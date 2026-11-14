@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://handobin9782-lang.github.io/smart-calc/sitemap.xml

@@ -218,7 +218,7 @@
   /* ── 10문항 (교시 · 영역) ─────────────────── */
   var QUESTIONS = [
     {
-      tag: '시험 전날 밤', area: '준비 영역', img: 'assets/cover.webp?v=2', accent: '#6b4bf6', label: 'D-1 · 23:00',
+      tag: '시험 전날 밤', area: '준비 영역', img: 'assets/cover.webp?v=3', accent: '#6b4bf6', label: 'D-1 · 23:00',
       q: '시험 전날 밤, 나는?',
       opts: [
         { k: 'ai', t: 'AI 안경 충전부터 한다. 렌즈 닦고 배터리 100% 확인.' },
@@ -308,7 +308,7 @@
       ]
     },
     {
-      tag: '한 문장', area: '총평 영역', img: 'assets/cover.webp?v=2', accent: '#6b4bf6', label: 'FIN · 정리',
+      tag: '한 문장', area: '총평 영역', img: 'assets/cover.webp?v=3', accent: '#6b4bf6', label: 'FIN · 정리',
       q: '이번 시험, 한 문장으로 정리하면?',
       opts: [
         { k: 'guess', t: '"촉이 좋았던 날이었다."' },

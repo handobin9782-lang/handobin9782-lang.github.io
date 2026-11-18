@@ -771,8 +771,8 @@
     var nmEl = E[p.nm.firstElem];
     var dayEl = E[p.saju.dayStem.elem];
     var out = [];
-    out.push((face ? sjInfo.ko + '(' + sjInfo.part + ')' : '사주 ' + p.saju.dayStem.han + ' ' + dayEl.ko + ' 기운') +
-      '이 실한데, ' + p.saju.day.name + '(' + p.saju.dayStem.read + ') 일주에 이름의 ' + nmEl.han + '(' + nmEl.ko + ') 기운이 ' +
+    out.push((face ? sjInfo.ko + '(' + sjInfo.part + ')' + '이 실한데, ' : '일간 ') +
+      p.saju.day.name + '(' + p.saju.dayStem.read + ') 일주에 이름의 ' + nmEl.han + '(' + nmEl.ko + ') 기운이 ' +
       (elemRel(dayEl.key, nmEl.key) === 'same' ? '그대로 겹칩니다' : (relWord(elemRel(dayEl.key, nmEl.key)) === '상생' ? '서로 밀어줍니다' : '한 번 부딪힙니다')) +
       '. 그래서 이 사람은 ' + SJ_PHRASE[sj][dom.key] + '.');
     if (face) {
@@ -880,18 +880,20 @@
   };
   var COMMON_ACT = {
     'hwa|mok': '가까운 산이나 바다로 당일치기 다녀오기',
-    'hwa|to': '집에서 같이 요리해 먹고 영화 한 편',
-    'geum|to': '가계부·일정표를 같이 정리하고 운동 가기',
+    'hwa|to': '집에서 요리해 먹고 영화 한 편',
+    'geum|to': '가계부·일정표를 정리하고 운동 가기',
     'geum|su': '사우나·수영하고 밤 산책하기',
-    'mok|su': '새로 배우는 클래스를 같이 등록하기',
+    'mok|su': '새로 배우는 클래스 등록하기',
     'hwa|geum': '전시·공연 보고 맛집 가기',
-    'mok|to': '텃밭·화분 같이 가꾸기',
-    'geum|mok': '러닝이나 등산처럼 목표를 정해 기록하기',
+    'mok|to': '텃밭·화분 가꾸기',
+    'geum|mok': '러닝·등산처럼 목표를 정해 기록하기',
     'hwa|su': '물놀이·온천 여행',
-    'su|to': '집에서 보드게임·독서 모임',
-    'mok|tok': '', 'hwa|hwa': '맛집 투어와 노래방', 'mok|mok': '같이 배우고 같이 기록하기',
-    'geum|geum': '같이 운동하고 서로 기록 경쟁하기', 'su|su': '밤 산책과 여행 계획 짜기',
-    'to|to': '집 정리·인테리어 같이 하기'
+    'su|to': '집에서 보드게임·독서 모임하기',
+    'hwa|hwa': '맛집 투어와 노래방',
+    'mok|mok': '배우고 기록하기',
+    'geum|geum': '운동하고 서로 기록 경쟁하기',
+    'su|su': '밤 산책과 여행 계획 짜기',
+    'to|to': '집 정리·인테리어 하기'
   };
   function commonAct(a, b) {
     var k = [a, b].sort().join('|');

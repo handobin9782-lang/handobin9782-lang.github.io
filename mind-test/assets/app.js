@@ -263,7 +263,7 @@
       if (S.cardUrl) {
         var a = document.createElement('a');
         a.href = S.cardUrl;
-        a.download = 'gwansang-' + (S.lastCardName || 'card') + '.png';
+        a.download = (S.lastCardName || 'gwansang-card') + '.png';
         document.body.appendChild(a); a.click(); a.remove();
         toast('이미지를 저장했어요');
       }

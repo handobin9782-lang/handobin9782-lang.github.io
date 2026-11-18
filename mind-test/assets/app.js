@@ -1068,8 +1068,7 @@
     var lines = ((info && info.why) || ['']).map(function (l) { return '<span>' + l + '</span>'; }).join('');
     return '<button class="pair p-' + kind + '" type="button" data-k="' + key + '">' +
       '<span class="pair-k">' + label + score + '</span>' +
-      '<span class="pair-e" aria-hidden="true">' + t.emoji + '</span>' +
-      '<span class="pair-n">' + t.name + '</span>' +
+      '<span class="pair-n"><span class="pair-e" aria-hidden="true">' + t.emoji + '</span> ' + t.name + '</span>' +
       '<span class="pair-r">' + lines + '</span></button>';
   }
 

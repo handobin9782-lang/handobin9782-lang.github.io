@@ -12,6 +12,8 @@
     if (n < 1024 * 1024) return (n / 1024).toFixed(0) + ' KB';
     return (n / 1048576).toFixed(1) + ' MB';
   }
+  function unit(arr, n) { return n === 1 ? arr[0] : arr[1]; }
+  function count(n, u) { return I.countFmt.replace('{n}', n).replace('{u}', u); }
   function render() {
     list.innerHTML = '';
     items.forEach(function (it, i) {
@@ -21,7 +23,7 @@
       nm.textContent = it.name;
       var meta = document.createElement('div');
       meta.className = 'fmeta';
-      meta.textContent = it.pages != null ? it.pages + ' ' + I.pages : bytes(it.size);
+      meta.textContent = it.pages != null ? count(it.pages, unit(I.pagesUnit, it.pages)) : bytes(it.size);
       li.appendChild(nm); li.appendChild(meta);
 
       var up = document.createElement('button');
@@ -46,7 +48,8 @@
     });
     var pages = items.reduce(function (s, it) { return s + (it.pages || 0); }, 0);
     totalEl.textContent = items.length
-      ? I.total.replace('{f}', items.length).replace('{p}', pages)
+      ? I.total.replace('{f}', count(items.length, unit(I.filesUnit, items.length)))
+              .replace('{p}', count(pages, unit(I.pagesUnit, pages)))
       : I.empty;
     mergeBtn.disabled = items.length < 1 || busy;
     clearBtn.disabled = items.length === 0 || busy;

@@ -23,7 +23,7 @@
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Merge PDF Files Online — Free, Private, No Upload">
   <meta name="twitter:description" content="Combine several PDFs into one file, in the order you choose. Merging runs entirely in your browser with pdf-lib, so documents are never uploaded and quality is preserved.">
-  <link rel="stylesheet" href="../assets/style.css?v=6">
+  <link rel="stylesheet" href="../assets/style.css?v=7">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230b1020'/%3E%3Ctext x='50' y='72' font-size='56' text-anchor='middle' fill='%2338d399'%3E%F0%9F%A7%B0%3C/text%3E%3C/svg%3E">
   <script type="application/ld+json">
 {
@@ -134,7 +134,7 @@
       <span class="big">📄</span>
       <b>Drop PDF files here or tap to choose</b>
       <div class="hint">Add two or more PDFs</div>
-      <div class="hint">PDF · pages</div>
+      <div class="hint">PDF</div>
     </div>
     <input type="file" id="file" accept="application/pdf,.pdf" multiple>
     <ul class="filelist" id="list"></ul>
@@ -161,7 +161,7 @@
 <details class="faq"><summary>How many files can I merge?</summary><p>There is no fixed number — the limit is your device's memory. Ten to twenty typical documents are no problem on a phone; hundreds of scanned pages are better on a computer.</p></details>
 <details class="faq"><summary>What about digital signatures?</summary><p>A merged document is a new file, so any signature becomes invalid. Keep the signed original if you need it for legal purposes.</p></details>
 </main>
-<script type="application/json" id="i18n">{"pages": "pages", "up": "Move up", "down": "Move down", "remove": "Remove", "merging": "Merging…", "download": "Download merged PDF", "total": "{f} files · {p} pages", "empty": "No files yet — add at least one PDF.", "errType": "That file is not a PDF.", "errLoad": "{n} could not be opened — it may be corrupted or password protected.", "errMerge": "The merge failed. Check that none of the files are password protected.", "errLib": "The PDF library did not load. Check your connection and reload the page.", "done": "{n} pages · {s}", "filename": "merged.pdf"}</script><script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js" defer></script>
-<script src="../assets/pdf-merge.js?v=6" defer></script>
+<script type="application/json" id="i18n">{"pagesUnit": ["page", "pages"], "filesUnit": ["file", "files"], "countFmt": "{n} {u}", "up": "Move up", "down": "Move down", "remove": "Remove", "merging": "Merging…", "download": "Download merged PDF", "total": "{f} · {p}", "empty": "No files yet — add at least one PDF.", "errType": "That file is not a PDF.", "errLoad": "{n} could not be opened — it may be corrupted or password protected.", "errMerge": "The merge failed. Check that none of the files are password protected.", "errLib": "The PDF library did not load. Check your connection and reload the page.", "done": "{n} pages · {s}", "filename": "merged.pdf"}</script><script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js" defer></script>
+<script src="../assets/pdf-merge.js?v=7" defer></script>
 </body>
 </html>

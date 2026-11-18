@@ -189,6 +189,20 @@
 
   var ORDER = ['ai', 'sleep', 'honest', 'guess', 'escape', 'deepfocus', 'watch', 'omr'];
 
+  /* ── 제휴 상품 (쿠팡 파트너스) ───────────────
+     url 에 파트너스 링크를 넣으면 그 즉시 구매 카드로 활성화됩니다.
+     빈 문자열이면 '준비 중' 상태로 안전하게 표시됩니다. */
+  var AFFILIATE_ITEMS = {
+    ai:        { name: '블루라이트 차단 안경', desc: '렌즈 반사광은 줄이고 눈은 지키는 기본템', url: '' },
+    sleep:     { name: '암막 수면안대', desc: '10분 꿀잠의 완성은 빛 차단', url: '' },
+    honest:    { name: '미끄럼 방지 연필 그립', desc: '손에 땀 차도 연필이 도망가지 않게', url: '' },
+    guess:     { name: '행운의 미니 부적 키링', desc: '촉은 실력이 아니라 기분에서 온다', url: '' },
+    escape:    { name: '초경량 미니 크로스백', desc: '40분 만에 나갈 몸에 책가방은 무겁다', url: '' },
+    deepfocus: { name: '대용량 지우개 3종 세트', desc: '가루 산을 만들 만큼 넉넉하게', url: '' },
+    watch:     { name: '소음 차단 귀마개', desc: '옆자리 책장 소리를 물리치는 유일한 방법', url: '' },
+    omr:       { name: '컴퓨터용 사인펜 + 수정테이프 세트', desc: '마지막 3분을 살리는 최소 장비', url: '' }
+  };
+
   /* ── 10문항 (교시 · 영역) ─────────────────── */
   var QUESTIONS = [
     {
@@ -880,6 +894,8 @@
     $('rWorst').innerHTML = '🚫 <span>이 놈이랑 <b>앞뒤 자리</b> 앉으면 둘 다 망함 — <b>' +
       ne.emoji + ' ' + ne.name + '</b><br>' + t.nemesis[1] + '</span>';
 
+    renderShop(key);
+
     var banner = $('previewBanner');
     if (state.preview) {
       banner.hidden = false;
@@ -900,8 +916,30 @@
     show('screen-result');
   }
 
-  function pairHtml(kind, key, label, reason) {
-    var t = TYPES[key];
+  /* ── 생존템 카드 ──────────────────────────── */
+  function renderShop(key) {
+    var block = $('shopBlock');
+    var it = AFFILIATE_ITEMS[key];
+    if (!block || !it) { if (block) block.hidden = true; return; }
+    block.hidden = false;
+
+    var live = typeof it.url === 'string' && /^https?:\/\//.test(it.url);
+    var emoji = TYPES[key].emoji;
+    var inner = '<span class="shop-e" aria-hidden="true">' + emoji + '</span>' +
+      '<span class="shop-b"><b>' + it.name + '</b><span>' + it.desc + '</span></span>';
+
+    if (live) {
+      $('shopCard').innerHTML = '<a class="shop-card is-live" href="' + it.url + '" target="_blank" rel="sponsored nofollow noopener">' +
+        inner + '<span class="shop-cta">보러 가기 →</span></a>';
+      $('shopNote').textContent = '※ 이 페이지는 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 받을 수 있습니다.';
+    } else {
+      $('shopCard').innerHTML = '<div class="shop-card">' + inner +
+        '<span class="shop-cta is-soon">제휴 링크 준비 중</span></div>';
+      $('shopNote').textContent = '※ 아직 제휴 링크가 연결되지 않았어요. 쿠팡 파트너스 링크를 연결하면 이 카드가 바로 구매 링크로 바뀝니다.';
+    }
+  }
+
+  function pairHtml(kind, key, label, reason) {    var t = TYPES[key];
     return '<button class="pair p-' + kind + '" type="button" data-k="' + key + '">' +
       '<span class="pair-k">' + label + '</span>' +
       '<span class="pair-e" aria-hidden="true">' + t.emoji + '</span>' +

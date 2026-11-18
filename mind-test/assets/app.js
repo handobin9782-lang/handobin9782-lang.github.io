@@ -287,7 +287,7 @@
       ]
     },
     {
-      tag: '시험 끝', area: '자기합리화 영역', img: 'assets/type-escape.webp', accent: '#f59f00', label: 'CASE 08 · 종료',
+      tag: '시험 끝', area: '자기합리화 영역', img: 'assets/type-escape.webp', pos: 'center 8%', accent: '#f59f00', label: 'CASE 08 · 종료',
       q: '시험 끝. 복도로 나서는데 친구가 "몇 개 찍었어?"라고 묻는다.',
       opts: [
         { k: 'guess', t: '다 찍었어. 그래도 두 개는 맞은 것 같아.' },
@@ -823,9 +823,11 @@
     if (img.getAttribute('src') !== q.img) {
       img.classList.add('is-fading');
       var src = q.img;
+      var pos = q.pos || '';
       var pending = new Image();
       pending.onload = function () {
         img.src = src;
+        img.style.objectPosition = pos;
         img.alt = q.tag + ' 상황 일러스트';
         img.classList.remove('is-fading');
       };

@@ -86,8 +86,9 @@ main{max-width:640px; margin:0 auto; padding:6px 18px 40px; min-height:60vh}
 .cover img{display:block; width:100%; height:auto; aspect-ratio:1400/788; object-fit:cover}
 .cover figcaption{
   position:absolute; left:0; right:0; bottom:0; padding:24px 16px 9px;
-  font-size:10px; font-weight:800; letter-spacing:.2em; color:rgba(255,255,255,.8);
-  background:linear-gradient(transparent, rgba(10,9,14,.85)); text-align:left;
+  font-size:10px; font-weight:800; letter-spacing:.2em; color:rgba(255,255,255,.82);
+  text-shadow:0 1px 3px rgba(10,9,14,.55);
+  background:linear-gradient(transparent, rgba(10,9,14,.42) 42%, rgba(10,9,14,.9)); text-align:left;
 }
 .cover-badge{
   position:absolute; top:10px; left:10px; z-index:2; font-size:10.5px; font-weight:900; letter-spacing:.02em;

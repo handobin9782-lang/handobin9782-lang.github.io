@@ -469,7 +469,7 @@ main{max-width:640px; margin:0 auto; padding:6px 18px 40px; min-height:60vh}
 }
 .chem-img img{width:100%; height:100%; object-fit:cover; display:block}
 .chem-role{font-size:9.5px; font-weight:800; letter-spacing:.1em; color:rgba(255,255,255,.55)}
-.chem-nm{font-size:11px; font-weight:800; line-height:1.35; text-align:center; color:#fff}
+.chem-nm{font-size:10.5px; font-weight:800; line-height:1.4; text-align:center; color:#fff; padding:0 2px; letter-spacing:-.01em}
 .chem-mid{display:flex; flex-direction:column; align-items:center; gap:2px; padding-top:8px}
 .chem-score{display:flex; align-items:baseline; gap:1px; font-weight:900; letter-spacing:-.04em}
 .chem-score b{font-size:38px; line-height:1; color:#ffe94d; font-variant-numeric:tabular-nums;

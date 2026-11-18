@@ -203,6 +203,18 @@
     omr:       { name: '컴퓨터용 사인펜 + 수정테이프 세트', desc: '마지막 3분을 살리는 최소 장비', url: '' }
   };
 
+  /* 짧은 표기 (케미 카드 등 좁은 자리) */
+  var SHORT = {
+    ai: 'AI 안경 끼고 베끼는 놈',
+    sleep: '10분 만에 꿀잠 자는 놈',
+    honest: '땀 뻘뻘 정직한 놈',
+    guess: '머리 굴려 찍는 놈',
+    escape: '제일 먼저 나가는 놈',
+    deepfocus: '한 문제에 목숨 거는 놈',
+    watch: '옆자리 소리에 예민한 놈',
+    omr: 'OMR 밀려 쓰는 놈'
+  };
+
   /* ── 10문항 (교시 · 영역) ─────────────────── */
   var QUESTIONS = [
     {
@@ -827,15 +839,15 @@
     var f = TYPES[friendKey], m = TYPES[myKey];
     $('chemImgA').src = f.img; $('chemImgA').alt = f.name;
     $('chemImgB').src = m.img; $('chemImgB').alt = m.name;
-    $('chemNameA').textContent = f.emoji + ' ' + f.name;
-    $('chemNameB').textContent = m.emoji + ' ' + m.name;
+    $('chemNameA').textContent = f.emoji + ' ' + (SHORT[friendKey] || f.name);
+    $('chemNameB').textContent = m.emoji + ' ' + (SHORT[myKey] || m.name);
     $('chemScore').textContent = data[0];
     $('chemTitle').textContent = data[1];
     $('chemLine').innerHTML = data[2].map(function (l) { return '<span>' + l + '</span>'; }).join('');
     box.hidden = false;
     $('btnChemShare').onclick = function () {
       var url = SITE + '?from=' + myKey;
-      var text = '시험장 케미 결과: 나 "' + m.name + '" vs 너 "' + f.name + '" → ' + data[0] + '점 (' + data[1] + ')\n' + data[2][1];
+      var text = '시험장 케미 결과: 나 "' + (SHORT[myKey] || m.name) + '" vs 너 "' + (SHORT[friendKey] || f.name) + '" → ' + data[0] + '점 (' + data[1] + ')\n' + data[2][1];
       if (navigator.share) {
         navigator.share({ title: '시험장 놈놈놈 케미', text: text, url: url }).catch(function () {});
       } else {

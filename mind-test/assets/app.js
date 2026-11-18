@@ -217,7 +217,7 @@
     S.from = p;
     var b = $('inviteBanner');
     b.hidden = false;
-    $('inviteTitle').textContent = p.name + '님의 링크로 들어오셨어요';
+    $('inviteTitle').textContent = p.name + ' 님의 링크로 들어오셨어요';
     $('inviteSub').textContent = p.name + '님(' + p.animal.name + '·' + p.saju.day.name + '일주)과의 6가지 관계를 볼 수 있습니다.';
     $('btnStart').textContent = '내 정보 넣고 답하기';
     $('formStep').textContent = '第一 · 내 정보 (초대 응답)';
@@ -293,6 +293,9 @@
       $('btnAnalyze').textContent = '풀이 시작';
     }
     clearPhoto();
+    if (mode === 'partner') {
+      $('fName').value = ''; $('fHanja').value = ''; $('fBirth').value = '';
+    }
     if (S.me && mode === 'self') {
       $('fName').value = S.me.name;
       $('fHanja').value = S.me.hanja || '';
@@ -687,7 +690,7 @@
     var gil = nm.sagyeok.filter(function (s) { return s.s.g === '길'; }).length;
     var heung = nm.sagyeok.filter(function (s) { return s.s.g === '흉'; }).length;
     var verdict = '소리 흐름은 ' + nm.flow.map(function (k) { return E[k].ko; }).join(' → ') + '. ' +
-      (nm.geuk ? '중간에 상극이 ' + nm.geuk + '번 끊깁니다 — 그 자리에서 말이 어긋나기 쉽습니다.' : '상생으로 이어져 이름을 부를수록 기운이 붙습니다.') +
+      (nm.geuk ? '중간에 상극이 ' + nm.geuk + '번 끊깁니다 — 그 자리에서 말이 어긋나기 쉽습니다.' : '끊김 없이 이어져 이름을 부를수록 기운이 붙습니다.') +
       ' 사격 중 길이 ' + gil + '개, 흉이 ' + heung + '개. 총운 ' + nm.sagyeok[3].v + '수 ' + nm.sagyeok[3].s.k + '(' + nm.sagyeok[3].s.g + ')입니다.';
 
     var hanjaChips = '';
@@ -814,12 +817,12 @@
     var box = $('shareBox');
     box.hidden = false;
     box.innerHTML = '<div class="share-url"><input id="shareUrl" readonly value="' + attr(url) + '"><button type="button" id="btnCopy">복사</button></div>' +
-      '<p class="note-line">이 링크를 받은 사람은 ' + esc(p.name) + '님의 6가지 관계를 볼 수 있습니다. 링크에는 이름·생년월일·동물상만 담기고 <b>사진은 담기지 않습니다</b>.</p>';
+      '<p class="note-line">이 링크를 받은 사람은 ' + esc(p.name) + ' 님의 6가지 관계를 볼 수 있습니다. 링크에는 이름·생년월일·동물상만 담기고 <b>사진은 담기지 않습니다</b>.</p>';
     $('btnCopy').addEventListener('click', function () { copyText(url); });
     if (navigator.share) {
       navigator.share({
         title: '관상철학관 — ' + p.name,
-        text: p.name + '님의 관상·사주·이름풀이. 링크를 열면 나와의 6가지 관계를 볼 수 있어요.',
+        text: p.name + ' 님의 관상·사주·이름풀이. 링크를 열면 나와의 6가지 관계를 볼 수 있어요.',
         url: url
       }).catch(function () {});
     } else {
@@ -973,13 +976,14 @@
     }
     box.innerHTML = '<section class="shop">' +
       '<div class="shop-h"><h3>개운템 추천</h3><span class="h-sub">COUPANG PARTNERS</span></div>' +
-      '<p class="shop-sub">' + esc(p.name) + '님의 ' + E[dom].han + '(' + E[dom].ko + ') 기운과 비어 있는 ' + E[lack].han + '(' + E[lack].ko + ') 기운에 맞춰 골랐습니다.</p>' +
+      '<p class="shop-sub">' + esc(p.name) + ' 님의 ' + E[dom].han + '(' + E[dom].ko + ') 기운과 비어 있는 ' + E[lack].han + '(' + E[lack].ko + ') 기운에 맞춰 골랐습니다.</p>' +
       '<div class="shop-items">' + pick.map(function (it) {
         return '<a class="shop-item" href="' + attr(it.url) + '" target="_blank" rel="noopener sponsored">' +
           '<span class="si-el" style="color:' + E[it.el].color + '">' + E[it.el].han + '</span>' +
           '<span class="si-b"><b>' + esc(it.name) + '</b><span>' + esc(it.desc) + '</span></span>' +
           '<span class="si-go">보기 →</span></a>';
       }).join('') + '</div>' +
+      (SHOP.every(function (it) { return it.el !== lack; }) ? '<p class="shop-note">' + E[lack].han + '(' + E[lack].ko + ') 기운은 ' + E[lack].lucky.color + ' 소품이나 ' + E[lack].lucky.item + '처럼 일상에서 채우는 게 좋습니다.</p>' : '') +
       '<p class="shop-note">※ 이 페이지는 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 받을 수 있습니다. 개운템은 재미를 위한 제안이며 효능을 보장하지 않습니다.</p>' +
       '</section>';
   }
@@ -1035,101 +1039,93 @@
     var cv = $('cardCanvas'), ctx = cv.getContext('2d');
     cv.width = CW; cv.height = CH;
     drawHanjiBg(ctx);
-    var PAD = 96, y = 150;
+    var PAD = 96;
 
     /* 헤더 */
-    ctx.fillStyle = '#a5392a'; rr(ctx, PAD, y - 52, 78, 78, 12); ctx.fill();
+    ctx.fillStyle = '#a5392a'; rr(ctx, PAD, 98, 78, 78, 12); ctx.fill();
     ctx.fillStyle = '#fff2df'; ctx.textAlign = 'center';
     ctx.font = '700 44px ' + FONT_SERIF;
-    ctx.fillText('觀', PAD + 39, y + 4);
+    ctx.fillText('觀', PAD + 39, 154);
     ctx.textAlign = 'left';
     ctx.fillStyle = '#17140f'; ctx.font = '700 40px ' + FONT_SERIF;
-    ctx.fillText('관상철학관', PAD + 98, y - 2);
+    ctx.fillText('관상철학관', PAD + 98, 148);
     ctx.fillStyle = '#8a8172'; ctx.font = '600 22px ' + FONT_SANS;
-    ctx.fillText('觀相 · 四柱 · 姓名', PAD + 98, y + 30);
+    ctx.fillText('觀相 · 四柱 · 姓名', PAD + 98, 180);
 
-    y = 300;
     /* 이름 */
     var nmSize = fitFont(ctx, p.name, CW - PAD * 2, 92, 52, '900');
     ctx.font = '900 ' + nmSize + 'px ' + FONT_SERIF;
     ctx.fillStyle = '#17140f';
-    ctx.fillText(p.name, PAD, y);
-    y += 46;
+    ctx.fillText(p.name, PAD, 300);
     ctx.font = '600 27px ' + FONT_SANS; ctx.fillStyle = '#8a8172';
-    ctx.fillText((p.hanja ? p.hanja + ' · ' : '') + dateText(p.birth) + ' 양력', PAD, y);
+    ctx.fillText((p.hanja ? p.hanja + ' · ' : '') + dateText(p.birth) + ' 양력', PAD, 346);
 
-    /* 사진 or 실 */
-    var boxY = y + 46, boxH = 640, boxW = CW - PAD * 2;
-    if (p.photoUrl && p.face) {
+    /* 사진 or 실 — 정사각 박스 */
+    var boxW = 600, boxH = 600;
+    var boxX = PAD + ((CW - PAD * 2) - boxW) / 2, boxY = 380;
+    if (p.photoUrl && p.face && p._img) {
       ctx.save();
-      rr(ctx, PAD, boxY, boxW, boxH, 26);
-      ctx.clip();
-      ctx.fillStyle = '#14110c'; ctx.fillRect(PAD, boxY, boxW, boxH);
-      var im = p._img;
-      if (im) {
-        var r = p.face.rect;
-        var sx = im.naturalWidth * r.x, sy = im.naturalHeight * r.y;
-        var sw = im.naturalWidth * r.w, sh = im.naturalHeight * r.h;
-        /* 얼굴 박스를 3:2 박스에 채움 */
-        var sc = Math.max(boxW / sw, boxH / sh);
-        var dw = sw * sc, dh = sh * sc;
-        ctx.drawImage(im, sx, sy, sw, sh, PAD + (boxW - dw) / 2, boxY + (boxH - dh) / 2, dw, dh);
-        /* HUD */
-        ctx.strokeStyle = 'rgba(240,222,180,.8)'; ctx.lineWidth = 2;
-        var fx = PAD + (boxW - dw) / 2, fy = boxY + (boxH - dh) / 2;
-        var m = p.face.marks;
-        ctx.setLineDash([8, 8]);
-        [m.brow, m.nose].forEach(function (k) {
-          ctx.beginPath(); ctx.moveTo(fx, fy + dh * k); ctx.lineTo(fx + dw, fy + dh * k); ctx.stroke();
-        });
-        ctx.setLineDash([]);
-        ctx.strokeStyle = 'rgba(217,185,111,.9)';
-        ctx.strokeRect(fx + 4, fy + 4, dw - 8, dh - 8);
-      }
+      rr(ctx, boxX, boxY, boxW, boxH, 24); ctx.clip();
+      ctx.fillStyle = '#14110c'; ctx.fillRect(boxX, boxY, boxW, boxH);
+      var im = p._img, fr = p.face.rect;
+      var sw = im.naturalWidth * fr.w, sh = im.naturalHeight * fr.h;
+      var sc = Math.max(boxW / sw, boxH / sh);
+      var dw = sw * sc, dh = sh * sc;
+      var dx = boxX + (boxW - dw) / 2, dy = boxY + (boxH - dh) / 2;
+      ctx.drawImage(im, im.naturalWidth * fr.x, im.naturalHeight * fr.y, sw, sh, dx, dy, dw, dh);
+      /* HUD */
+      var mk = p.face.marks;
+      ctx.strokeStyle = 'rgba(240,222,180,.75)'; ctx.lineWidth = 2;
+      ctx.setLineDash([9, 9]);
+      [mk.brow, mk.nose].forEach(function (k) {
+        var ly = dy + dh * k;
+        ctx.beginPath(); ctx.moveTo(boxX, ly); ctx.lineTo(boxX + boxW, ly); ctx.stroke();
+      });
+      ctx.setLineDash([]);
+      ctx.strokeStyle = 'rgba(217,185,111,.65)';
+      ctx.strokeRect(dx + 2, dy + 2, dw - 4, dh - 4);
       ctx.restore();
       ctx.strokeStyle = 'rgba(176,135,60,.6)'; ctx.lineWidth = 2;
-      rr(ctx, PAD, boxY, boxW, boxH, 26); ctx.stroke();
+      rr(ctx, boxX, boxY, boxW, boxH, 24); ctx.stroke();
     } else {
-      /* 실(seal) 카드 */
       var dom0 = E[p.saju.dominant];
       ctx.save();
-      rr(ctx, PAD, boxY, boxW, boxH, 26); ctx.clip();
-      var gg = ctx.createLinearGradient(PAD, boxY, PAD + boxW, boxY + boxH);
+      rr(ctx, boxX, boxY, boxW, boxH, 24); ctx.clip();
+      var gg = ctx.createLinearGradient(boxX, boxY, boxX + boxW, boxY + boxH);
       gg.addColorStop(0, '#221d15'); gg.addColorStop(1, '#100e0a');
-      ctx.fillStyle = gg; ctx.fillRect(PAD, boxY, boxW, boxH);
+      ctx.fillStyle = gg; ctx.fillRect(boxX, boxY, boxW, boxH);
       ctx.strokeStyle = 'rgba(217,185,111,.4)'; ctx.lineWidth = 2;
-      ctx.beginPath(); ctx.arc(PAD + boxW / 2, boxY + boxH / 2, 200, 0, Math.PI * 2); ctx.stroke();
+      ctx.beginPath(); ctx.arc(boxX + boxW / 2, boxY + boxH / 2, 190, 0, Math.PI * 2); ctx.stroke();
       ctx.setLineDash([6, 12]);
-      ctx.beginPath(); ctx.arc(PAD + boxW / 2, boxY + boxH / 2, 244, 0, Math.PI * 2); ctx.stroke();
+      ctx.beginPath(); ctx.arc(boxX + boxW / 2, boxY + boxH / 2, 232, 0, Math.PI * 2); ctx.stroke();
       ctx.setLineDash([]);
       ctx.textAlign = 'center';
-      ctx.fillStyle = '#d9b96f'; ctx.font = '900 190px ' + FONT_SERIF;
-      ctx.fillText(dom0.han, PAD + boxW / 2, boxY + boxH / 2 + 66);
+      ctx.fillStyle = '#d9b96f'; ctx.font = '900 180px ' + FONT_SERIF;
+      ctx.fillText(dom0.han, boxX + boxW / 2, boxY + boxH / 2 + 62);
+      ctx.fillStyle = 'rgba(240,222,180,.6)'; ctx.font = '600 22px ' + FONT_SANS;
+      ctx.fillText('사주 ' + dom0.ko + ' 기운으로 추정한 상', boxX + boxW / 2, boxY + boxH - 52);
       ctx.textAlign = 'left';
       ctx.restore();
     }
 
-    y = boxY + boxH + 34;
     /* 배지 줄 */
+    var y = 1020;
     var badges = [p.animal.emoji + ' ' + p.animal.name, p.saju.day.han + ' ' + p.saju.day.name + '일주', p.saju.zodiac];
     var bx = PAD;
     badges.forEach(function (t) {
-      ctx.font = '700 26px ' + FONT_SANS;
-      var w = ctx.measureText(t).width + 44;
+      ctx.font = '700 25px ' + FONT_SANS;
+      var w = ctx.measureText(t).width + 40;
       ctx.fillStyle = 'rgba(255,253,247,.95)';
-      rr(ctx, bx, y - 30, w, 48, 24); ctx.fill();
+      rr(ctx, bx, y - 29, w, 46, 23); ctx.fill();
       ctx.strokeStyle = 'rgba(176,135,60,.55)'; ctx.lineWidth = 1.5; ctx.stroke();
       ctx.fillStyle = '#3b352b';
-      ctx.fillText(t, bx + 22, y + 2);
-      bx += w + 10;
+      ctx.fillText(t, bx + 20, y + 1);
+      bx += w + 9;
     });
-    y += 66;
 
     /* 오행 */
-    ctx.font = '700 24px ' + FONT_SANS; ctx.fillStyle = '#8a8172';
-    var elTxt = EO.map(function (k) { return E[k].han + ' ' + p.saju.counts[k]; }).join('   ');
-    ctx.fillText(elTxt, PAD, y);
-    y += 44;
+    ctx.font = '700 23px ' + FONT_SANS; ctx.fillStyle = '#8a8172';
+    ctx.fillText(EO.map(function (k) { return E[k].han + ' ' + p.saju.counts[k]; }).join('    '), PAD, 1062);
 
     /* 삼정 미니바 */
     var sm = p.face ? p.face.samjeong : guessSamjeong(p);
@@ -1139,55 +1135,59 @@
     ['sang', 'jung', 'ha'].forEach(function (k) {
       var w = totalW * sm[k] / 100;
       ctx.fillStyle = cols[k];
-      ctx.fillRect(x0, y, w, bh);
+      ctx.fillRect(x0, 1088, w, bh);
       x0 += w;
     });
-    y += bh + 26;
-    ctx.font = '600 21px ' + FONT_SANS; ctx.fillStyle = '#5c5346';
-    ctx.fillText('상정 ' + sm.sang + '%   중정 ' + sm.jung + '%   하정 ' + sm.ha + '%', PAD, y);
-    y += 46;
+    ctx.font = '600 20px ' + FONT_SANS; ctx.fillStyle = '#5c5346';
+    ctx.fillText('상정 ' + sm.sang + '%   중정 ' + sm.jung + '%   하정 ' + sm.ha + '%', PAD, 1132);
 
-    /* 총평 */
-    var line = p.narrative && p.narrative[0] ? p.narrative[0] : '';
-    ctx.font = '600 25px ' + FONT_SERIF; ctx.fillStyle = '#3b352b';
-    var lines = wrapText(ctx, line, totalW).slice(0, 2);
-    lines.forEach(function (ln) { ctx.fillText(ln, PAD, y); y += 36; });
-    y += 26;
+    /* 총평 3줄 */
+    var lineTxt = p.narrative && p.narrative[0] ? p.narrative[0] : '';
+    ctx.font = '600 23px ' + FONT_SERIF; ctx.fillStyle = '#3b352b';
+    var tlines = wrapText(ctx, lineTxt, totalW);
+    var maxL = 3;
+    if (tlines.length > maxL) { tlines = tlines.slice(0, maxL); tlines[maxL - 1] += ' …'; }
+    var ny = 1170;
+    tlines.forEach(function (ln) { ctx.fillText(ln, PAD, ny); ny += 30; });
 
     /* 피할 것 / 곁에 둘 것 */
-    function box2(title, sub, item, color, bg) {
-      ctx.fillStyle = bg; rr(ctx, PAD, y, totalW, 176, 18); ctx.fill();
+    function box2(yy, title, sub, item, color, bg) {
+      var H = 164;
+      ctx.fillStyle = bg; rr(ctx, PAD, yy, totalW, H, 18); ctx.fill();
       ctx.strokeStyle = color + '55'; ctx.lineWidth = 2; ctx.stroke();
       ctx.fillStyle = color;
-      ctx.font = '800 25px ' + FONT_SERIF;
-      ctx.fillText(title, PAD + 24, y + 42);
-      ctx.font = '600 19px ' + FONT_SANS; ctx.fillStyle = '#8a8172';
-      ctx.fillText(sub, PAD + 24 + ctx.measureText(title).width + 160, y + 42);
-      ctx.fillStyle = '#3b352b'; ctx.font = '700 23px ' + FONT_SERIF;
-      var t1 = wrapText(ctx, item.t, totalW - 48).slice(0, 1)[0] || '';
-      ctx.fillText(t1, PAD + 24, y + 82);
-      ctx.fillStyle = '#5c5346'; ctx.font = '500 21px ' + FONT_SANS;
+      ctx.font = '800 24px ' + FONT_SERIF;
+      ctx.fillText(title, PAD + 24, yy + 40);
+      ctx.font = '700 18px ' + FONT_SANS; ctx.fillStyle = 'rgba(138,129,114,.9)';
+      ctx.textAlign = 'right';
+      ctx.fillText(sub, PAD + totalW - 24, yy + 39);
+      ctx.textAlign = 'left';
+      ctx.fillStyle = '#3b352b'; ctx.font = '700 22px ' + FONT_SERIF;
+      var t1 = wrapText(ctx, item.t, totalW - 48);
+      ctx.fillText(t1[0] + (t1.length > 1 ? ' …' : ''), PAD + 24, yy + 78);
+      ctx.fillStyle = '#5c5346'; ctx.font = '500 20px ' + FONT_SANS;
       var t2 = wrapText(ctx, item.d, totalW - 48).slice(0, 2);
-      t2.forEach(function (ln, i) { ctx.fillText(ln, PAD + 24, y + 118 + i * 28); });
-      y += 196;
+      t2.forEach(function (ln, i) { ctx.fillText(ln, PAD + 24, yy + 112 + i * 26); });
+      return yy + H;
     }
-    box2('⚠ 피해야 할 것', '흉', p.avoid[0], '#a5392a', 'rgba(250,238,234,.92)');
-    box2('🍀 곁에 둘 것', '길', p.keep[0], '#2c5b52', 'rgba(238,247,236,.92)');
+    var yAfter = box2(1250, '⚠  피해야 할 것', '흉 · AVOID', p.avoid[0], '#a5392a', 'rgba(250,238,234,.92)');
+    yAfter = box2(yAfter + 14, '🍀  곁에 둘 것', '길 · KEEP', p.keep[0], '#2c5b52', 'rgba(238,247,236,.92)');
 
     /* 오늘 */
-    ctx.fillStyle = '#8a8172'; ctx.font = '700 22px ' + FONT_SANS;
-    ctx.fillText('오늘 · ' + p.today.dateText + ' — ' + p.today.pillar.name + '일', PAD, y + 14);
-    ctx.fillStyle = '#3b352b'; ctx.font = '500 21px ' + FONT_SANS;
-    var todayLine = p.today.score >= 70 ? '기운이 내 편입니다. 미뤄둔 일을 꺼내기 좋은 날.' : (p.today.score >= 50 ? '무난한 하루. 큰 결정보다 정리하기 좋습니다.' : '내 기운을 누르는 날. 큰 계약·고백은 미루세요.');
-    ctx.fillText(todayLine, PAD, y + 44);
+    ctx.fillStyle = '#8a8172'; ctx.font = '700 21px ' + FONT_SANS;
+    ctx.fillText('오늘 · ' + p.today.dateText + ' — ' + p.today.pillar.name + '일', PAD, yAfter + 44);
+    ctx.fillStyle = '#3b352b'; ctx.font = '500 20px ' + FONT_SANS;
+    var todayLine = p.today.score >= 70 ? '기운이 내 편입니다. 미뤄둔 일을 꺼내기 좋은 날.'
+      : (p.today.score >= 50 ? '무난한 하루. 큰 결정보다 정리하기 좋은 날입니다.' : '내 기운을 누르는 날. 큰 계약·고백은 미루세요.');
+    ctx.fillText(wrapText(ctx, todayLine, totalW)[0], PAD, yAfter + 74);
 
     /* 푸터 */
     ctx.fillStyle = '#17140f'; ctx.font = '700 26px ' + FONT_SANS;
-    ctx.fillText('나도 관상·사주·이름풀이 보기', PAD, CH - 128);
+    ctx.fillText('나도 관상·사주·이름풀이 보기', PAD, CH - 138);
     ctx.fillStyle = '#8a8172'; ctx.font = '500 21px ' + FONT_SANS;
-    ctx.fillText('handobin9782-lang.github.io/mind-test', PAD, CH - 92);
+    ctx.fillText('handobin9782-lang.github.io/mind-test', PAD, CH - 102);
     ctx.fillStyle = 'rgba(23,20,15,.4)'; ctx.font = '500 17px ' + FONT_SANS;
-    ctx.fillText('재미로 보는 관상·사주·이름풀이 · 의료·투자 판단 근거 아님', PAD, CH - 62);
+    ctx.fillText('재미로 보는 관상·사주·이름풀이 · 의료·투자 판단 근거 아님', PAD, CH - 68);
     ctx.fillStyle = '#a5392a'; ctx.fillRect(0, CH - 12, CW, 12);
   }
 
@@ -1296,7 +1296,7 @@
       drawCard(p);
       return canvasToBlob($('cardCanvas'));
     }).then(function (blob) {
-      openSheet(blob, p.name + '님의 관상·사주 카드', 'gwansang-' + p.name);
+      openSheet(blob, p.name + ' 님의 관상·사주 카드', 'gwansang-' + p.name);
     }).catch(function (e) {
       window.__errs.push('card:' + (e && e.message));
       toast('카드를 만들지 못했어요. 다시 시도해 주세요.');

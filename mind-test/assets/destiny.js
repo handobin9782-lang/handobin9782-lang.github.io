@@ -849,7 +849,8 @@
       out.push({ t: '이름 소리의 상극 — ' + p.nm.geukPairs.map(function (x) { return E[x.a].han + '→' + E[x.b].han; }).join(', '),
         d: '말이 앞뒤에서 끊기는 소리입니다. 계약·약속을 말로만 하지 말고 반드시 글로 남기세요. 특히 ' + E[p.nm.geukPairs[0].b].ko + ' 기운이 필요한 자리에서 말실수가 납니다.' });
     } else {
-      out.push({ t: '정격 ' + p.nm.sagyeok[3].v + '수 ' + p.nm.sagyeok[3].s.k + '의 그림자', d: p.nm.sagyeok[3].s.t + ' — 이 수가 흉으로 기울 때는 ' + pk([el.avoid[2], an.avoid[0], weak.avoid[1]]) + '이 그 신호입니다.' });
+      var _sg = pk([el.avoid[2], an.avoid[0], weak.avoid[1]]);
+      out.push({ t: '정격 ' + p.nm.sagyeok[3].v + '수 ' + p.nm.sagyeok[3].s.k + '의 그림자', d: p.nm.sagyeok[3].s.t + ' — 이 수가 흉으로 기울 때는 ' + _sg + josa(_sg, '이', '가') + ' 그 신호입니다.' });
     }
     out.push({ t: '오늘 밤 하지 말 것', d: p.today.score < 50 ? '오늘(' + p.today.pillar.name + '일)은 ' + E[p.today.pillar.stem.elem].ko + ' 기운이 내 일주를 누르는 날입니다. 큰 결정·계약·고백은 내일로 미루세요.' : '오늘은 ' + p.today.pillar.name + '일, ' + E[p.today.pillar.stem.elem].ko + ' 기운이 내 편입니다. 대신 ' + _a + josa(_a, '은', '는') + ' 참으세요.' });
     return out;
@@ -1071,7 +1072,7 @@
     cards.push({
       id: 'keep', icon: '✨', title: '이 관계에서 곁에 두어야 할 것', sub: '관계를 살리는 비결',
       score: score + 4, badge: '행운', positive: true,
-      summary: '이 관계의 열쇠는 ' + keepEl.ko + ' 기운입니다. ' + keepEl.lucky.item + '을 곁에 두고, ' + keepEl.lucky.color + ' 계열을 맞춰 보세요.',
+      summary: '이 관계의 열쇠는 ' + keepEl.ko + ' 기운입니다. ' + keepEl.lucky.item + josa(keepEl.lucky.item, '을', '를') + ' 곁에 두고, ' + keepEl.lucky.color + ' 계열을 맞춰 보세요.',
       items: keep
     });
 

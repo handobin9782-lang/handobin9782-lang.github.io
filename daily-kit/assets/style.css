@@ -138,6 +138,7 @@ textarea { min-height: 104px; resize: vertical; line-height: 1.6; }
 
 .result-big { font-size: 30px; font-weight: 800; letter-spacing: -1px; line-height: 1.2; }
 .result-big small { font-size: 13px; font-weight: 600; color: var(--muted); letter-spacing: 0; display: block; margin-top: 4px; }
+.result-big.idle { font-size: 15px; font-weight: 600; color: var(--muted); letter-spacing: 0; }
 
 .table-wrap { overflow-x: auto; border-radius: 12px; border: 1px solid var(--border); margin-top: 12px; }
 table { width: 100%; border-collapse: collapse; font-size: 13.5px; min-width: 460px; }

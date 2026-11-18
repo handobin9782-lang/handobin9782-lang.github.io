@@ -79,6 +79,12 @@
 
   function setText(id, v) { var el = $(id); if (el) el.textContent = v; }
   function setHTML(id, v) { var el = $(id); if (el) el.innerHTML = v; }
+  function setMain(id, v, idle) {
+    var el = $(id);
+    if (!el) return;
+    el.innerHTML = v;
+    el.className = 'result-big' + (idle ? ' idle' : '');
+  }
 
   /* ---------- 1. 만 나이 ---------- */
   function calcAge() {
@@ -87,7 +93,7 @@
     setText('age-ref-label', '');
 
     if (!birth) {
-      setHTML('age-main', '생년월일을 입력해 주세요<small>입력하는 즉시 계산됩니다</small>');
+      setMain('age-main', '생년월일을 입력해 주세요 <small>입력하는 즉시 계산됩니다</small>', true);
       ['age-year', 'age-birthday', 'age-days', 'age-slot'].forEach(function (id) { setText(id, '—'); });
       return;
     }
@@ -96,7 +102,7 @@
     var nb = nextBirthday(birth, ref);
     var left = diffDays(ref, nb);
 
-    setHTML('age-main', '만 ' + age + '세 <small>기준일 ' + fmt(ref) + '</small>');
+    setMain('age-main', '만 ' + age + '세 <small>기준일 ' + fmt(ref) + '</small>', false);
     setText('age-year', (ref.y - birth.y) + '세');
     if (left === 0) {
       setText('age-birthday', 'D-Day 🎉');
@@ -117,16 +123,16 @@
     var label = $('dd-label').value.trim();
 
     if (!target) {
-      setHTML('dd-main', '목표일을 골라 주세요<small>기념일·마감일까지 남은 날을 셉니다</small>');
+      setMain('dd-main', '목표일을 골라 주세요 <small>기념일·마감일까지 남은 날을 셉니다</small>', true);
       setText('dd-days', '—'); setText('dd-weeks', '—'); setText('dd-weekday', '—');
       return;
     }
 
     var n = diffDays(base, target);
     var head = label ? label + ' · ' : '';
-    if (n === 0) setHTML('dd-main', head + 'D-Day <small>바로 오늘입니다</small>');
-    else if (n > 0) setHTML('dd-main', head + 'D-' + num(n) + ' <small>' + fmt(target) + '까지 ' + num(n) + '일 남음</small>');
-    else setHTML('dd-main', head + 'D+' + num(-n) + ' <small>' + fmt(target) + '에서 ' + num(-n) + '일 지남</small>');
+    if (n === 0) setMain('dd-main', head + 'D-Day <small>바로 오늘입니다</small>', false);
+    else if (n > 0) setMain('dd-main', head + 'D-' + num(n) + ' <small>' + fmt(target) + '까지 ' + num(n) + '일 남음</small>', false);
+    else setMain('dd-main', head + 'D+' + num(-n) + ' <small>' + fmt(target) + '에서 ' + num(-n) + '일 지남</small>', false);
 
     setText('dd-days', num(Math.abs(n)) + '일');
     var w = Math.floor(Math.abs(n) / 7), r = Math.abs(n) % 7;
@@ -139,12 +145,12 @@
     var base = parse($('off-base').value) || today();
     var n = parseInt($('off-days').value, 10);
     if (isNaN(n)) {
-      setHTML('off-main', '일수를 입력해 주세요<small>100일, 1000일처럼 더하거나 뺍니다</small>');
+      setMain('off-main', '일수를 입력해 주세요 <small>100일, 1000일처럼 더하거나 뺍니다</small>', true);
       setText('off-weekday', '—'); setText('off-today', '—');
       return;
     }
     var res = addDays(base, n);
-    setHTML('off-main', fmt(res) + '<small>' + (n >= 0 ? base.y + '년 ' + base.m + '월 ' + base.d + '일에서 ' + num(n) + '일 뒤' : base.y + '년 ' + base.m + '월 ' + base.d + '일에서 ' + num(-n) + '일 전') + '</small>');
+    setMain('off-main', fmt(res) + '<small>' + (n >= 0 ? base.y + '년 ' + base.m + '월 ' + base.d + '일에서 ' + num(n) + '일 뒤' : base.y + '년 ' + base.m + '월 ' + base.d + '일에서 ' + num(-n) + '일 전') + '</small>', false);
     setText('off-weekday', weekday(res) + '요일');
     var fromToday = diffDays(today(), res);
     setText('off-today', fromToday === 0 ? '오늘' : (fromToday > 0 ? '오늘부터 D-' + num(fromToday) : '오늘부터 D+' + num(-fromToday)));
@@ -155,17 +161,17 @@
     var a = parse($('bt-start').value);
     var b = parse($('bt-end').value);
     if (!a || !b) {
-      setHTML('bt-main', '두 날짜를 골라 주세요<small>시작일과 종료일 사이의 일수</small>');
+      setMain('bt-main', '두 날짜를 골라 주세요 <small>시작일과 종료일 사이의 일수</small>', true);
       setText('bt-diff', '—'); setText('bt-week', '—'); setText('bt-incl', '—');
       return;
     }
     var n = diffDays(a, b);
     if (n < 0) {
-      setHTML('bt-main', '종료일이 시작일보다 빠릅니다<small>두 날짜를 바꿔 보세요</small>');
+      setMain('bt-main', '종료일이 시작일보다 빠릅니다 <small>두 날짜를 바꿔 보세요</small>', true);
       setText('bt-diff', num(n) + '일'); setText('bt-week', '—'); setText('bt-incl', '—');
       return;
     }
-    setHTML('bt-main', num(n) + '일 <small>' + fmt(a) + ' → ' + fmt(b) + '</small>');
+    setMain('bt-main', num(n) + '일 <small>' + fmt(a) + ' → ' + fmt(b) + '</small>', false);
     setText('bt-diff', num(n) + '일');
     setText('bt-week', Math.floor(n / 7) + '주' + (n % 7 ? ' ' + (n % 7) + '일' : ''));
     setText('bt-incl', num(n + 1) + '일');

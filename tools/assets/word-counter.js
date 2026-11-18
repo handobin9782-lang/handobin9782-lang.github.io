@@ -64,7 +64,9 @@
     $('cRead').textContent = fmtTime(readMin);
     $('cSpeak').textContent = fmtTime(speakMin);
 
-    // frequency
+    // unique words (all tokens), then frequency without stop words
+    var uniq = {};
+    toks.forEach(function (w) { uniq[w] = 1; });
     var freq = {}, total = 0;
     toks.forEach(function (w) {
       if (STOP[w]) return;
@@ -73,7 +75,7 @@
       total++;
     });
     var keys = Object.keys(freq).sort(function (a, b) { return freq[b] - freq[a] || a.localeCompare(b); });
-    $('cUnique').textContent = num(keys.length);
+    $('cUnique').textContent = num(Object.keys(uniq).length);
     var box = $('density');
     box.innerHTML = '';
     if (!keys.length) {

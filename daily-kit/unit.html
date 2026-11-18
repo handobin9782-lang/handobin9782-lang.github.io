@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>평수 계산기 · 단위 변환기 — ㎡↔평, 길이·무게·온도 변환</title>
+  <meta name="description" content="㎡를 평으로, 평을 ㎡로 바로 바꾸는 평수 계산기. 84㎡는 몇 평인지 즉시 확인하고, 길이(cm·m·inch·ft)·무게(kg·lb)·온도(°C·°F)도 한 화면에서 변환합니다.">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="theme-color" content="#0b1020">
+  <link rel="canonical" href="https://handobin9782-lang.github.io/daily-kit/unit.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="데일리 킷">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:title" content="평수 계산기 · 단위 변환기 — ㎡↔평, 길이·무게·온도">
+  <meta property="og:description" content="84㎡는 25.41평. ㎡↔평을 바로 바꾸고 길이·무게·온도까지 한 화면에서 변환합니다.">
+  <meta property="og:url" content="https://handobin9782-lang.github.io/daily-kit/unit.html">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="평수 계산기 · 단위 변환기 — ㎡↔평">
+  <meta name="twitter:description" content="84㎡는 25.41평. ㎡↔평을 바로 바꾸고 길이·무게·온도까지 한 화면에서 변환합니다.">
+  <link rel="stylesheet" href="assets/style.css?v=1">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230b1020'/%3E%3Ctext x='50' y='72' font-size='54' text-anchor='middle' fill='%23fbbf24'%3E%F0%9F%A7%B0%3C/text%3E%3C/svg%3E">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "단위 · 평수 변환기",
+      "url": "https://handobin9782-lang.github.io/daily-kit/unit.html",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "Any",
+      "inLanguage": "ko",
+      "browserRequirements": "Requires JavaScript",
+      "description": "㎡↔평 평수 변환과 길이·무게·온도 단위 변환을 한 화면에서 처리하는 무료 도구.",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "KRW" }
+    },
+    {
+      "@type": "FAQPage",
+      "inLanguage": "ko",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "1평은 몇 ㎡인가요?",
+          "acceptedAnswer": { "@type": "Answer", "text": "1평은 약 3.305785㎡입니다. 반대로 1㎡는 약 0.3025평입니다. 84㎡는 25.41평, 59㎡는 17.85평입니다." }
+        },
+        {
+          "@type": "Question",
+          "name": "공급면적과 전용면적은 무엇이 다른가요?",
+          "acceptedAnswer": { "@type": "Answer", "text": "전용면적은 현관문 안쪽, 실제로 사는 면적입니다. 공급면적은 전용면적에 계단·복도 같은 공용면적을 더한 값이며, 흔히 말하는 25평·34평 아파트는 공급면적 기준입니다." }
+        },
+        {
+          "@type": "Question",
+          "name": "계산 결과를 그대로 계약에 써도 되나요?",
+          "acceptedAnswer": { "@type": "Answer", "text": "참고용으로만 쓰세요. 등기부등본과 계약서의 면적이 기준이고, 표시 방식에 따라 1㎡ 차이도 금액 차이가 될 수 있습니다." }
+        },
+        {
+          "@type": "Question",
+          "name": "인치와 피트는 어떻게 계산하나요?",
+          "acceptedAnswer": { "@type": "Answer", "text": "1인치(inch)는 2.54cm, 1피트(ft)는 30.48cm입니다. 1피트는 12인치입니다." }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9910389156575302" crossorigin="anonymous"></script>
+</head>
+<body>
+<header class="topbar">
+  <div class="wrap bar">
+    <a class="brand" href="./"><span class="logo">🧰</span> 데일리 킷</a>
+  </div>
+  <nav class="toolnav" aria-label="데일리 킷 도구">
+    <a href="./">홈</a>
+    <a href="qr.html">QR 코드 생성기</a>
+    <a href="date.html">만 나이·D-Day</a>
+    <a href="unit.html" aria-current="page">단위·평수 변환</a>
+    <a href="privacy.html">개인정보</a>
+  </nav>
+</header>
+<main class="wrap">
+  <p class="crumb"><a href="./">데일리 킷</a> › 단위 · 평수 변환기</p>
+  <h1>단위 · 평수(㎡↔평) 변환기</h1>
+  <p class="lead">값을 아무 칸에나 넣으면 나머지 단위가 동시에 바뀝니다. 부동산 ㎡↔평부터 길이·무게·온도까지 한 화면에서 변환하세요.</p>
+
+  <div class="card">
+    <h3>평수 계산기 (㎡ ↔ 평)</h3>
+    <div class="conv">
+      <div class="field">
+        <label for="area-m2">제곱미터 <span>㎡</span></label>
+        <input type="text" id="area-m2" inputmode="decimal" placeholder="예: 84">
+      </div>
+      <div class="field">
+        <label for="area-pyeong">평 <span>1평 = 3.3058㎡</span></label>
+        <input type="text" id="area-pyeong" inputmode="decimal" placeholder="예: 25.41">
+      </div>
+      <div class="field">
+        <label for="area-ft2">제곱피트 <span>ft²</span></label>
+        <input type="text" id="area-ft2" inputmode="decimal" placeholder="예: 904.17">
+      </div>
+    </div>
+    <p class="note">1평 = 3.305785㎡, 1㎡ = 0.3025평. 아파트 면적 표기는 ㎡가 기준이지만, 중개 현장에서는 아직 공급면적 기준 평수를 함께 씁니다.</p>
+    <div class="table-wrap">
+      <table>
+        <caption class="sr">자주 쓰는 평수와 ㎡ 환산표</caption>
+        <thead><tr><th>평</th><th>㎡</th><th>㎡</th><th>평</th></tr></thead>
+        <tbody>
+          <tr><td>10평</td><td>33.06㎡</td><td>59㎡</td><td>17.85평</td></tr>
+          <tr><td>18평</td><td>59.50㎡</td><td>74㎡</td><td>22.39평</td></tr>
+          <tr><td>24평</td><td>79.34㎡</td><td>84㎡</td><td>25.41평</td></tr>
+          <tr><td>25평</td><td>82.64㎡</td><td>101㎡</td><td>30.55평</td></tr>
+          <tr><td>30평</td><td>99.17㎡</td><td>112㎡</td><td>33.88평</td></tr>
+          <tr><td>34평</td><td>112.40㎡</td><td>130㎡</td><td>39.33평</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>길이 변환 (cm · m · inch · ft)</h3>
+    <div class="conv">
+      <div class="field"><label for="len-mm">밀리미터 <span>mm</span></label><input type="text" id="len-mm" inputmode="decimal"></div>
+      <div class="field"><label for="len-cm">센티미터 <span>cm</span></label><input type="text" id="len-cm" inputmode="decimal"></div>
+      <div class="field"><label for="len-m">미터 <span>m</span></label><input type="text" id="len-m" inputmode="decimal"></div>
+      <div class="field"><label for="len-km">킬로미터 <span>km</span></label><input type="text" id="len-km" inputmode="decimal"></div>
+      <div class="field"><label for="len-in">인치 <span>inch</span></label><input type="text" id="len-in" inputmode="decimal"></div>
+      <div class="field"><label for="len-ft">피트 <span>ft</span></label><input type="text" id="len-ft" inputmode="decimal"></div>
+      <div class="field"><label for="len-yd">야드 <span>yd</span></label><input type="text" id="len-yd" inputmode="decimal"></div>
+      <div class="field"><label for="len-mile">마일 <span>mile</span></label><input type="text" id="len-mile" inputmode="decimal"></div>
+    </div>
+    <p class="note">1inch = 2.54cm = 25.4mm, 1ft = 30.48cm, 1mile = 1.609344km. 모니터·가구 치수는 인치, 해외 쇼핑은 피트·마일 표기가 흔합니다.</p>
+  </div>
+
+  <div class="card">
+    <h3>무게 변환 (kg · lb)</h3>
+    <div class="conv">
+      <div class="field"><label for="wt-mg">밀리그램 <span>mg</span></label><input type="text" id="wt-mg" inputmode="decimal"></div>
+      <div class="field"><label for="wt-g">그램 <span>g</span></label><input type="text" id="wt-g" inputmode="decimal"></div>
+      <div class="field"><label for="wt-kg">킬로그램 <span>kg</span></label><input type="text" id="wt-kg" inputmode="decimal"></div>
+      <div class="field"><label for="wt-t">톤 <span>t</span></label><input type="text" id="wt-t" inputmode="decimal"></div>
+      <div class="field"><label for="wt-oz">온스 <span>oz</span></label><input type="text" id="wt-oz" inputmode="decimal"></div>
+      <div class="field"><label for="wt-lb">파운드 <span>lb</span></label><input type="text" id="wt-lb" inputmode="decimal"></div>
+    </div>
+    <p class="note">1kg = 2.2046lb, 1lb = 0.4536kg. 1톤(t)은 1,000kg입니다.</p>
+  </div>
+
+  <div class="card">
+    <h3>온도 변환 (°C · °F)</h3>
+    <div class="conv">
+      <div class="field"><label for="temp-c">섭씨 <span>°C</span></label><input type="text" id="temp-c" inputmode="decimal"></div>
+      <div class="field"><label for="temp-f">화씨 <span>°F</span></label><input type="text" id="temp-f" inputmode="decimal"></div>
+      <div class="field"><label for="temp-k">켈빈 <span>K</span></label><input type="text" id="temp-k" inputmode="decimal"></div>
+    </div>
+    <p class="note">°F = °C × 9/5 + 32. 실내 온도·요리·날씨 예보를 옮길 때 씁니다. 38°C는 100.4°F, 100°F는 37.8°C입니다.</p>
+  </div>
+
+  <div class="prose">
+    <h2>평수, 왜 아직도 헷갈릴까</h2>
+    <p>2007년부터 부동산 공부서류와 광고에는 ㎡를 쓰게 되었지만, 집을 구하거나 이야기할 때는 여전히 평이 익숙합니다. 1평은 약 3.3㎡, 정확히는 3.305785㎡입니다. 그래서 84㎡는 25.41평, 59㎡는 17.85평이 됩니다.</p>
+    <p>주의할 점은 ‘평’이 전용면적과 공급면적 중 무엇을 뜻하는지입니다. 흔히 말하는 25평·34평 아파트는 공급면적 기준이고, 실제 집 안 면적인 전용면적은 그보다 작습니다. 84㎡(전용) 아파트를 34평형이라고 부르는 것은 공급면적이 34평쯤 되기 때문입니다.</p>
+    <p>계산은 빠르게 하되, 계약서에는 등기부등본에 적힌 ㎡를 그대로 쓰세요. 1㎡의 차이가 분양가·보증금에서 수십만 원이 됩니다.</p>
+
+    <h2>자주 쓰는 변환 값</h2>
+    <ul>
+      <li><b>평 → ㎡</b> — 평 × 3.3058</li>
+      <li><b>㎡ → 평</b> — ㎡ × 0.3025</li>
+      <li><b>kg → lb</b> — kg × 2.2046</li>
+      <li><b>cm → inch</b> — cm ÷ 2.54</li>
+      <li><b>°C → °F</b> — °C × 1.8 + 32</li>
+    </ul>
+
+    <h2>자주 묻는 질문</h2>
+    <details class="faq"><summary>1평은 몇 ㎡인가요?</summary><p>1평은 약 3.305785㎡입니다. 반대로 1㎡는 약 0.3025평입니다. 84㎡는 25.41평, 59㎡는 17.85평입니다.</p></details>
+    <details class="faq"><summary>공급면적과 전용면적은 무엇이 다른가요?</summary><p>전용면적은 현관문 안쪽, 실제로 사는 면적입니다. 공급면적은 전용면적에 계단·복도 같은 공용면적을 더한 값이며, 흔히 말하는 25평·34평 아파트는 공급면적 기준입니다.</p></details>
+    <details class="faq"><summary>계산 결과를 그대로 계약에 써도 되나요?</summary><p>참고용으로만 쓰세요. 등기부등본과 계약서의 면적이 기준이고, 표시 방식에 따라 1㎡ 차이도 금액 차이가 될 수 있습니다.</p></details>
+    <details class="faq"><summary>인치와 피트는 어떻게 계산하나요?</summary><p>1인치(inch)는 2.54cm, 1피트(ft)는 30.48cm입니다. 1피트는 12인치입니다.</p></details>
+  </div>
+</main>
+<footer>
+  <div class="wrap">
+    <nav class="fnav">
+      <a href="./">데일리 킷 홈</a>
+      <a href="qr.html">QR 코드 생성기</a>
+      <a href="date.html">만 나이·D-Day</a>
+      <a href="privacy.html">개인정보처리방침</a>
+    </nav>
+    <p>환산 값은 참고용입니다. 계약·의료·법적 판단은 공식 기준을 확인하세요.</p>
+    <p>© 2026 데일리 킷 · <a href="https://handobin9782-lang.github.io/">handobin9782-lang.github.io</a></p>
+  </div>
+</footer>
+<script src="assets/unit.js?v=1" defer></script>
+</body>
+</html>

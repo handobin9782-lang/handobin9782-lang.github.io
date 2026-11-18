@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>무료 QR 코드 생성기 — 주소·글자·와이파이 QR 만들기, PNG 저장</title>
+  <meta name="description" content="주소나 글자, 와이파이 접속 정보를 넣으면 바로 QR 코드가 만들어집니다. 크기·색상·오류 정정 수준을 고르고 PNG로 저장하세요. 회원가입 없이 브라우저에서만 동작합니다.">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="theme-color" content="#0b1020">
+  <link rel="canonical" href="https://handobin9782-lang.github.io/daily-kit/qr.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="데일리 킷">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:title" content="무료 QR 코드 생성기 — 주소·글자·와이파이 QR 만들기">
+  <meta property="og:description" content="입력하는 즉시 QR이 만들어집니다. 크기·색상·오류 정정 수준 선택, PNG 다운로드. 회원가입 없이 브라우저에서만.">
+  <meta property="og:url" content="https://handobin9782-lang.github.io/daily-kit/qr.html">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="무료 QR 코드 생성기 — 주소·글자·와이파이">
+  <meta name="twitter:description" content="입력하는 즉시 QR이 만들어집니다. 크기·색상 선택, PNG 다운로드. 회원가입 없이 브라우저에서만.">
+  <link rel="stylesheet" href="assets/style.css?v=1">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230b1020'/%3E%3Ctext x='50' y='72' font-size='54' text-anchor='middle' fill='%23fbbf24'%3E%F0%9F%A7%B0%3C/text%3E%3C/svg%3E">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "QR 코드 생성기",
+      "url": "https://handobin9782-lang.github.io/daily-kit/qr.html",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "Any",
+      "inLanguage": "ko",
+      "browserRequirements": "Requires JavaScript",
+      "description": "주소·글자·와이파이 정보로 QR 코드를 만들고 크기와 색상을 골라 PNG로 저장하는 무료 도구.",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "KRW" }
+    },
+    {
+      "@type": "FAQPage",
+      "inLanguage": "ko",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "QR 코드가 서버로 전송되나요?",
+          "acceptedAnswer": { "@type": "Answer", "text": "아니요. QR은 브라우저 안에서 자바스크립트로 직접 그립니다. 입력한 주소나 와이파이 비밀번호는 어디에도 저장되거나 전송되지 않습니다." }
+        },
+        {
+          "@type": "Question",
+          "name": "와이파이 QR은 어떻게 쓰나요?",
+          "acceptedAnswer": { "@type": "Answer", "text": "와이파이 이름과 비밀번호를 넣어 QR을 만들고 카페나 집 손님에게 보여 주면, 손님이 휴대폰 카메라로 찍어 비밀번호 입력 없이 접속할 수 있습니다." }
+        },
+        {
+          "@type": "Question",
+          "name": "인쇄해도 되나요?",
+          "acceptedAnswer": { "@type": "Answer", "text": "네. 인쇄용으로는 1024px 이상으로 저장하고 보통 3~5cm 크기로 인쇄하면 잘 읽힙니다. 전경색과 배경색 대비를 충분히 두세요." }
+        },
+        {
+          "@type": "Question",
+          "name": "만든 QR이 얼마나 오래 유효한가요?",
+          "acceptedAnswer": { "@type": "Answer", "text": "QR 자체에는 만료가 없습니다. 안에 담긴 주소가 살아 있는 한 계속 동작하고, 주소를 바꾸려면 QR을 다시 만들어야 합니다." }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9910389156575302" crossorigin="anonymous"></script>
+</head>
+<body>
+<header class="topbar">
+  <div class="wrap bar">
+    <a class="brand" href="./"><span class="logo">🧰</span> 데일리 킷</a>
+  </div>
+  <nav class="toolnav" aria-label="데일리 킷 도구">
+    <a href="./">홈</a>
+    <a href="qr.html" aria-current="page">QR 코드 생성기</a>
+    <a href="date.html">만 나이·D-Day</a>
+    <a href="unit.html">단위·평수 변환</a>
+    <a href="privacy.html">개인정보</a>
+  </nav>
+</header>
+<main class="wrap">
+  <p class="crumb"><a href="./">데일리 킷</a> › QR 코드 생성기</p>
+  <h1>무료 QR 코드 생성기</h1>
+  <p class="lead">주소·글자·와이파이 정보를 넣으면 입력하는 즉시 QR 코드가 만들어집니다. 크기와 색을 고른 뒤 PNG로 저장하세요.</p>
+
+  <div class="tabs" role="tablist" aria-label="QR에 담을 내용">
+    <button type="button" data-mode="text" aria-selected="true" role="tab">링크 · 텍스트</button>
+    <button type="button" data-mode="wifi" aria-selected="false" role="tab">와이파이</button>
+  </div>
+
+  <div class="grid two" style="align-items:start">
+    <div class="card">
+      <div class="panel" data-panel="text">
+        <div class="field">
+          <label for="qr-text">주소 또는 글자</label>
+          <textarea id="qr-text" placeholder="https://example.com 또는 남길 문구" autocapitalize="off" autocorrect="off" spellcheck="false"></textarea>
+        </div>
+        <p class="muted" style="margin:8px 0 0">한글도 그대로 담깁니다(UTF-8). 너무 길면 QR이 커지고 인식이 어려워지니 주소는 짧을수록 좋습니다.</p>
+      </div>
+
+      <div class="panel" data-panel="wifi" hidden>
+        <div class="field">
+          <label for="wifi-ssid">와이파이 이름 (SSID)</label>
+          <input type="text" id="wifi-ssid" placeholder="MyHome_5G" autocapitalize="off" autocorrect="off" spellcheck="false">
+        </div>
+        <div class="field" style="margin-top:12px">
+          <label for="wifi-sec">보안 방식</label>
+          <select id="wifi-sec">
+            <option value="WPA" selected>WPA / WPA2 / WPA3</option>
+            <option value="WEP">WEP</option>
+            <option value="nopass">없음 (개방)</option>
+          </select>
+        </div>
+        <div class="field" style="margin-top:12px">
+          <label for="wifi-pw">비밀번호</label>
+          <input type="text" id="wifi-pw" placeholder="비밀번호" autocapitalize="off" autocorrect="off" spellcheck="false">
+        </div>
+        <label class="check" style="margin-top:12px"><input type="checkbox" id="wifi-hidden"> 숨겨진 네트워크입니다</label>
+        <p class="muted" style="margin:8px 0 0">와이파이 비밀번호가 QR 안에 담깁니다. 손님에게만 보여 주세요.</p>
+      </div>
+
+      <h3 style="margin-top:20px">모양</h3>
+      <div class="row">
+        <div class="field">
+          <label for="qr-size">크기</label>
+          <select id="qr-size">
+            <option value="256">256px (화면용)</option>
+            <option value="512" selected>512px (기본)</option>
+            <option value="1024">1024px (인쇄용)</option>
+            <option value="2048">2048px (큰 인쇄)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="qr-ec">오류 정정</label>
+          <select id="qr-ec">
+            <option value="L">L (7%) — 가장 작게</option>
+            <option value="M" selected>M (15%) — 기본</option>
+            <option value="Q">Q (25%) — 손상에 강함</option>
+            <option value="H">H (30%) — 가장 강함</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="qr-quiet">여백 (모듈)</label>
+          <input type="number" id="qr-quiet" value="4" min="0" max="8" step="1" inputmode="numeric">
+        </div>
+      </div>
+      <div class="row" style="margin-top:12px">
+        <div class="field">
+          <label for="qr-fg">전경색 (코드)</label>
+          <input type="color" id="qr-fg" value="#000000">
+        </div>
+        <div class="field">
+          <label for="qr-bg">배경색</label>
+          <input type="color" id="qr-bg" value="#ffffff">
+        </div>
+      </div>
+      <div class="presets" style="margin-top:12px">
+        <button type="button" data-fg="#000000" data-bg="#ffffff" title="검정 · 흰색" style="background:#000;box-shadow:inset 0 0 0 6px #fff">검정</button>
+        <button type="button" data-fg="#1e3a8a" data-bg="#ffffff" title="네이비 · 흰색" style="background:#1e3a8a">네이비</button>
+        <button type="button" data-fg="#7f1d1d" data-bg="#ffffff" title="버건디 · 흰색" style="background:#7f1d1d">버건디</button>
+        <button type="button" data-fg="#064e3b" data-bg="#ffffff" title="다크그린 · 흰색" style="background:#064e3b">그린</button>
+        <button type="button" data-fg="#111827" data-bg="#f5f5f0" title="차콜 · 아이보리" style="background:#111827">차콜</button>
+      </div>
+    </div>
+
+    <div class="card qr-stage">
+      <div class="qr-box">
+        <canvas id="qr-canvas" width="512" height="512" aria-label="생성된 QR 코드"></canvas>
+        <div class="qr-empty" id="qr-empty">주소나 글자를 입력하면 아래에 QR 코드가 나타납니다.</div>
+      </div>
+      <p class="qr-meta" id="qr-meta"></p>
+      <p class="qr-meta" id="qr-warn" hidden></p>
+      <div class="actions" style="justify-content:center;margin-top:4px">
+        <button type="button" class="btn" id="qr-download" disabled>PNG로 저장</button>
+        <button type="button" class="btn ghost" id="qr-copy" disabled>이미지 복사</button>
+      </div>
+      <p class="muted" style="text-align:center;margin:0">휴대폰에서는 버튼을 누른 뒤 이미지를 길게 눌러 ‘사진에 저장’해도 됩니다.</p>
+    </div>
+  </div>
+
+  <div class="notice">
+    <span>💡</span>
+    <span>만든 QR은 이 브라우저 안에서만 그려집니다. 입력값은 서버로 가지 않고, 새로 고치면 사라집니다.</span>
+  </div>
+
+  <div class="prose">
+    <h2>QR 코드, 이렇게 쓰면 좋습니다</h2>
+    <ul>
+      <li><b>가게·매장</b> — 메뉴판, 리뷰 작성 링크, 인스타그램·카카오톡 채널, 주차 등록 안내.</li>
+      <li><b>와이파이 공유</b> — 집들이나 카페에서 비밀번호를 불러 주지 않아도 손님이 카메라로 찍어 바로 접속합니다.</li>
+      <li><b>명함·전단</b> — 연락처 대신 포트폴리오 주소나 예약 페이지를 담습니다.</li>
+      <li><b>행사·안내문</b> — 접수 폼, 안내 페이지, 설문 링크를 종이에 찍어 붙입니다.</li>
+    </ul>
+
+    <h2>잘 읽히게 만드는 요령</h2>
+    <ul>
+      <li><b>대비를 크게</b> — 밝은 배경에 어두운 색. 반대로 뒤집은(어두운 배경에 밝은 코드) QR은 일부 카메라가 못 읽습니다.</li>
+      <li><b>여백을 남기기</b> — QR 둘레의 흰 여백(기본 4모듈)은 인식에 필요합니다. 잘라 내지 마세요.</li>
+      <li><b>인쇄 크기</b> — 보통 3~5cm, 멀리서 찍게 된다면 10cm 이상. 내용이 길수록 모듈이 촘촘해지므로 크게 인쇄하세요.</li>
+      <li><b>오류 정정</b> — 로고를 얹거나 작게 인쇄한다면 Q나 H를 고르세요. 대신 QR이 조금 커집니다.</li>
+    </ul>
+
+    <h2>자주 묻는 질문</h2>
+    <details class="faq"><summary>QR 코드가 서버로 전송되나요?</summary><p>아니요. QR은 브라우저 안에서 자바스크립트로 직접 그립니다. 입력한 주소나 와이파이 비밀번호는 어디에도 저장되거나 전송되지 않습니다.</p></details>
+    <details class="faq"><summary>와이파이 QR은 어떻게 쓰나요?</summary><p>와이파이 이름과 비밀번호를 넣어 QR을 만들고 카페나 집 손님에게 보여 주면, 손님이 휴대폰 카메라로 찍어 비밀번호 입력 없이 접속할 수 있습니다.</p></details>
+    <details class="faq"><summary>인쇄해도 되나요?</summary><p>네. 인쇄용으로는 1024px 이상으로 저장하고 보통 3~5cm 크기로 인쇄하면 잘 읽힙니다. 전경색과 배경색 대비를 충분히 두세요.</p></details>
+    <details class="faq"><summary>만든 QR이 얼마나 오래 유효한가요?</summary><p>QR 자체에는 만료가 없습니다. 안에 담긴 주소가 살아 있는 한 계속 동작하고, 주소를 바꾸려면 QR을 다시 만들어야 합니다.</p></details>
+    <details class="faq"><summary>휴대폰에서 저장이 안 됩니다.</summary><p>‘PNG로 저장’이 동작하지 않는 브라우저라면 이미지를 길게 눌러 ‘이미지 저장’을 선택하세요. 또는 ‘이미지 복사’ 후 메시지 앱에 붙여 넣어도 됩니다.</p></details>
+  </div>
+</main>
+<footer>
+  <div class="wrap">
+    <nav class="fnav">
+      <a href="./">데일리 킷 홈</a>
+      <a href="date.html">만 나이·D-Day</a>
+      <a href="unit.html">단위·평수 변환</a>
+      <a href="privacy.html">개인정보처리방침</a>
+    </nav>
+    <p>© 2026 데일리 킷 · <a href="https://handobin9782-lang.github.io/">handobin9782-lang.github.io</a></p>
+  </div>
+</footer>
+<script src="assets/qrcode.js?v=1" defer></script>
+<script src="assets/qr.js?v=1" defer></script>
+</body>
+</html>

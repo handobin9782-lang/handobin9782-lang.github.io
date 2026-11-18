@@ -16,6 +16,7 @@
   var outputs = [];
   var runId = 0;
   var runTimer = null;
+  var lastKey = null;
 
   function bytes(n) {
     if (n < 1024) return n + ' B';
@@ -132,8 +133,16 @@
     return li;
   }
 
+  function settingsKey() {
+    return files.map(function (f) { return f.name + ':' + f.size + ':' + f.lastModified; }).join('|') +
+      '#' + fmtSel.value + '#' + quality.value + '#' + maxW.value;
+  }
+
   async function run() {
     if (!files.length) return;
+    var key = settingsKey();
+    if (key === lastKey) return;
+    lastKey = key;
     var my = ++runId;
     resetView();
     status.textContent = I.processing + ' (0/' + files.length + ')';
@@ -219,6 +228,7 @@
   });
   btnClear.addEventListener('click', function () {
     files = [];
+    lastKey = null;
     runId++;
     resetView();
   });

@@ -839,8 +839,8 @@
     var f = TYPES[friendKey], m = TYPES[myKey];
     $('chemImgA').src = f.img; $('chemImgA').alt = f.name;
     $('chemImgB').src = m.img; $('chemImgB').alt = m.name;
-    $('chemNameA').textContent = f.emoji + ' ' + (SHORT[friendKey] || f.name);
-    $('chemNameB').textContent = m.emoji + ' ' + (SHORT[myKey] || m.name);
+    $('chemNameA').textContent = SHORT[friendKey] || f.name;
+    $('chemNameB').textContent = SHORT[myKey] || m.name;
     $('chemScore').textContent = data[0];
     $('chemTitle').textContent = data[1];
     $('chemLine').innerHTML = data[2].map(function (l) { return '<span>' + l + '</span>'; }).join('');
@@ -903,8 +903,8 @@
       pairHtml('nemesis', nk, '최악의 상극', t.nemesis[1]);
 
     var ne = TYPES[nk];
-    $('rWorst').innerHTML = '🚫 <span>이 놈이랑 <b>앞뒤 자리</b> 앉으면 둘 다 망함 — <b>' +
-      ne.emoji + ' ' + ne.name + '</b><br>' + t.nemesis[1] + '</span>';
+    $('rWorst').innerHTML = '<span class="worst-main">🚫 이 놈이랑 <b>앞뒤 자리</b> 앉으면 둘 다 망함 — <b>' +
+      ne.emoji + ' ' + ne.name + '</b></span><span class="worst-why">' + t.nemesis[1] + '</span>';
 
     renderShop(key);
 

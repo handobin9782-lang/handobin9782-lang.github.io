@@ -493,10 +493,12 @@ main{max-width:640px; margin:0 auto; padding:6px 18px 40px; min-height:60vh}
 
 /* ── 최악의 상극 한 줄 ─────────────────── */
 .worst{
-  display:flex; gap:8px; align-items:flex-start; margin:10px 0 0; padding:12px 14px;
-  font-size:12px; font-weight:700; line-height:1.55; color:#7a1d18;
+  display:block; margin:10px 0 0; padding:12px 14px;
+  font-size:12px; font-weight:700; line-height:1.6; color:#7a1d18;
   background:#fdecea; border:1.5px dashed #e8a7a2; border-radius:14px;
 }
+.worst-main{display:block}
+.worst-why{display:block; margin-top:3px; font-weight:600; color:#a8372f}
 .worst b{font-weight:900}
 
 /* ── 생존템(제휴) 카드 ─────────────────── */

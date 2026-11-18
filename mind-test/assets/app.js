@@ -962,6 +962,18 @@
   var CARD_W = 1080, CARD_H = 1920;
   var FONT = '"Apple SD Gothic Neo","Pretendard","Noto Sans KR","Noto Sans CJK KR","Malgun Gothic",sans-serif';
 
+  /* 카드에서는 두 줄로 자연스럽게 끊어 쓴다 (자동 축소) */
+  var CARD_NAMES = {
+    ai: ['AI 안경 몰래 끼고', '답 베끼는 놈'],
+    sleep: ['시험 10분 만에', '꿀잠 자는 놈'],
+    honest: ['정직하게 땀 뻘뻘', '열심히 푸는 놈'],
+    guess: ['아는 거 없는데 끝까지', '머리 굴려 찍는 놈'],
+    escape: ['다 풀었든 말든', '먼저 나가버리는 놈'],
+    deepfocus: ['지우개 가루 산 쌓고', '한 문제에 목숨 거는 놈'],
+    watch: ['옆자리 책장 넘기는 소리에', '멘탈 나가는 놈'],
+    omr: ['종료 3분 전 OMR 밀려 써서', '식은땀 흘리는 놈']
+  };
+
   function roundRect(ctx, x, y, w, h, r) {
     if (ctx.roundRect) { ctx.beginPath(); ctx.roundRect(x, y, w, h, r); return; }
     ctx.beginPath();
@@ -1059,13 +1071,24 @@
     ctx.fillText('당 신 은', W / 2, y);
 
     ctx.fillStyle = '#16171d';
-    ctx.font = '900 74px ' + FONT;
-    var nameLines = wrapLines(ctx, t.name, W - PAD * 2 - 30);
-    y += 86;
-    nameLines.slice(0, 2).forEach(function (ln) {
+    var nameLines = CARD_NAMES[key] || wrapLines(ctx, t.name, W - PAD * 2 - 30);
+    var nameMaxW = W - PAD * 2 - 20;
+    var nameSize = 76;
+    while (nameSize > 42) {
+      ctx.font = '900 ' + nameSize + 'px ' + FONT;
+      var widest = 0;
+      nameLines.forEach(function (ln) { widest = Math.max(widest, ctx.measureText(ln).width); });
+      if (widest <= nameMaxW) break;
+      nameSize -= 2;
+    }
+    ctx.font = '900 ' + nameSize + 'px ' + FONT;
+    var nameLh = nameSize + 14;
+    y += nameSize + 10;
+    nameLines.forEach(function (ln) {
       ctx.fillText(ln, W / 2, y);
-      y += 84;
+      y += nameLh;
     });
+    y -= 12;
 
     ctx.fillStyle = '#3a3d47';
     ctx.font = '700 33px ' + FONT;
@@ -1098,7 +1121,7 @@
 
     if (pct) {
       var rows = ORDER.slice().sort(function (a, b) { return pct[b] - pct[a]; }).slice(0, 4);
-      var rowH = Math.min(74, (1700 - y) / rows.length);
+      var rowH = Math.min(72, (1670 - y) / rows.length);
       rows.forEach(function (k) {
         var tt = TYPES[k];
         var bx = PAD + 250, bw = W - PAD - 190 - bx;
@@ -1118,6 +1141,15 @@
         ctx.fillText(pct[k] + '%', W - PAD, y + 27);
         y += rowH;
       });
+    }
+
+    // 최악의 상극 한 줄
+    if (pct && y < 1700) {
+      var ne = TYPES[t.nemesis[0]];
+      ctx.textAlign = 'center';
+      ctx.fillStyle = 'rgba(224,54,47,0.92)';
+      ctx.font = '800 25px ' + FONT;
+      ctx.fillText('🚫 최악의 상극 · ' + ne.emoji + ' ' + ne.label + ' — 앞뒤 자리 앉으면 둘 다 망함', W / 2, y + 34);
     }
 
     ctx.textAlign = 'center';

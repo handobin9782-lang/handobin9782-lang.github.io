@@ -193,14 +193,14 @@
      url 에 파트너스 링크를 넣으면 그 즉시 구매 카드로 활성화됩니다.
      빈 문자열이면 '준비 중' 상태로 안전하게 표시됩니다. */
   var AFFILIATE_ITEMS = {
-    ai:        { name: '블루라이트 차단 안경', desc: '렌즈 반사광은 줄이고 눈은 지키는 기본템', url: '' },
-    sleep:     { name: '암막 수면안대', desc: '10분 꿀잠의 완성은 빛 차단', url: '' },
-    honest:    { name: '미끄럼 방지 연필 그립', desc: '손에 땀 차도 연필이 도망가지 않게', url: '' },
-    guess:     { name: '행운의 미니 부적 키링', desc: '촉은 실력이 아니라 기분에서 온다', url: '' },
-    escape:    { name: '초경량 미니 크로스백', desc: '40분 만에 나갈 몸에 책가방은 무겁다', url: '' },
-    deepfocus: { name: '대용량 지우개 3종 세트', desc: '가루 산을 만들 만큼 넉넉하게', url: '' },
-    watch:     { name: '소음 차단 귀마개', desc: '옆자리 책장 소리를 물리치는 유일한 방법', url: '' },
-    omr:       { name: '컴퓨터용 사인펜 + 수정테이프 세트', desc: '마지막 3분을 살리는 최소 장비', url: '' }
+    ai:        { name: '블루라이트 차단 안경 (베델루스 뿔테)', desc: '렌즈 반사광은 줄이고 눈은 지키는 기본템', url: 'https://link.coupang.com/a/iL2Wt3Soay' },
+    sleep:     { name: '3D 암막 수면안대 (빅트리 프리미엄)', desc: '10분 꿀잠의 완성은 빛 차단', url: 'https://link.coupang.com/a/iL1KHZ3jC8' },
+    honest:    { name: '고탄력 통기성 손목보호대 2P', desc: '손목이 저려도 연필은 놓지 못하니까', url: 'https://link.coupang.com/a/iL2YTn6Uoe' },
+    guess:     { name: '컬러 아크릴 미니 주사위 50개입', desc: '촉은 실력이 아니라 기분에서 온다', url: 'https://link.coupang.com/a/iL22LXSDG8' },
+    escape:    { name: '거실 구름 실내화 슬리퍼', desc: '40분 만에 나갈 몸에 운동화 끈은 번거롭다', url: 'https://link.coupang.com/a/iL25RPizEO' },
+    deepfocus: { name: '펜텔 아인 점보 지우개 특대형 2개', desc: '가루 산을 만들 만큼 넉넉하게', url: 'https://link.coupang.com/a/iL29DZgAmq' },
+    watch:     { name: '굿나잇 이어플러그 프리미엄 15쌍', desc: '옆자리 책장 소리를 물리치는 유일한 방법', url: 'https://link.coupang.com/a/iL3bUS7ttY' },
+    omr:       { name: '컴퓨터용 사인펜 + 수정테이프 세트', desc: '마지막 3분을 살리는 최소 장비', url: 'https://link.coupang.com/a/iL3efXwP6q' }
   };
 
   /* 짧은 표기 (케미 카드 등 좁은 자리) */

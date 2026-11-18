@@ -19,15 +19,15 @@
       facts: [
         '공부는 안 했지만 정보 수집은 했다. 그것도 아주 치밀하게.',
         '문제를 읽는 시간보다 안경 각도를 조절하는 시간이 길다.',
-        '시험이 끝나면 머리에 남은 게 없다. 안경엔 다 있는데.'
+        '시험이 끝나면 머리에 남은 건 없다. 안경엔 다 있는데, 배터리는 3%.'
       ],
       feats: [
         '시험지를 받자마자 손보다 목이 먼저 움직인다. 사방 정찰 3초.',
         '연필 2자루, 안경 1개, 배터리 87%. 완벽한 풀세팅.',
         '감독관이 다가오면 갑자기 아주 정성스럽게 문제를 "읽는 척" 한다.',
-        '모르는 문제가 나오면 오히려 안심한다. 안경이 더 잘 알 테니까.'
+        '모르는 문제가 나오면 오히려 안심한다. 렌ズ에 답이 뜨는 순간을 기다린다.'
       ],
-      aiLine: '렌즈에 "정답입니다"가 뜨는 순간, 그 빛이 감독관 뒤통수에 반사된다. 시험은 끝나고, 안경은 압수되고, 집에 전화가 간다.',
+      aiLine: '렌즈에 "정답입니다"가 뜨는 순간, 화면 한켠에 배터리 3% 경고가 깜박인다. 마지막 문제에서 안경이 꺼지고, 그 직전까지 본 정답이 감독관 뒤통수에 반사된다. 시험은 끝나고, 안경은 압수되고, 집에 전화가 간다.',
       fantasy: ['guess', '내가 정보를, 쟤가 촉을. 손만 대면 만점 아니냐.'],
       nemesis: ['honest', '쟤가 팔로 답안지를 가리고 앉는다. 최악.']
     },
@@ -258,10 +258,10 @@
       ]
     },
     {
-      tag: 'AI 안경의 유혹', area: '양심 영역', img: 'assets/type-ai.webp', accent: '#16a34a', label: 'CASE 05 · 유혹',
-      q: '책상 위에 AI 안경이 딱 놓여 있다. 배터리 100%.',
+      tag: 'AI 안경의 유혹 · 배터리 100%', area: '양심 영역', img: 'assets/type-ai.webp', accent: '#16a34a', label: 'CASE 05 · 유혹',
+      q: '책상 위에 AI 안경이 딱 놓여 있다. 렌즈에 답이 스르륵 떠오른다. 배터리 100%.',
       opts: [
-        { k: 'ai', t: '이건 하늘의 계시다. 잠깐만 쓰자.' },
+        { k: 'ai', t: '이건 하늘의 계시다. 렌즈에 답 뜨는 순간까지만 쓰자.' },
         { k: 'honest', t: '부정행위다. 절대 안 쓴다. 손으로 푼다.' },
         { k: 'sleep', t: '안경은 무슨. 일단 10분만 눈 붙이자.' },
         { k: 'deepfocus', t: '안경은 됐고 이 문제 하나만 더 붙잡자.' }
@@ -615,12 +615,21 @@
 
   /* ── 인트로 ───────────────────────────────── */
   function renderTeaser() {
-    $('teaser').innerHTML = ORDER.map(function (k) {
+    var ai = TYPES.ai;
+    var featured = '<div class="tcard is-feature">' +
+      '<img class="tcard-art" src="' + ai.img + '" alt="" width="720" height="720" loading="lazy">' +
+      '<span class="tcard-body">' +
+        '<span class="tcard-feat-b">대표 유형</span>' +
+        '<span class="tcard-txt"><span aria-hidden="true">🕶️</span> ' + ai.name + '</span>' +
+        '<span class="tcard-sub">렌즈에 답 뜨는 순간 · 배터리 3% 경고</span>' +
+      '</span></div>';
+    var rest = ORDER.filter(function (k) { return k !== 'ai'; }).map(function (k) {
       var t = TYPES[k];
       return '<div class="tcard" style="border-color:' + t.accent + '33">' +
         '<span class="tcard-emoji" aria-hidden="true">' + t.emoji + '</span>' +
         '<span class="tcard-txt">' + t.name + '</span></div>';
     }).join('');
+    $('teaser').innerHTML = featured + rest;
   }
   function renderPeople() {
     $('peopleTotal').textContent = fmt(totalOf(counts(store)));

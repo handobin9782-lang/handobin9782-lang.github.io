@@ -28,6 +28,15 @@
     return function (arr) { return arr[Math.floor(r() * arr.length) % arr.length]; };
   }
   function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+  function lastJong(word) {
+    var s = String(word).replace(/[\s,."'”’)\]]+$/, '');
+    var code = s.charCodeAt(s.length - 1);
+    if (!(code >= 0xAC00 && code <= 0xD7A3)) return -1;
+    return (code - 0xAC00) % 28;
+  }
+  /* 조사: 받침 있으면 a, 없으면 b */
+  function josa(word, a, b) { var j = lastJong(word); return j > 0 ? a : (j === 0 ? b : b); }
+  function josaRo(word) { var j = lastJong(word); return (j > 0 && j !== 8) ? '으로' : '로'; }
   function r1(v) { return Math.round(v * 10) / 10; }
   function pad2(n) { return (n < 10 ? '0' : '') + n; }
 
@@ -286,24 +295,56 @@
     return blobs;
   }
 
-  function findEyePair(lum, W, H) {
+  function skinRatioInBox(skin, W, H, x0, y0, w, h, step) {
+    x0 = Math.max(0, Math.round(x0)); y0 = Math.max(0, Math.round(y0));
+    var x1 = Math.min(W - 1, Math.round(x0 + w)), y1 = Math.min(H - 1, Math.round(y0 + h));
+    var c = 0, s = 0;
+    step = step || 2;
+    for (var y = y0; y <= y1; y += step) for (var x = x0; x <= x1; x += step) {
+      c++; if (skin[y * W + x]) s++;
+    }
+    return c ? s / c : 0;
+  }
+  function skinAroundBlob(skin, W, H, b) {
+    var x0 = b.x - b.w * 0.75, y0 = b.y - b.h * 0.9;
+    return skinRatioInBox(skin, W, H, x0, y0, b.w * 1.5, b.h * 1.8, 1);
+  }
+
+  function findEyePair(lum, skin, W, H) {
     var med = medianOf(lum, W, H);
     var thr = Math.max(24, med * 0.66);
-    var blobs = darkBlobs(lum, W, H, thr);
+    var blobs = darkBlobs(lum, W, H, thr).filter(function (b) {
+      return b.y > H * 0.05 && b.y < H * 0.75 && skinAroundBlob(skin, W, H, b) > 0.35;
+    });
     if (blobs.length < 2) return null;
     var best = null, bestScore = -1e9;
     for (var i = 0; i < blobs.length; i++) {
       for (var j = i + 1; j < blobs.length; j++) {
         var a = blobs[i], b = blobs[j];
         var dy = Math.abs(a.y - b.y), dx = Math.abs(a.x - b.x);
-        if (dx < W * 0.08 || dx > W * 0.48) continue;
-        if (dy > H * 0.055) continue;
+        if (dx < W * 0.07 || dx > W * 0.42) continue;
+        if (dy > H * 0.05) continue;
         var ar = Math.max(a.area, b.area) / Math.max(1, Math.min(a.area, b.area));
-        if (ar > 3.4) continue;
+        if (ar > 3.2) continue;
         var mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2;
-        if (my < H * 0.10 || my > H * 0.70) continue;
-        var score = -Math.abs(mx - W * 0.5) / W * 2.2 - Math.abs(my - H * 0.40) / H * 1.6 + (my / H) * 0.25;
-        if (score > bestScore) { bestScore = score; best = { a: a, b: b, mx: mx, my: my, d: dx }; }
+        if (my < H * 0.10 || my > H * 0.68) continue;
+        var fw = dx / 0.40, fh = fw * 1.34;
+        if (fw < W * 0.16 || fw > W * 0.9) continue;
+        var bx = mx - fw / 2, by = my - fh * 0.40;
+        if (bx < -fw * 0.1 || bx + fw > W * 1.1) continue;
+        var sr = skinRatioInBox(skin, W, H, bx, by, fw, fh, 3);
+        if (sr < 0.30) continue;
+        var midDark = 0, midN = 0;
+        for (var xm = Math.round(mx - dx * 0.12); xm <= Math.round(mx + dx * 0.12); xm++) {
+          for (var ym = Math.round(my - H * 0.02); ym <= Math.round(my + H * 0.02); ym++) {
+            if (xm < 0 || xm >= W || ym < 0 || ym >= H) continue;
+            midN++; if (lum[ym * W + xm] < thr) midDark++;
+          }
+        }
+        var midPen = midN ? (midDark / midN) : 0;
+        var score = sr * 3.2 - Math.abs(mx - W * 0.5) / W * 1.8 - Math.abs(my - H * 0.42) / H * 1.2
+          + (my / H) * 0.35 - midPen * 1.2;
+        if (score > bestScore) { bestScore = score; best = { a: a, b: b, mx: mx, my: my, d: dx, sr: sr }; }
       }
     }
     return best;
@@ -342,9 +383,9 @@
   }
 
   function findFaceBox(lum, skin, W, H) {
-    var eyes = findEyePair(lum, W, H);
+    var eyes = findEyePair(lum, skin, W, H);
     if (eyes) {
-      var fw = clamp(eyes.d / 0.40, W * 0.16, W * 0.92);
+      var fw = clamp(eyes.d / 0.40, W * 0.16, W * 0.88);
       var fh = fw * 1.34;
       var x0 = eyes.mx - fw / 2;
       var y0 = eyes.my - fh * 0.40;
@@ -359,10 +400,14 @@
       var h2 = Math.min(sb.bh, w2 * 1.45);
       var x2 = clamp(sb.x0 + (sb.bw - w2) / 2, 0, W - w2);
       var y2 = clamp(sb.y0, 0, H - h2);
-      return { x: Math.round(x2), y: Math.round(y2), w: Math.round(w2), h: Math.round(h2), method: 'skin' };
+      if (skinRatioInBox(skin, W, H, x2, y2, w2, h2, 3) > 0.2) {
+        return { x: Math.round(x2), y: Math.round(y2), w: Math.round(w2), h: Math.round(h2), method: 'skin' };
+      }
     }
     var w3 = W * 0.56, h3 = Math.min(H * 0.8, w3 * 1.34);
-    return { x: Math.round((W - w3) / 2), y: Math.round(H * 0.07), w: Math.round(w3), h: Math.round(h3), method: 'center' };
+    var boxC = { x: Math.round((W - w3) / 2), y: Math.round(H * 0.07), w: Math.round(w3), h: Math.round(h3), method: 'center' };
+    if (skinRatioInBox(skin, W, H, boxC.x, boxC.y, boxC.w, boxC.h, 3) < 0.12) return null;
+    return boxC;
   }
 
   function analyzeFaceImage(img) {
@@ -545,7 +590,8 @@
 
     var metrics = {
       faceRatio: r1(faceRatio), symmetry: Math.round(symmetry),
-      brightness: Math.round(brightness), redness: r1(redness),
+      brightness: Math.round(clamp(brightness / 255 * 100, 0, 100)),
+      redness: Math.round(clamp((redness - 8) / 35 * 100, 0, 100)),
       eyeSize: r1(eyeSize), eyeSpace: r1(eyeSpace),
       noseWidth: r1(noseWidth), noseContrast: r1(noseContrast),
       mouthWidth: r1(mouthWidth), lipDensity: r1(lipDensity),
@@ -692,7 +738,7 @@
     var now = new Date();
     var yp = yearPillar(now.getFullYear(), now.getMonth() + 1, now.getDate());
     var f = fateAgainst(saju, yp);
-    return { pillar: yp, score: f.score, rel: f.rel, link: f.link, year: now.getFullYear() };
+    return { pillar: yp, score: f.score, rel: f.rel, link: f.link, year: now.getFullYear(), text: now.getFullYear() };
   }
 
   /* ── 프로필 ───────────────────────────────────────── */
@@ -725,26 +771,28 @@
     var pk = picker(p.seed + 11);
     var el = E[p.saju.dominant], weak = E[p.saju.weakest];
     var an = p.animal;
+    var _p = p.saju.lack.length ? E[p.saju.lack[0]].avoid[0] : weak.avoid[0];
+    var _a = pk(el.avoid);
     var out = [];
     out.push({ t: el.ko + ' 기운의 ' + el.weak.split(',')[0].trim(), d: el.avoid[0] });
     out.push({ t: an.name + '의 그늘 — ' + an.guard.split('.')[0], d: an.avoid[0] + ' / ' + an.avoid[1] });
     out.push({ t: (p.saju.lack.length ? E[p.saju.lack[0]].ko + ' 기운이 비어 있는 자리' : weak.ko + ' 기운이 얇은 자리'),
       d: (p.saju.lack.length ? E[p.saju.lack[0]] : weak).weak + ' — 이 기운이 약해서 무리하게 흉내 내면 오히려 새어 나갑니다. ' +
-        (p.saju.lack.length ? E[p.saju.lack[0]].avoid[0] : weak.avoid[0]) + '를 조심하세요.' });
+        _p + josa(_p, '을', '를') + ' 자주 한다면 그게 신호입니다.' });
     if (p.nm.geuk > 0) {
       out.push({ t: '이름 소리의 상극 — ' + p.nm.geukPairs.map(function (x) { return E[x.a].han + '→' + E[x.b].han; }).join(', '),
         d: '말이 앞뒤에서 끊기는 소리입니다. 계약·약속을 말로만 하지 말고 반드시 글로 남기세요. 특히 ' + E[p.nm.geukPairs[0].b].ko + ' 기운이 필요한 자리에서 말실수가 납니다.' });
     } else {
       out.push({ t: '정격 ' + p.nm.sagyeok[3].v + '수 ' + p.nm.sagyeok[3].s.k + '의 그림자', d: p.nm.sagyeok[3].s.t + ' — 이 수가 흉으로 기울 때는 ' + pk([el.avoid[2], an.avoid[0], weak.avoid[1]]) + '이 그 신호입니다.' });
     }
-    out.push({ t: '오늘 밤 하지 말 것', d: p.today.score < 50 ? '오늘(' + p.today.pillar.name + '일)은 ' + E[p.today.pillar.stem.elem].ko + ' 기운이 내 일주를 누르는 날입니다. 큰 결정·계약·고백은 내일로 미루세요.' : '오늘은 ' + p.today.pillar.name + '일, ' + E[p.today.pillar.stem.elem].ko + ' 기운이 내 편입니다. 대신 ' + pk(el.avoid) + '은 참으세요.' });
+    out.push({ t: '오늘 밤 하지 말 것', d: p.today.score < 50 ? '오늘(' + p.today.pillar.name + '일)은 ' + E[p.today.pillar.stem.elem].ko + ' 기운이 내 일주를 누르는 날입니다. 큰 결정·계약·고백은 내일로 미루세요.' : '오늘은 ' + p.today.pillar.name + '일, ' + E[p.today.pillar.stem.elem].ko + ' 기운이 내 편입니다. 대신 ' + _a + josa(_a, '은', '는') + ' 참으세요.' });
     return out;
   }
   function buildKeep(p) {
     var el = E[p.saju.dominant], lack = p.saju.lack.length ? E[p.saju.lack[0]] : E[p.saju.weakest];
     var an = p.animal;
     var out = [];
-    out.push({ t: el.ko + ' 기운 살리기', d: el.keep.join(' · ') + '. ' + el.lucky.item + '을 곁에 두면 좋습니다.' });
+    out.push({ t: el.ko + ' 기운 살리기', d: el.keep.join(' · ') + '. ' + el.lucky.item + josa(el.lucky.item, '을', '를') + ' 곁에 두면 좋습니다.' });
     out.push({ t: an.name + '의 무기 — ' + an.charm, d: an.keep.join(' / ') });
     out.push({ t: '비어 있는 ' + lack.ko + '(' + lack.han + ') 채우기', d: lack.lucky.color + ' 계열 옷·소품, ' + lack.lucky.dir + ' 방향, ' + lack.lucky.num + ' 숫자를 의식적으로 쓰세요. ' + lack.lucky.item + '도 좋습니다.' });
     out.push({ t: '이름의 ' + p.nm.sagyeok[3].s.k + ' 살리기', d: p.nm.sagyeok[3].s.g === '길' ? '정격 ' + p.nm.sagyeok[3].v + '수가 ' + p.nm.sagyeok[3].s.k + '으로 길합니다. ' + p.nm.sagyeok[3].s.t + ' — 이름을 소리 내어 부르는 자리(모임·발표)에서 운이 열립니다.' : '정격 ' + p.nm.sagyeok[3].v + '수가 ' + p.nm.sagyeok[3].s.k + '입니다. ' + p.nm.sagyeok[3].s.t + ' — 이름을 크게 드러내기보다 ' + lack.ko + ' 기운의 공간(조용한 자리)에서 힘을 모으세요.' });

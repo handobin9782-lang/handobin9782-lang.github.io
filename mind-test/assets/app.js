@@ -184,6 +184,14 @@
     var p = b.split('-');
     return p[0] + '.' + p[1] + '.' + p[2];
   }
+  function lastJong(word) {
+    var s = String(word).replace(/[\s,.\"'”’)\]]+$/, '');
+    var code = s.charCodeAt(s.length - 1);
+    if (!(code >= 0xAC00 && code <= 0xD7A3)) return -1;
+    return (code - 0xAC00) % 28;
+  }
+  function josaKo(word, a, b) { var j = lastJong(word); return j > 0 ? a : b; }
+  function roJosa(word) { var j = lastJong(word); return (j > 0 && j !== 8) ? '으로' : '로'; }
   function elemChips(counts) {
     return EO.map(function (k) {
       return '<span class="pill" style="border-color:' + E[k].color + '44"><b style="color:' + E[k].color + '">' + E[k].han + '</b> ' + counts[k] + '</span>';
@@ -632,8 +640,8 @@
 
     var lackText = s.lack.length
       ? s.lack.map(function (k) { return E[k].han + '(' + E[k].ko + ')'; }).join('·') + ' 기운이 비어 있습니다. ' +
-        E[s.lack[0]].lucky.color + ' 계열, ' + E[s.lack[0]].dir + ' 방향, ' + E[s.lack[0]].lucky.item + '으로 채워 보세요.'
-      : '다섯 기운이 모두 있습니다. ' + E[s.weakest].han + '(' + E[s.weakest].ko + ') 기운이 가장 얇으니 ' + E[s.weakest].lucky.item + '을 곁에 두면 좋습니다.';
+        E[s.lack[0]].lucky.color + ' 계열, ' + E[s.lack[0]].dir + ' 방향, ' + E[s.lack[0]].lucky.item + roJosa(E[s.lack[0]].lucky.item) + ' 채워 보세요.'
+      : '다섯 기운이 모두 있습니다. ' + E[s.weakest].han + '(' + E[s.weakest].ko + ') 기운이 가장 얇으니 ' + E[s.weakest].lucky.item + josaKo(E[s.weakest].lucky.item, '을', '를') + ' 곁에 두면 좋습니다.';
 
     return '' +
       '<section class="sec">' +
@@ -707,13 +715,13 @@
   }
 
   function fateBlock(p) {
-    function card(o, label) {
+    function card(o, label, unit) {
       var score = o.score;
       var tone = score >= 70 ? 'var(--jade)' : (score >= 50 ? '#b0873c' : 'var(--cinnabar)');
       return '<div class="fate">' +
         '<div class="f-k">' + label + '</div>' +
-        '<div class="f-v" style="color:' + tone + '">' + o.pillar.name + '일 · ' + (score >= 70 ? '길(吉)' : (score >= 50 ? '무난' : '주의')) + '</div>' +
-        '<div class="f-d">' + esc(fateText(p, o, label)) + '</div>' +
+        '<div class="f-v" style="color:' + tone + '">' + o.pillar.name + unit + ' · ' + (score >= 70 ? '길(吉)' : (score >= 50 ? '무난' : '주의')) + '</div>' +
+        '<div class="f-d">' + esc(fateText(p, o, label, unit)) + '</div>' +
         '<div class="f-bar"><i style="width:' + score + '%"></i></div>' +
         '</div>';
     }
@@ -721,22 +729,23 @@
       '<section class="sec">' +
       '<div class="sec-h"><span class="h-han">運</span><h3>오늘과 올해</h3><span class="h-sub">日辰 · 歲運</span></div>' +
       '<div class="fate-grid">' +
-      card(p.today, '오늘 · ' + p.today.dateText) +
-      card(p.year, '올해 · ' + p.year.year) +
+      card(p.today, '오늘 · ' + p.today.dateText, '일') +
+      card(p.year, '올해 · ' + p.year.year, '년') +
       '</div></section>';
   }
-  function fateText(p, o, label) {
+  function fateText(p, o, label, unit) {
     var e = E[o.pillar.stem.elem];
     var rel = o.rel;
-    var base = label.indexOf('오늘') === 0
+    var isToday = label.indexOf('오늘') === 0;
+    var base = isToday
       ? '오늘은 ' + o.pillar.name + '일, ' + e.ko + '(' + e.han + ') 기운이 도는 날입니다. '
-      : o.year.year + '년은 ' + o.pillar.name + '년, ' + e.ko + ' 기운의 해입니다. ';
+      : o.year + '년은 ' + o.pillar.name + '년, ' + e.ko + ' 기운의 해입니다. ';
     var relText = {
-      give: '내 일주를 살려주는 기운이라 ' + (label.indexOf('오늘') === 0 ? '미뤄둔 일을 꺼내기 좋습니다.' : '새로 시작하는 일이 잘 풀립니다.'),
-      take: '내가 그 기운을 살려주는 자리라 ' + (label.indexOf('오늘') === 0 ? '누군가를 도와주면 그게 나에게 돌아옵니다.' : '베푸는 자리에서 복이 쌓입니다.'),
-      same: '같은 기운이 겹쳐 ' + (label.indexOf('오늘') === 0 ? '익숙한 일은 잘 되고 새로운 일은 미루는 게 좋습니다.' : '한 우물을 깊게 파는 해입니다.'),
-      control: '내 기운을 누르는 날이라 ' + (label.indexOf('오늘') === 0 ? '큰 결정·계약·고백은 피하세요.' : '큰 지출과 보증을 조심하세요.'),
-      controlled: '내가 그 기운을 누르는 자리라 ' + (label.indexOf('오늘') === 0 ? '말이 세게 나가기 쉽습니다. 한 번 더 듣고 말하세요.' : '사람과의 마찰이 생기기 쉬우니 말을 아끼세요.')
+      give: '내 일주를 살려주는 기운이라 ' + (isToday ? '미뤄둔 일을 꺼내기 좋습니다.' : '새로 시작하는 일이 잘 풀립니다.'),
+      take: '내가 그 기운을 살려주는 자리라 ' + (isToday ? '누군가를 도와주면 그게 나에게 돌아옵니다.' : '베푸는 자리에서 복이 쌓입니다.'),
+      same: '같은 기운이 겹져 ' + (isToday ? '익숙한 일은 잘 되고 새로운 일은 미루는 게 좋습니다.' : '한 우물을 깊게 파는 해입니다.'),
+      control: '내 기운을 누르는 날이라 ' + (isToday ? '큰 결정·계약·고백은 피하세요.' : '큰 지출과 보증을 조심하세요.'),
+      controlled: '내가 그 기운을 누르는 자리라 ' + (isToday ? '말이 세게 나가기 쉽습니다. 한 번 더 듣고 말하세요.' : '사람과의 마찰이 생기기 쉬우니 말을 아끼세요.')
     }[rel];
     var linkTag = o.link && o.link.tags.length ? ' (' + o.link.tags.join('·') + ')' : '';
     return base + relText + linkTag;

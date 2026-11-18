@@ -218,7 +218,7 @@
     var b = $('inviteBanner');
     b.hidden = false;
     $('inviteTitle').textContent = p.name + ' 님의 링크로 들어오셨어요';
-    $('inviteSub').textContent = p.name + '님(' + p.animal.name + '·' + p.saju.day.name + '일주)과의 6가지 관계를 볼 수 있습니다.';
+    $('inviteSub').textContent = p.name + ' 님(' + p.animal.name + '·' + p.saju.day.name + '일주)과의 6가지 관계를 볼 수 있습니다.';
     $('btnStart').textContent = '내 정보 넣고 답하기';
     $('formStep').textContent = '第一 · 내 정보 (초대 응답)';
     $('formSub').textContent = p.name + '님에게 내 풀이를 보여주고, 두 사람의 6가지 관계를 함께 봅니다.';
@@ -287,9 +287,9 @@
       $('formStep').textContent = S.from ? '第一 · 내 정보 (초대 응답)' : '第一 · 내 정보';
       $('formTitle').textContent = '내 정보를 적어주세요';
       $('formSub').textContent = S.from
-        ? S.from.name + '님에게 내 풀이를 보여주고, 두 사람의 6가지 관계를 함께 봅니다.'
+        ? S.from.name + ' 님에게 내 풀이를 보여주고, 두 사람의 6가지 관계를 함께 봅니다.'
         : '사진은 선택입니다. 이름과 생년월일만으로도 풀이가 나옵니다.';
-      relField.hidden = true;
+      relField.hidden = !S.from;
       $('btnAnalyze').textContent = '풀이 시작';
     }
     clearPhoto();
@@ -780,7 +780,7 @@
         '<button type="button" class="btn btn-ghost" id="btnShare">🔗 내 링크 보내기</button>' +
         '<button type="button" class="btn btn-ghost" id="btnPartner">💞 상대방 입력 → 6가지 관계</button>' +
         '</div>') +
-      (S.from && !isPartner ? '<p class="note-line">아래에 ' + esc(S.from.name) + '님과의 6가지 관계가 이어집니다.</p>' : '') +
+      (S.from && !isPartner ? '<p class="note-line">아래에 ' + esc(S.from.name) + ' 님과의 6가지 관계가 이어집니다.</p>' : '') +
       '<div class="share-box" id="shareBox" hidden></div>' +
       '<button type="button" class="btn btn-ghost btn-sm" id="btnRestart">처음부터 다시</button>' +
       '</div>';
@@ -817,7 +817,7 @@
     var box = $('shareBox');
     box.hidden = false;
     box.innerHTML = '<div class="share-url"><input id="shareUrl" readonly value="' + attr(url) + '"><button type="button" id="btnCopy">복사</button></div>' +
-      '<p class="note-line">이 링크를 받은 사람은 ' + esc(p.name) + ' 님의 6가지 관계를 볼 수 있습니다. 링크에는 이름·생년월일·동물상만 담기고 <b>사진은 담기지 않습니다</b>.</p>';
+      '<p class="note-line">이 링크를 받은 사람은 ' + esc(p.name) + ' 님의 6가지 관계를 볼 수 있습니다. 링크에는 이름·생년월일·동물상·삼정 비율만 담기고 <b>사진은 담기지 않습니다</b>.</p>';
     $('btnCopy').addEventListener('click', function () { copyText(url); });
     if (navigator.share) {
       navigator.share({

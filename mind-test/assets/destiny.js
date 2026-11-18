@@ -310,11 +310,20 @@
     return skinRatioInBox(skin, W, H, x0, y0, b.w * 1.5, b.h * 1.8, 1);
   }
 
-  function findEyePair(lum, skin, W, H) {
+  function edgeMeanInBox(edge, W, H, x0, y0, w, h, step) {
+    x0 = Math.max(0, Math.round(x0)); y0 = Math.max(0, Math.round(y0));
+    var x1 = Math.min(W - 1, Math.round(x0 + w)), y1 = Math.min(H - 1, Math.round(y0 + h));
+    var c = 0, s = 0; step = step || 2;
+    for (var y = y0; y <= y1; y += step) for (var x = x0; x <= x1; x += step) { c++; s += edge[y * W + x]; }
+    return c ? s / c : 0;
+  }
+
+  function findEyePair(lum, skin, edge, edgeMean, W, H) {
     var med = medianOf(lum, W, H);
     var thr = Math.max(24, med * 0.66);
     var blobs = darkBlobs(lum, W, H, thr).filter(function (b) {
-      return b.y > H * 0.05 && b.y < H * 0.75 && skinAroundBlob(skin, W, H, b) > 0.35;
+      var asp = b.w / b.h;
+      return b.y > H * 0.08 && b.y < H * 0.62 && asp > 1.1 && asp < 5 && skinAroundBlob(skin, W, H, b) > 0.30;
     });
     if (blobs.length < 2) return null;
     var best = null, bestScore = -1e9;
@@ -322,18 +331,20 @@
       for (var j = i + 1; j < blobs.length; j++) {
         var a = blobs[i], b = blobs[j];
         var dy = Math.abs(a.y - b.y), dx = Math.abs(a.x - b.x);
-        if (dx < W * 0.07 || dx > W * 0.42) continue;
-        if (dy > H * 0.05) continue;
+        if (dx < W * 0.07 || dx > W * 0.33) continue;
+        if (dy > H * 0.045) continue;
         var ar = Math.max(a.area, b.area) / Math.max(1, Math.min(a.area, b.area));
-        if (ar > 3.2) continue;
+        if (ar > 2.8) continue;
         var mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2;
-        if (my < H * 0.10 || my > H * 0.68) continue;
+        if (my < H * 0.12 || my > H * 0.62) continue;
         var fw = dx / 0.40, fh = fw * 1.34;
-        if (fw < W * 0.16 || fw > W * 0.9) continue;
+        if (fw < W * 0.16 || fw > W * 0.78) continue;
         var bx = mx - fw / 2, by = my - fh * 0.40;
-        if (bx < -fw * 0.1 || bx + fw > W * 1.1) continue;
+        if (bx < 0 || bx + fw > W || by < -fh * 0.02 || by + fh > H) continue;
         var sr = skinRatioInBox(skin, W, H, bx, by, fw, fh, 3);
-        if (sr < 0.30) continue;
+        if (sr < 0.32) continue;
+        var ed = edgeMeanInBox(edge, W, H, bx, by, fw, fh, 2);
+        if (ed < edgeMean * 1.05) continue;
         var midDark = 0, midN = 0;
         for (var xm = Math.round(mx - dx * 0.12); xm <= Math.round(mx + dx * 0.12); xm++) {
           for (var ym = Math.round(my - H * 0.02); ym <= Math.round(my + H * 0.02); ym++) {
@@ -342,9 +353,9 @@
           }
         }
         var midPen = midN ? (midDark / midN) : 0;
-        var score = sr * 3.2 - Math.abs(mx - W * 0.5) / W * 1.8 - Math.abs(my - H * 0.42) / H * 1.2
-          + (my / H) * 0.35 - midPen * 1.2;
-        if (score > bestScore) { bestScore = score; best = { a: a, b: b, mx: mx, my: my, d: dx, sr: sr }; }
+        var score = sr * 2.2 - Math.abs(mx - W * 0.5) / W * 2.2 - Math.abs(my - H * 0.42) / H * 1.4
+          - Math.abs(dx / W - 0.21) * 4.2 - midPen * 1.4 + (ed / edgeMean) * 0.45;
+        if (score > bestScore) { bestScore = score; best = { a: a, b: b, mx: mx, my: my, d: dx, sr: sr, ed: ed }; }
       }
     }
     return best;
@@ -382,10 +393,10 @@
     return best;
   }
 
-  function findFaceBox(lum, skin, W, H) {
-    var eyes = findEyePair(lum, skin, W, H);
+  function findFaceBox(lum, skin, edge, edgeMean, W, H) {
+    var eyes = findEyePair(lum, skin, edge, edgeMean, W, H);
     if (eyes) {
-      var fw = clamp(eyes.d / 0.40, W * 0.16, W * 0.88);
+      var fw = eyes.d / 0.40;
       var fh = fw * 1.34;
       var x0 = eyes.mx - fw / 2;
       var y0 = eyes.my - fh * 0.40;
@@ -437,9 +448,19 @@
     }
     if (skinCount < n * 0.015) return null;
 
+    /* 엣지맵 (얼굴 검증·기운 계측에 함께 사용) */
+    var edge = new Float32Array(W * H), edgeSum = 0;
+    for (var y4 = 1; y4 < H - 1; y4++) for (var x4 = 1; x4 < W - 1; x4++) {
+      var gx = lum[y4 * W + x4 + 1] - lum[y4 * W + x4 - 1];
+      var gy = lum[(y4 + 1) * W + x4] - lum[(y4 - 1) * W + x4];
+      var m = Math.sqrt(gx * gx + gy * gy);
+      edge[y4 * W + x4] = m; edgeSum += m;
+    }
+    var edgeMean = edgeSum / (W * H) || 1;
+
     /* ── 얼굴 박스 찾기 ──
-       1) 눈 쌍 검출(배경과 무관하게 안정적) 2) 스킨 블롭 3) 중앙 추정 */
-    var box = findFaceBox(lum, skin, W, H);
+       1) 눈 쌍 검출(사진 중심·크기·엣지 밀도 검증) 2) 스킨 블롭 3) 중앙 추정 */
+    var box = findFaceBox(lum, skin, edge, edgeMean, W, H);
     if (!box) return null;
     var bx0 = box.x, by0 = box.y, fw = box.w, fh = box.h;
     var bx1 = Math.min(W - 1, bx0 + fw - 1);
@@ -463,16 +484,6 @@
     }
     var brightness = bN ? bSum / bN : 128;
     var redness = bN ? redSum / bN : 20;
-
-    /* 엣지맵 */
-    var edge = new Float32Array(W * H), edgeSum = 0;
-    for (var y4 = 1; y4 < H - 1; y4++) for (var x4 = 1; x4 < W - 1; x4++) {
-      var gx = lum[y4 * W + x4 + 1] - lum[y4 * W + x4 - 1];
-      var gy = lum[(y4 + 1) * W + x4] - lum[(y4 - 1) * W + x4];
-      var m = Math.sqrt(gx * gx + gy * gy);
-      edge[y4 * W + x4] = m; edgeSum += m;
-    }
-    var edgeMean = edgeSum / (W * H) || 1;
 
     function bandStats(y0, y1) {
       var e = 0, c = 0, sk = 0, r0 = 0;
@@ -633,6 +644,7 @@
         mouth: clamp((mouthY - by0) / fh, 0.55, 0.95)
       },
       metrics: metrics, samjeong: samjeong, energy: energy,
+      method: box.method, box: box,
       scores: scores, animalKey: animalKey, seed: imgHash
     };
   }

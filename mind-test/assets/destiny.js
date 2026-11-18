@@ -417,8 +417,9 @@
         if (runStart <= want1 && rw1 > (bestRun ? bestRun.w : 0)) bestRun = { a: runStart, b: W - 1, w: rw1 };
       }
       if (bestRun && bestRun.w > fw * 0.55 && bestRun.w < fw * 1.8) {
-        var fw2 = bestRun.w * 1.04;
-        x0 = (bestRun.a + bestRun.b) / 2 - fw2 / 2;
+        /* 폭만 보정하고 중심은 눈 중점 고정 (배경 병합 대비) */
+        var fw2 = clamp(bestRun.w * 1.04, fw * 0.85, fw * 1.25);
+        x0 = eyes.mx - fw2 / 2;
         fw = fw2;
         fh = fw * 1.34;
         y0 = eyes.my - fh * 0.40;

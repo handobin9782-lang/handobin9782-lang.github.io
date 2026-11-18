@@ -1195,65 +1195,71 @@
     var cv = $('cardCanvas'), ctx = cv.getContext('2d');
     cv.width = CW; cv.height = CH;
     drawHanjiBg(ctx);
-    var PAD = 96, y = 150;
-    ctx.fillStyle = '#a5392a'; rr(ctx, PAD, y - 52, 78, 78, 12); ctx.fill();
+    var PAD = 96;
+
+    /* 헤더 */
+    ctx.fillStyle = '#a5392a'; rr(ctx, PAD, 98, 78, 78, 12); ctx.fill();
     ctx.fillStyle = '#fff2df'; ctx.font = '700 44px ' + FONT_SERIF; ctx.textAlign = 'center';
-    ctx.fillText('緣', PAD + 39, y + 4); ctx.textAlign = 'left';
+    ctx.fillText('緣', PAD + 39, 154); ctx.textAlign = 'left';
     ctx.fillStyle = '#17140f'; ctx.font = '700 40px ' + FONT_SERIF;
-    ctx.fillText('6가지 관계', PAD + 98, y - 2);
+    ctx.fillText('6가지 관계', PAD + 98, 148);
     ctx.fillStyle = '#8a8172'; ctx.font = '600 22px ' + FONT_SANS;
-    ctx.fillText('六親 · 緣', PAD + 98, y + 30);
+    ctx.fillText('六親 · 緣', PAD + 98, 180);
 
-    y = 320;
-    ctx.font = '900 74px ' + FONT_SERIF; ctx.fillStyle = '#17140f';
-    ctx.fillText(A.name + ' × ' + B.name, PAD, y);
-    y += 56;
+    /* 이름 */
+    ctx.fillStyle = '#17140f';
+    var nmS = fitFont(ctx, A.name + ' × ' + B.name, CW - PAD * 2, 76, 44, '900');
+    ctx.font = '900 ' + nmS + 'px ' + FONT_SERIF;
+    ctx.fillText(A.name + ' × ' + B.name, PAD, 300);
     ctx.font = '600 26px ' + FONT_SANS; ctx.fillStyle = '#5c5346';
-    ctx.fillText(rel.grade.label + ' · ' + relWordKo(rel.elRel) + ' · ' + rel.relType, PAD, y);
+    ctx.fillText(rel.grade.label + ' · ' + relWordKo(rel.elRel) + ' · ' + rel.relType, PAD, 344);
 
-    y += 40;
-    /* 점수 링 */
-    var cx0 = PAD + 130, cy0 = y + 130, rad = 120;
+    /* 점수 링 + 총평 */
+    var cx0 = PAD + 118, cy0 = 490, rad = 112;
     ctx.lineWidth = 18; ctx.strokeStyle = 'rgba(23,20,15,.1)';
     ctx.beginPath(); ctx.arc(cx0, cy0, rad, 0, Math.PI * 2); ctx.stroke();
     ctx.strokeStyle = '#a5392a'; ctx.lineCap = 'round';
     ctx.beginPath(); ctx.arc(cx0, cy0, rad, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * rel.score / 100); ctx.stroke();
     ctx.textAlign = 'center';
-    ctx.fillStyle = '#17140f'; ctx.font = '900 76px ' + FONT_SERIF;
-    ctx.fillText(String(rel.score), cx0, cy0 + 22);
-    ctx.font = '600 24px ' + FONT_SANS; ctx.fillStyle = '#8a8172';
-    ctx.fillText('점', cx0, cy0 + 56);
+    ctx.fillStyle = '#17140f'; ctx.font = '900 70px ' + FONT_SERIF;
+    ctx.fillText(String(rel.score), cx0, cy0 + 20);
+    ctx.font = '600 22px ' + FONT_SANS; ctx.fillStyle = '#8a8172';
+    ctx.fillText('점', cx0, cy0 + 52);
     ctx.textAlign = 'left';
+    var tx = cx0 + rad + 34, tw = CW - PAD - tx;
     ctx.fillStyle = '#3b352b'; ctx.font = '700 30px ' + FONT_SERIF;
-    var hl = wrapText(ctx, rel.headline, CW - PAD - (cx0 + rad + 30));
-    hl.slice(0, 3).forEach(function (ln, i) { ctx.fillText(ln, cx0 + rad + 30, cy0 - 30 + i * 40); });
+    var hl = wrapText(ctx, rel.headline, tw);
+    hl.slice(0, 3).forEach(function (ln, i) { ctx.fillText(ln, tx, cy0 - 44 + i * 38); });
+    ctx.fillStyle = '#8a8172'; ctx.font = '500 21px ' + FONT_SANS;
+    wrapText(ctx, '성격 ' + rel.cards[0].score + '점 · 재물 ' + (rel.cards[3].signed > 0 ? '+' : '') + rel.cards[3].signed + ' · 최고 포지션 ' + rel.best.key, tw)
+      .slice(0, 2).forEach(function (ln, i) { ctx.fillText(ln, tx, cy0 + 46 + i * 28); });
 
-    y = cy0 + rad + 60;
     /* 6개 카드 */
-    var colW = (CW - PAD * 2 - 20) / 2, rowH = 190;
+    var top = 650, colW = (CW - PAD * 2 - 20) / 2, rowH = 300, gap = 18;
     rel.cards.forEach(function (c, i) {
       var col = i % 2, row = Math.floor(i / 2);
-      var x = PAD + col * (colW + 20), yy = y + row * (rowH + 18);
-      ctx.fillStyle = 'rgba(255,253,247,.95)';
-      rr(ctx, x, yy, colW, rowH, 18); ctx.fill();
+      var x = PAD + col * (colW + 20), yy = top + row * (rowH + gap);
+      ctx.fillStyle = 'rgba(255,253,247,.96)';
+      rr(ctx, x, yy, colW, rowH, 20); ctx.fill();
       ctx.strokeStyle = 'rgba(176,135,60,.45)'; ctx.lineWidth = 1.6; ctx.stroke();
-      ctx.fillStyle = '#17140f'; ctx.font = '700 26px ' + FONT_SERIF;
-      ctx.fillText(c.icon + ' ' + c.title, x + 20, yy + 44);
-      ctx.fillStyle = '#5c5346'; ctx.font = '500 20px ' + FONT_SANS;
-      wrapText(ctx, c.summary, colW - 40).slice(0, 3).forEach(function (ln, k) {
-        ctx.fillText(ln, x + 20, yy + 82 + k * 27);
+      ctx.fillStyle = '#17140f'; ctx.font = '700 29px ' + FONT_SERIF;
+      var title = c.icon + ' ' + c.title;
+      ctx.fillText(title, x + 24, yy + 54);
+      ctx.fillStyle = '#5c5346'; ctx.font = '500 21px ' + FONT_SANS;
+      wrapText(ctx, c.summary, colW - 48).slice(0, 5).forEach(function (ln, k) {
+        ctx.fillText(ln, x + 24, yy + 96 + k * 29);
       });
-      ctx.fillStyle = '#8a8172'; ctx.font = '700 18px ' + FONT_SANS;
-      ctx.fillText((c.badge || '').slice(0, 18), x + 20, yy + rowH - 18);
+      ctx.fillStyle = '#8a8172'; ctx.font = '700 19px ' + FONT_SANS;
+      ctx.fillText(String(c.badge || '').slice(0, 20), x + 24, yy + rowH - 22);
     });
-    y += 3 * (rowH + 18) + 26;
 
+    /* 푸터 */
     ctx.fillStyle = '#17140f'; ctx.font = '700 26px ' + FONT_SANS;
-    ctx.fillText('나도 6가지 관계 보기', PAD, CH - 128);
+    ctx.fillText('나도 6가지 관계 보기', PAD, CH - 138);
     ctx.fillStyle = '#8a8172'; ctx.font = '500 21px ' + FONT_SANS;
-    ctx.fillText('handobin9782-lang.github.io/mind-test', PAD, CH - 92);
+    ctx.fillText('handobin9782-lang.github.io/mind-test', PAD, CH - 102);
     ctx.fillStyle = 'rgba(23,20,15,.4)'; ctx.font = '500 17px ' + FONT_SANS;
-    ctx.fillText('재미로 보는 궁합 · 의료·투자 판단 근거 아님', PAD, CH - 62);
+    ctx.fillText('재미로 보는 궁합 · 의료·투자 판단 근거 아님', PAD, CH - 68);
     ctx.fillStyle = '#a5392a'; ctx.fillRect(0, CH - 12, CW, 12);
   }
 

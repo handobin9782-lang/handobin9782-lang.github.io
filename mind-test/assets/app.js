@@ -14,7 +14,7 @@
       name: 'AI 안경 몰래 끼고 답 베끼는 놈',
       tagline: '요령 · 최신 기술 풀세팅러',
       quirk: '안경 각도만 계속 만진다',
-      accent: '#6b4bf6', tint: '#efeaff', img: 'assets/type-ai.webp',
+      accent: '#6b4bf6', tint: '#efeaff', img: 'assets/type-ai.webp?v=2',
       desc: ['공부는 안 했지만 세팅은 완벽하다.', '문제보다 안경 각도가 더 신경 쓰이는 하루.'],
       facts: [
         '공부는 안 했지만 정보 수집은 했다. 그것도 아주 치밀하게.',
@@ -24,10 +24,10 @@
       feats: [
         '시험지를 받자마자 손보다 목이 먼저 움직인다. 사방 정찰 3초.',
         '연필 2자루, 안경 1개, 배터리 87%. 완벽한 풀세팅.',
-        '감독관이 다가오면 갑자기 아주 정성스럽게 문제를 "읽는 척" 한다.',
+        '렌즈 옆 카메라에 초록불이 켜지는 순간, 이미 감독관이 등 뒤에 서 있다.',
         '모르는 문제가 나오면 오히려 안심한다. 렌즈에 답이 뜨는 순간을 기다린다.'
       ],
-      aiLine: '렌즈에 "정답입니다"가 뜨는 순간, 화면 한켠에 배터리 3% 경고가 깜박인다. 마지막 문제에서 안경이 꺼지고, 그 직전까지 본 정답이 감독관 뒤통수에 반사된다. 시험은 끝나고, 안경은 압수되고, 집에 전화가 간다.',
+      aiLine: '렌즈에 "정답입니다"가 뜨는 순간, 렌즈 옆 카메라의 초록불이 켜진다. 그 불빛을 감독관이 먼저 봤고, 배터리 3% 경고음까지 겹쳐 울린다. 시험은 끝나고, 안경은 압수되고, 집에 전화가 간다.',
       fantasy: ['guess', '내가 정보를, 쟤가 촉을. 손만 대면 만점 아니냐.'],
       nemesis: ['honest', '쟤가 팔로 답안지를 가리고 앉는다. 최악.']
     },
@@ -218,7 +218,7 @@
   /* ── 10문항 (교시 · 영역) ─────────────────── */
   var QUESTIONS = [
     {
-      tag: '시험 전날 밤', area: '준비 영역', img: 'assets/cover.webp', accent: '#6b4bf6', label: 'D-1 · 23:00',
+      tag: '시험 전날 밤', area: '준비 영역', img: 'assets/cover.webp?v=2', accent: '#6b4bf6', label: 'D-1 · 23:00',
       q: '시험 전날 밤, 나는?',
       opts: [
         { k: 'ai', t: 'AI 안경 충전부터 한다. 렌즈 닦고 배터리 100% 확인.' },
@@ -258,8 +258,8 @@
       ]
     },
     {
-      tag: 'AI 안경의 유혹 · 배터리 100%', area: '양심 영역', img: 'assets/type-ai.webp', accent: '#16a34a', label: 'CASE 05 · 유혹',
-      q: '책상 위에 AI 안경이 딱 놓여 있다. 렌즈에 답이 스르륵 떠오른다. 배터리 100%.',
+      tag: 'AI 안경의 유혹 · 배터리 100%', area: '양심 영역', img: 'assets/type-ai.webp?v=2', accent: '#16a34a', label: 'CASE 05 · 유혹',
+      q: '책상 위에 AI 안경이 딱 놓여 있다. 렌즈 옆 카메라에 초록불이 켜지고, 렌즈에 답이 스르륵 떠오른다. 배터리 100%.',
       opts: [
         { k: 'ai', t: '이건 하늘의 계시다. 렌즈에 답 뜨는 순간까지만 쓰자.' },
         { k: 'honest', t: '부정행위다. 절대 안 쓴다. 손으로 푼다.' },
@@ -308,7 +308,7 @@
       ]
     },
     {
-      tag: '한 문장', area: '총평 영역', img: 'assets/cover.webp', accent: '#6b4bf6', label: 'FIN · 정리',
+      tag: '한 문장', area: '총평 영역', img: 'assets/cover.webp?v=2', accent: '#6b4bf6', label: 'FIN · 정리',
       q: '이번 시험, 한 문장으로 정리하면?',
       opts: [
         { k: 'guess', t: '"촉이 좋았던 날이었다."' },
@@ -621,7 +621,7 @@
       '<span class="tcard-body">' +
         '<span class="tcard-feat-b">대표 유형</span>' +
         '<span class="tcard-txt"><span aria-hidden="true">🕶️</span> ' + ai.name + '</span>' +
-        '<span class="tcard-sub">렌즈에 답 뜨는 순간 · 배터리 3% 경고</span>' +
+        '<span class="tcard-sub">카메라 2개 · 렌즈에 답 뜨는 순간 · 배터리 3% 경고</span>' +
       '</span></div>';
     var rest = ORDER.filter(function (k) { return k !== 'ai'; }).map(function (k) {
       var t = TYPES[k];

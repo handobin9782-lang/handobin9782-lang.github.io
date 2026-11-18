@@ -1,520 +1,39 @@
-/* 시험 중 나는..? — 시험장 놈놈놈 테스트
-   8유형 · 10문항 · 9:16 결과 카드 · 기기 내 누적 랭킹 · 1:1 케미 · 사운드 */
+/* ══════════════════════════════════════════════════════════
+   觀相 · 四柱 · 姓名 — app (UI)
+   ══════════════════════════════════════════════════════════ */
 (function () {
   'use strict';
+  window.__errs = [];
+  window.addEventListener('error', function (e) { window.__errs.push(String(e.message)); });
 
-  var SITE = 'https://handobin9782-lang.github.io/mind-test/';
-  var STORE_KEY = 'mindtest.v1';
-  var SOUND_KEY = 'mindtest.sound';
-
-  /* ── 8가지 유형 ───────────────────────────── */
-  var TYPES = {
-    ai: {
-      emoji: '🕶️', label: 'AI 안경',
-      name: 'AI 안경 몰래 끼고 답 베끼는 놈',
-      tagline: '요령 · 최신 기술 풀세팅러',
-      quirk: '안경 각도만 계속 만진다',
-      accent: '#6b4bf6', tint: '#efeaff', img: 'assets/type-ai.webp?v=2',
-      desc: [
-        '공부는 안 했는데 세팅은 끝냈다. 렌즈 닦고, 배터리 100% 확인하고, 카메라 각도까지 리허설해 왔다.',
-        '시험지가 펼쳐지면 손보다 목이 먼저 움직인다. 사방 정찰 3초, 그다음 렌즈가 답을 띄운다. 문제를 읽는 시간보다 안경 각도를 만지는 시간이 길다.',
-        '현실에서도 이 사람은 "준비는 완벽, 실행은 도구에 위임" 타입이다. 앱은 다 깔려 있고 계획표는 예쁜데, 정작 시작은 안 했다.',
-        '머리가 나빠서가 아니다. 가장 짧은 길을 찾는 감각이 비정상적으로 좋다. 다만 그 길이 늘 남의 힘을 빌린 길이라는 게 문제다.',
-        '도구가 꺼지는 순간 제일 먼저 어리둥절해지는 사람도 이 사람이다. 안경 배터리는 늘 100%, 실력 배터리는 늘 3%.'
-      ],
-      card: ['공부는 안 했는데 세팅은 완벽.', '도구가 꺼지면 제일 먼저 어리둥절.'],
-      facts: [
-        '공부했냐고 물으면 "준비했어"라고 답한다. 그 둘의 차이를 제일 잘 아는 사람이 이 사람이다.',
-        '잘되면 내 실력, 망하면 도구 탓. 근데 그 도구도 당신이 돈 주고 산 거다.',
-        '시험이 끝나면 머리에 남은 건 없다. 안경엔 다 있는데 배터리가 3%라서 아무것도 못 꺼낸다.'
-      ],
-      aiLine: '렌즈에 "정답입니다"가 뜨는 순간, 렌즈 옆 카메라의 초록불이 켜진다. 그 불빛을 감독관이 먼저 봤고, 배터리 3% 경고음까지 겹쳐 울린다. 시험은 끝나고, 안경은 압수되고, 집에 전화가 간다.',
-      fantasy: 'guess', nemesis: 'honest'
-    },
-    sleep: {
-      emoji: '😴', label: '꿀잠',
-      name: '시험 10분 만에 꿀잠 자는 놈',
-      tagline: '멘탈 초연 · 낭만 직진러',
-      quirk: '10분 만에 엎드려 잔다',
-      accent: '#0d9488', tint: '#e3f7f2', img: 'assets/type-sleep.webp',
-      desc: [
-        '시험지가 인생 전부는 아니라는 걸 몸으로 증명한다. 이름 쓰고 10분, 그다음은 국가대표급 엎드리기다.',
-        '감독관이 깨우면 "다 풀었어요"라고 말한다. 백지인데. 종이 울리면 시험장에서 제일 개운한 얼굴로 일어난다.',
-        '현실에서도 이 사람은 "안 해도 되는 이유를 열 개 준비해 오는" 타입이다. 긴장이라는 단어는 사전에서만 봤고, 마감은 늘 남의 일처럼 느껴진다.',
-        '그런데 이 사람이 진짜로 안 무너지는 건 사실이다. 남들이 밤새 흔들릴 때 얘는 잘 자고, 다음 날 제일 멀쩡하다.',
-        '인생은 길고 시험은 짧다. 이 사람은 그걸 아주 일찍 깨달았고, 그래서 남들보다 편하게 산다.'
-      ],
-      card: ['시험 10분 만에 꿀잠.', '깨어나면 이미 종이 울려 있다.'],
-      facts: [
-        '잠결에 들은 3번 문제 답은 기억한다. 그것도 틀렸다.',
-        '"이번엔 진짜 못 봤어"를 세 번 말하면, 세 번째부터는 자기도 믿는다.',
-        '시험장에서 제일 건강한 사람. 스트레스가 없어서가 아니라, 안 받기로 결정해서다.'
-      ],
-      aiLine: 'AI 안경을 써도 3분이면 잠든다. 렌즈에 정답이 떠 있는 걸 아무도 못 본다. 다만 코고는 소리가 4번 문제까지 들린다.',
-      fantasy: 'watch', nemesis: 'deepfocus'
-    },
-    honest: {
-      emoji: '✍️', label: '땀뻘뻘',
-      name: '정직하게 땀 뻘뻘 열심히 푸는 놈',
-      tagline: '노력파 · 뚝심의 정석',
-      quirk: '땀 흘리며 뭐라도 쓴다',
-      accent: '#e8590c', tint: '#ffece0', img: 'assets/type-honest.webp',
-      desc: [
-        '모르는 문제도 일단 뭐라도 쓴다. 빈칸이 세상에서 제일 무섭고, 부분점수에 인생을 건다.',
-        '손에 땀이 차서 연필이 미끄러지고, 그래서 2B를 네 자루 챙겨 온다. 화장실 갈 시간이 아까워서 물도 안 마신다.',
-        '현실에서도 이 사람은 "제일 열심히 하는데 제일 억울한" 타입이다. 새벽 2시까지 봤는데 10시에 잔 친구가 더 잘 본다. 세상은 원래 불공평하고, 이 사람은 그걸 제일 잘 안다.',
-        '대신 이 사람은 배신을 안 한다. 맡은 일은 끝까지 하고, 남의 노력도 알아본다. 결정적인 순간에 손을 잡아 주는 사람은 늘 이 사람이다.',
-        'AI 안경 얘기가 나오면 진심으로 화낸다. "그거 부정행위야"라는 말에 인생이 담겨 있다.'
-      ],
-      card: ['모르는 문제도 일단 뭐라도 쓴다.', '빈칸이 세상에서 제일 무섭다.'],
-      facts: [
-        '옆에서 종이 넘어가는 소리만 들어도 심장이 빨라진다. 이기는 법은 "한 장 더 쓰는 것"뿐이라고 믿는다.',
-        '문제를 세 번 읽는다. 시간이 없어서 세 번째는 못 읽지만.',
-        '제일 많이 공부하고 제일 많이 틀린다. 억울하지만 다음 시험에도 또 이렇게 한다.'
-      ],
-      aiLine: 'AI 안경을 끼고도 스스로 풀려고 한다. 결국 안경을 벗고 손으로 풀고, 안경 배터리만 떨어진다. 이게 정직의 낭비다.',
-      fantasy: 'deepfocus', nemesis: 'ai'
-    },
-    guess: {
-      emoji: '🧠', label: '찍기',
-      name: '아는 거 없는데 끝까지 머리 굴려 찍는 놈',
-      tagline: '촉 · 임기응변 만렙러',
-      quirk: '끝까지 찍어 본다',
-      accent: '#d6336c', tint: '#ffe9f1', img: 'assets/type-guess.webp',
-      desc: [
-        '답은 모르지만 C가 연속 두 번 안 나온 건 안다. 선택지가 네 개면 "가운데가 답"이라는 신념도 확고하다.',
-        '1번부터 10번까지 다 풀었다. 전부 찍었는데 필기구 색만 진짜다. 찍을 때만큼은 진심이라, 답안지에 옮겨 적으며 한 번 더 확인한다.',
-        '현실에서도 이 사람은 "정보가 없어도 일단 고르고 보는" 타입이다. 메뉴판 앞에서 오래 고민하지 않고, 대신 고른 뒤에 후회를 잘 안 한다.',
-        '정확도는 반반인데 추진력은 상위 1%다. 남들이 검색하는 동안 이 사람은 이미 출발해 있다.',
-        '문제는 가끔 그 촉이 아주 잘 맞는다는 것. 그래서 다음에도 또 찍는다.'
-      ],
-      card: ['답은 모르지만 C가 연속 두 번', '안 나온 건 안다.'],
-      facts: [
-        '답을 맞춰 보면 두 개는 맞았다. 아는 문제보다 잘 찍었다.',
-        '문제에 나온 단어와 제일 비슷하게 생긴 선택지를 고른다. 그게 은근히 맞는다.',
-        '"왜 그렇게 골랐어?"라고 물으면 "느낌"이라고 답한다. 그 느낌을 설명 못 하는 게 더 무섭다.'
-      ],
-      aiLine: 'AI 안경이 정답을 다 알려줘도 못 믿어서 다섯 개를 지우고 다시 찍는다. 촉은 안경도 못 이긴다.',
-      fantasy: 'ai', nemesis: 'escape'
-    },
-    escape: {
-      emoji: '🏃', label: '탈주',
-      name: '다 풀었든 말든 제일 먼저 나가버리는 놈',
-      tagline: '스피드 · 탈주러',
-      quirk: '40분 만에 나가 버린다',
-      accent: '#f59f00', tint: '#fff3d6', img: 'assets/type-escape.webp',
-      desc: [
-        '시험은 100분, 이 사람의 인내심은 40분. 시작 30분 만에 손을 들고, 감독관이 "벌써요?"라고 묻는다.',
-        '책가방은 이미 어깨에 걸려 있다. 다 푼 게 아니라 "더 앉아 있어 봤자"를 계산한 결과다. 문을 나서는 그 개운함이 이 시험의 유일한 보상이다.',
-        '현실에서도 이 사람은 "끝을 빨리 보고 싶어서 중간을 건너뛰는" 타입이다. 회의는 10분 만에 결론을 내고, 드라마는 마지막 회를 먼저 본다.',
-        '결정이 빠른 대신 확인을 안 한다. 집에 와서 답을 맞춰 보면 아직 안 푼 문제가 있다는 걸 알게 된다.',
-        '그래도 이 사람은 후회를 오래 하지 않는다. 나온 문은 다시 안 본다. 그게 장점이자 전부다.'
-      ],
-      card: ['시험은 100분,', '내 인내심은 40분.'],
-      facts: [
-        '화장실을 두 번 갔다 오는 사이 나머지 절반을 포기했다.',
-        '아직 앉아 있는 사람들이 신기하다. 왜 저러지?',
-        '빨리 나온 걸 후회한 적은 없는데, 결과를 본 뒤에 조용해지는 일은 자주 있다.'
-      ],
-      aiLine: 'AI 안경을 쓰면 10분 만에 다 풀고 나간다. 그리고 로비에서 안경으로 정답을 확인하고, 지하철에서 인생을 반성한다.',
-      fantasy: 'omr', nemesis: 'guess'
-    },
-    deepfocus: {
-      emoji: '🔍', label: '과몰입',
-      name: '지우개 가루 산 쌓고 한 문제에 목숨 거는 놈',
-      tagline: '과몰입러 · 집요함의 화신',
-      quirk: '한 문제에 목숨을 건다',
-      accent: '#2f9e44', tint: '#e7f7e4', img: 'assets/type-deepfocus.webp',
-      desc: [
-        '10점짜리 한 문제에 40분을 쓴다. 지우개를 갈고 또 갈아서 책상엔 가루로 작은 눈산이 쌓인다.',
-        '"이거 분명히 수업 시간에 했는데"를 30분 동안 되새긴다. 풀리면 인생이 열릴 것 같고, 안 풀리면 인생이 닫힌 것 같다.',
-        '현실에서도 이 사람은 "완벽주의가 앞부분에서 시간을 다 태우는" 타입이다. 첫 문단을 세 번 고치고, 나머지 반은 손도 못 댄다.',
-        '집요함은 무기다. 대신 우선순위가 없다. 중요한 것과 재미있는 것을 구분하지 못하는 게 이 사람의 유일한 약점이다.',
-        '결국 그 한 문제는 틀리고 나머지는 아예 못 본다. 그리고 다음 시험에도 또 그 한 문제부터 붙잡는다.'
-      ],
-      card: ['10점짜리 한 문제에 40분.', '지우개 가루로 눈이 내린다.'],
-      facts: [
-        '한 문제에서 시계를 마흔 번 넘게 본다. 그 시간이 아깝다는 걸 알면서도 못 넘어간다.',
-        '끝까지 앉아 있는데도 시간이 부족하다. 이상하지? 이해가 안 돼서 그렇다.',
-        '"다음 문제로 넘어가세요"라는 감독관의 말이 제일 무섭다. 그 말이 맞는 걸 본인도 안다.'
-      ],
-      aiLine: 'AI 안경을 쓰면 그 문제를 3초에 푼다. 그리고 그 3초 동안 "이래도 되나" 하는 인생 최고의 회의를 한다.',
-      fantasy: 'honest', nemesis: 'sleep'
-    },
-    watch: {
-      emoji: '👀', label: '옆자리',
-      name: '옆자리 책장 넘기는 소리에 멘탈 나가는 놈',
-      tagline: '주변 의식 · 예민러',
-      quirk: '옆자리 책장 소리에 심장이 내려앉는다',
-      accent: '#2563eb', tint: '#e6efff', img: 'assets/type-watch.webp',
-      desc: [
-        '문제보다 옆자리 책장 넘기는 소리가 더 크게 들린다. 내 1장과 옆의 3장, 이게 인생 차이처럼 느껴진다.',
-        '문제는 네 개밖에 못 풀었는데 옆자리가 몇 장 넘겼는지는 정확히 기억한다. 옆자리가 펜을 놓는 순간 심장이 내려앉는다.',
-        '현실에서도 이 사람은 "남의 속도로 내 하루를 채점하는" 타입이다. 친구가 올린 사진 한 장에 내 주말이 초라해지고, 남이 잘되면 축하와 함께 조용한 상처가 온다.',
-        '나쁜 사람이 아니다. 그만큼 눈치가 빠르고 남의 기분을 먼저 읽는다. 회의실 분위기를 제일 먼저 알아채는 사람도 이 사람이다.',
-        '다만 그 안테나가 자기한테만 너무 예민하다. 남의 3장을 세는 동안 내 1장은 안 늘어난다.'
-      ],
-      card: ['문제보다 옆자리 책장 소리가', '더 크게 들린다.'],
-      facts: [
-        '필기구 소리만 들어도 "나는 늦었다"는 결론이 3초 만에 나온다.',
-        '귀마개를 챙겨 오겠다고 다짐하고, 다음 시험에도 안 챙긴다. 그런데 옆자리 소리는 여전히 다 들린다.',
-        '시험이 끝나고 옆자리 점수를 물어본다. 묻고 나서 더 속상해진다.'
-      ],
-      aiLine: 'AI 안경을 쓰면 소리는 안 들릴지 몰라도, 옆자리가 안경을 안 썼다는 사실이 더 신경 쓰인다. 결국 세 문제 남기고 비교를 시작한다.',
-      fantasy: 'sleep', nemesis: 'omr'
-    },
-    omr: {
-      emoji: '🫠', label: 'OMR',
-      name: '종료 3분 전 OMR 밀려 써서 식은땀 흘리는 놈',
-      tagline: '막판 대참사러',
-      quirk: '마지막 3분에 OMR을 밀려 쓴다',
-      accent: '#e0362f', tint: '#ffe8e6', img: 'assets/type-omr.webp',
-      desc: [
-        '답은 다 알았는데 마킹을 안 했다. 문제 옆에 동그라미는 쳐 놨는데 OMR은 백지다. 이건 재능이다.',
-        '종료 3분 전부터 손이 떨려서 5번 답을 6번 칸에 쓴다. 고친 자국이 다섯 군데, 지우개는 공중에 떠 있다.',
-        '현실에서도 이 사람은 "마무리를 마지막 순간에 몰아서 하는" 타입이다. 준비물은 다 있는데 제출 버튼을 제일 마지막에 누른다.',
-        '실력이 없어서가 아니다. 아는 문제를 아는 순간에 안 적어서 잃는 사람이다. 이건 머리 문제가 아니라 순서 문제다.',
-        '제일 억울한 유형 1위. 다 아는 시험인데 결과는 늘 이상하게 낮다.'
-      ],
-      card: ['답은 다 알았는데 마킹을 안 했다.', '종료 3분 전, 손이 두 개였으면.'],
-      facts: [
-        '문제를 풀 때 OMR에 옮기는 습관이 없다. "나중에 한꺼번에"가 인생 모토다.',
-        '3분 남았는데 남은 칸이 열두 개. 손이 두 개였으면 좋겠다.',
-        '결과가 이상하게 낮다. 다 아는 문제였는데. 이유는 본인이 제일 잘 안다.'
-      ],
-      aiLine: 'AI 안경이 정답을 다 띄워 줘도 마킹은 직접 해야 한다. 안경이 "3분 남았습니다"를 세 번이나 알려 줬는데.',
-      fantasy: 'escape', nemesis: 'watch'
-    }
-  };
-  var ORDER = ['ai', 'sleep', 'honest', 'guess', 'escape', 'deepfocus', 'watch', 'omr'];
-
-  /* ── 제휴 상품 (쿠팡 파트너스) ───────────────
-     url 에 파트너스 링크를 넣으면 그 즉시 구매 카드로 활성화됩니다.
-     빈 문자열이면 '준비 중' 상태로 안전하게 표시됩니다. */
-  var AFFILIATE_ITEMS = {
-    ai:        { name: '블루라이트 차단 안경 (베델루스 뿔테)', desc: '렌즈 반사광은 줄이고 눈은 지키는 기본템', url: 'https://link.coupang.com/a/iL2Wt3Soay' },
-    sleep:     { name: '3D 암막 수면안대 (빅트리 프리미엄)', desc: '10분 꿀잠의 완성은 빛 차단', url: 'https://link.coupang.com/a/iL1KHZ3jC8' },
-    honest:    { name: '고탄력 통기성 손목보호대 2P', desc: '손목이 저려도 연필은 놓지 못하니까', url: 'https://link.coupang.com/a/iL2YTn6Uoe' },
-    guess:     { name: '컬러 아크릴 미니 주사위 50개입', desc: '촉은 실력이 아니라 기분에서 온다', url: 'https://link.coupang.com/a/iL22LXSDG8' },
-    escape:    { name: '거실 구름 실내화 슬리퍼', desc: '40분 만에 나갈 몸에 운동화 끈은 번거롭다', url: 'https://link.coupang.com/a/iL25RPizEO' },
-    deepfocus: { name: '펜텔 아인 점보 지우개 특대형 2개', desc: '가루 산을 만들 만큼 넉넉하게', url: 'https://link.coupang.com/a/iL29DZgAmq' },
-    watch:     { name: '굿나잇 이어플러그 프리미엄 15쌍', desc: '옆자리 책장 소리를 물리치는 유일한 방법', url: 'https://link.coupang.com/a/iL3bUS7ttY' },
-    omr:       { name: '컴퓨터용 사인펜 + 수정테이프 세트', desc: '마지막 3분을 살리는 최소 장비', url: 'https://link.coupang.com/a/iL3efXwP6q' }
-  };
-
-  /* 짧은 표기 (케미 카드 등 좁은 자리) */
-  var SHORT = {
-    ai: 'AI 안경 끼고 베끼는 놈',
-    sleep: '10분 만에 꿀잠 자는 놈',
-    honest: '땀 뻘뻘 정직한 놈',
-    guess: '머리 굴려 찍는 놈',
-    escape: '제일 먼저 나가는 놈',
-    deepfocus: '한 문제에 목숨 거는 놈',
-    watch: '옆자리 소리에 예민한 놈',
-    omr: 'OMR 밀려 쓰는 놈'
-  };
-
-  /* ── 10문항 (교시 · 영역) ─────────────────── */
-  var QUESTIONS = [
-    {
-      tag: '시험 전날 밤', area: '준비 영역', img: 'assets/type-sleep.webp', accent: '#6b4bf6', label: 'D-1 · 23:00',
-      q: '시험 전날 밤, 나는?',
-      opts: [
-        { k: 'ai', t: 'AI 안경 충전부터 한다. 렌즈 닦고 배터리 100% 확인.' },
-        { k: 'honest', t: '기출 3년치를 훑다가 새벽 2시. 그리고 다 못 봤다.' },
-        { k: 'sleep', t: '"내일은 내일의 내가 잘할 거야" 하고 11시 취침.' },
-        { k: 'watch', t: '옆자리 걔는 뭐 하고 있나 카톡 프로필부터 확인한다. 나만 안 한 것 같아서.' }
-      ]
-    },
-    {
-      tag: '시험지 받는 순간', area: '초조 영역', img: 'assets/type-honest.webp', accent: '#e8590c', label: '09:00 · 1교시',
-      q: '감독관이 "시험지 펼치세요"라고 말했다. 그때 나는?',
-      opts: [
-        { k: 'deepfocus', t: '제일 어려워 보이는 문제부터 찾아 표시해 둔다.' },
-        { k: 'guess', t: '1번부터 10번까지 훑고 "몇 개나 찍을지" 계산한다.' },
-        { k: 'watch', t: '옆자리 시험지 펼치는 속도부터 확인한다.' },
-        { k: 'sleep', t: '이름 쓰고 10분 뒤엔 이미 엎드려 자고 있다. 시험은 이제 시작됐다.' }
-      ]
-    },
-    {
-      tag: '모르는 문제', area: '위기 영역', img: 'assets/type-guess.webp', accent: '#d6336c', label: 'CASE 03 · 막힘',
-      q: '모르는 문제를 만났다. 그 순간 나는?',
-      opts: [
-        { k: 'honest', t: '일단 뭐라도 쓴다. 빈칸은 죄악이다.' },
-        { k: 'guess', t: '선택지를 세 번 읽고, 제일 낯익은 걸 고른다.' },
-        { k: 'ai', t: '안경을 살짝 만지고 시선을 아래로 내린다.' },
-        { k: 'omr', t: '일단 표시만 해두고 나중에 OMR에 옮긴다.' }
-      ]
-    },
-    {
-      tag: '감독관과 눈 마주침', area: '심장 영역', img: 'assets/cover.webp?v=3', accent: '#2563eb', label: 'CASE 04 · 접촉',
-      q: '감독관과 눈이 마주쳤다. 나는?',
-      opts: [
-        { k: 'watch', t: '심장이 내려앉아서 30초 동안 문제에 집중하는 척한다.' },
-        { k: 'honest', t: '오히려 정면으로 마주본다. 잘못한 게 없으니까.' },
-        { k: 'ai', t: '아무 일 없던 것처럼 미소 짓고 고개를 끄덕인다.' },
-        { k: 'escape', t: '눈 마주친 김에 "화장실 가도 돼요?"라고 묻는다.' }
-      ]
-    },
-    {
-      tag: 'AI 안경의 유혹 · 배터리 100%', area: '양심 영역', img: 'assets/type-ai.webp?v=2', accent: '#16a34a', label: 'CASE 05 · 유혹',
-      q: '책상 위에 AI 안경이 딱 놓여 있다. 집어 들면 렌즈 옆 카메라에 초록불이 켜지고, 쓰는 순간 정답이 스르륵 떠오를 게 뻔하다. 배터리 100%.',
-      opts: [
-        { k: 'ai', t: '이건 하늘의 계시다. 렌즈에 답 뜨는 순간까지만 쓰자.' },
-        { k: 'honest', t: '부정행위다. 절대 안 쓴다. 손으로 푼다.' },
-        { k: 'sleep', t: '안경은 무슨. 일단 10분만 눈 붙이자.' },
-        { k: 'deepfocus', t: '안경은 됐고 이 문제 하나만 더 붙잡자.' }
-      ]
-    },
-    {
-      tag: '시간 절반', area: '시간 영역', img: 'assets/type-omr.webp', accent: '#e0362f', label: 'CASE 06 · 50분',
-      q: '시험 시간 절반이 지났는데 문제도 절반 남았다.',
-      opts: [
-        { k: 'honest', t: '속도 올린다. 아는 문제부터 정확하게, 모르는 건 일단 뭐라도 채우고 넘어간다.' },
-        { k: 'guess', t: '남은 문제는 다 찍는다. 대신 각오를 담아서.' },
-        { k: 'escape', t: '"이쯤이면 그냥 나가는 게 낫지 않나"를 열 번째 계산한다.' },
-        { k: 'omr', t: '"아, OMR 아직 안 썼다"를 이때 깨닫는다.' }
-      ]
-    },
-    {
-      tag: '옆자리의 답안지', area: '우정 영역', img: 'assets/type-watch.webp', accent: '#0d9488', label: 'CASE 07 · 밀당',
-      q: '옆자리 친구가 답안지를 살짝 밀어줬다.',
-      opts: [
-        { k: 'honest', t: '고맙지만 안 본다. 이건 내 시험이니까.' },
-        { k: 'ai', t: '0.5초만 본다. 그러다 결국 남은 문제도 다 본다.' },
-        { k: 'watch', t: '보기도 전에 "쟤는 다 풀었구나"로 상처받는다.' },
-        { k: 'deepfocus', t: '지금 이 문제에 집중하느라 못 봤다.' }
-      ]
-    },
-    {
-      tag: '시험 끝', area: '자기합리화 영역', img: 'assets/type-escape.webp', pos: 'center 8%', accent: '#f59f00', label: 'CASE 08 · 종료',
-      q: '시험 끝. 복도로 나서는데 친구가 "몇 개 찍었어?"라고 묻는다.',
-      opts: [
-        { k: 'guess', t: '다 찍었어. 그래도 두 개는 맞은 것 같아.' },
-        { k: 'escape', t: '몰라, 나 40분 만에 나왔어. 그때 이미 내 시험은 끝났지.' },
-        { k: 'watch', t: '"몇 개 찍긴. 너는 몇 개 맞았어?" 하고 먼저 되묻는다.' },
-        { k: 'omr', t: '"나 8번 OMR 칸 비웠을지도 몰라..." 이미 낸 답안지가 자꾸 떠오른다.' }
-      ]
-    },
-    {
-      tag: '시험 3일 전', area: '환경 영역', img: 'assets/type-deepfocus.webp', accent: '#2f9e44', label: 'D-3 · 책상',
-      q: '시험 3일 전, 내 방 책상은?',
-      opts: [
-        { k: 'honest', t: '기출 프린트, 형광펜 6색, 스탬플러까지 완벽 정리.' },
-        { k: 'ai', t: '충전기 꽂힌 AI 안경. 케이블 정리까지 끝났다.' },
-        { k: 'sleep', t: '이불. 그 위에 노트북. 노트북엔 유튜브.' },
-        { k: 'omr', t: 'OMR 연습지는 한 장도 없다. 답 옮기는 연습은 한 번도 안 해봤다.' }
-      ]
-    },
-    {
-      tag: '한 문장', area: '총평 영역', img: 'assets/cover.webp?v=3', accent: '#6b4bf6', label: 'FIN · 정리',
-      q: '이번 시험, 한 문장으로 정리하면?',
-      opts: [
-        { k: 'guess', t: '"촉이 좋았던 날이었다."' },
-        { k: 'deepfocus', t: '"한 문제만 더 붙잡았으면."' },
-        { k: 'escape', t: '"빨리 나온 건 후회 없다."' },
-        { k: 'sleep', t: '"잘 잤다."' }
-      ]
-    }
-  ];
-
-  /* ── 기기 내 누적 랭킹 시드 ───────────────── */
-  var SEED = { ai: 1521, sleep: 1033, honest: 1402, guess: 1188, escape: 744, deepfocus: 691, watch: 862, omr: 577 };
-
-  /* ── 케미 ────────────────────────────────────
-     8가지 짝(환상 4 · 상극 4)을 한 곳에서 정의해
-     결과 카드의 짝꿍/상극 설명과 1:1 케미 문구가 같은 논리로 말해지게 한다. */
-  var PAIRS = {
-    'ai|guess': {
-      s: 96, t: '환상의 조합 · 안경과 촉',
-      why: [
-        '한 명은 안경으로 정답을 띄우고, 한 명은 그 정답이 못 믿어서 다시 찍는다. 그런데 둘 다 맞힌다.',
-        '정보를 믿는 놈과 자기 촉을 믿는 놈이 서로를 검증해 주니 틀릴 구멍이 없다. 문제는 시험이 끝나면 둘 다 아무것도 기억하지 못한다는 것.'
-      ]
-    },
-    'deepfocus|honest': {
-      s: 86, t: '뚝심 콤비',
-      why: [
-        '한 명은 한 문제를 40분 붙잡고, 한 명은 열 문제를 다 붙잡는다. 방식은 정반대인데 "끝까지 앉아 있다"는 결론만 같다.',
-        '둘 다 시간이 부족해서 결과는 아쉽지만, 서로의 뚝심을 유일하게 알아봐 주는 사이. 끝나고 둘 다 말없이 지우개를 턴다.'
-      ]
-    },
-    'escape|omr': {
-      s: 78, t: '먼저 나간 자와 남은 자',
-      why: [
-        '먼저 나가는 놈이 40분에 교실을 뜨면, 마킹을 미루던 놈은 그 빈자리를 보며 "나도 저러고 싶다"를 참는다. 그 참음이 마킹을 더 미루게 만든다.',
-        '그래서 한 명은 로비에서 기다리고, 한 명은 종료 3분 전에 OMR을 밀려 쓴다. 만나면 아무것도 안 묻고 아이스크림을 사 준다.'
-      ]
-    },
-    'sleep|watch': {
-      s: 92, t: '조용한 위로',
-      why: [
-        '옆자리가 조용히 자고 있으면 소리에 예민한 놈은 오히려 마음이 놓인다. 책장 소리도, 펜 소리도, 한숨도 안 나기 때문이다.',
-        '자는 쪽은 아무것도 안 해도 남의 멘탈을 지켜 주고, 예민한 쪽은 그 덕에 겨우 문제를 푼다. 서로에게 최고의 이웃.'
-      ]
-    },
-    'ai|honest': {
-      s: 21, t: '최악의 상극 · 안경과 팔',
-      why: [
-        '안경 쓴 놈은 옆의 답이 보여야 하고, 정직한 놈은 팔로 답안지를 가린다. 한 명의 생존 조건이 다른 한 명의 방해물이다.',
-        '게다가 정직한 놈은 "그거 부정행위야"를 진심으로 말한다. 앞뒤 자리에 앉으면 안경은 잡히고 팔은 뻐근하고, 둘 다 망한다.'
-      ],
-      fail: '안경은 압수되고, 팔은 저리고, 정직한 놈은 그날 제일 분노한 채로 시험을 끝낸다.'
-    },
-    'deepfocus|sleep': {
-      s: 18, t: '최악의 상극 · 지우개와 코고는 소리',
-      why: [
-        '한 명은 한 문제에 목숨을 걸고 지우개를 갈고, 한 명은 그 옆에서 10분 만에 잠든다.',
-        '지우개 가는 소리는 잠을 깨우고, 코고는 소리는 집중을 부순다. 깨운 쪽은 왜 화내는지 모르고, 깨운 쪽은 억울하다.'
-      ],
-      fail: '한 명은 그 문제를 영원히 못 풀고, 한 명은 4번 문제를 꿈에서 본다. 둘 다 그날 시험을 잃는다.'
-    },
-    'escape|guess': {
-      s: 26, t: '최악의 상극 · 촉과 탈주',
-      why: [
-        '찍는 놈은 답을 고르는 데 10초가 걸리고, 나가는 놈은 그 10초를 못 기다린다. 가방 메고 일어나는 소리만 들어도 촉이 흔들린다.',
-        '결국 찍던 놈도 "나도 나가"를 외치고 같이 나간다. 둘 다 답을 모른 채 복도에 서 있다.'
-      ],
-      fail: '남은 답은 안 찍히고 시험은 두 사람을 이긴다. 복도에서 "너 몇 개 찍었어?"도 못 묻는다.'
-    },
-    'omr|watch': {
-      s: 24, t: '최악의 상극 · 소리와 식은땀',
-      why: [
-        '마킹을 미룬 놈은 종료 3분 전에 펜을 부러질 듯 갈기고, 예민한 놈은 그 소리에 심장이 내려앉아 손이 멈춘다.',
-        '옆자리는 소리에 다섯 번 놀라고, 마킹하는 놈은 옆자리가 멈춘 걸 눈치채지 못한다. 둘 다 마지막 3분을 서로에게 빼앗긴다.'
-      ],
-      fail: '한 명은 8번 칸을 비우고, 한 명은 3번 문제에서 손이 굳는다. 둘 다 종이 울릴 때 같은 얼굴이다.'
-    }
-  };
-
-  /* ── 같은 유형끼리 (1:1 케미) ───────────────── */
-  var CHEMI_SAME = {
-    ai: [84, '같은 안경 두 개', [
-      '같은 안경 두 개를 쓰면 렌즈에 같은 정답이 뜬다. 문제는 둘이 그걸 확인하느라 서로의 렌즈를 보다가 자기 문제를 안 푼다.',
-      '결국 둘 다 감독관에게 잡히고, 집에 가는 길에 "다음엔 다른 안경 쓰자"고 진지하게 상의한다.'
-    ]],
-    sleep: [88, '쌍둥이 꿀잠', [
-      '둘이 동시에 엎드리면 시험장에 코고는 소리가 두 겹으로 깔린다. 감독관이 깨우면 둘 다 "다 풀었어요"라고 말한다.',
-      '둘 다 백지인 걸 서로가 확인해 주는데, 그게 왜인지 위로가 된다.'
-    ]],
-    honest: [80, '정직한 동지', [
-      '둘 다 손에 땀이 차서 연필이 계속 미끄러지고, 둘 다 부분점수를 노린다. 서로의 답안지를 보면 "나만 이렇게 쓴 게 아니구나" 싶다.',
-      '시험이 끝나고 답을 맞춰 보면 둘 다 조용해진다. 서로에게 먼저 미안하다고 말한다.'
-    ]],
-    guess: [86, '찍기의 성지', [
-      '둘 다 C를 찍고, 둘 다 답이 다르게 나와서 동시에 조용해진다. 누가 맞았는지 확인하는 순간이 제일 무섭다.',
-      '그런데 둘 다 두 개씩은 맞았다. 촉이 통한 게 아니라 문제가 이상했던 거다.'
-    ]],
-    escape: [90, '탈주 콤비', [
-      '둘 다 40분에 나가서 로비에서 마주친다. "너도?" "어." 그 한 마디로 우정이 완성된다.',
-      '편의점 아이스크림을 들고 인생을 논한다. 둘 다 망했지만 그날의 하이라이트는 그 복도였다.'
-    ]],
-    deepfocus: [74, '과몰입 부부', [
-      '둘 다 같은 문제에 목숨을 걸고, 서로 지우개를 빌려 갈아 쓴다. 지우개 가루가 책상에 눈처럼 쌓인다.',
-      '시험이 끝나도 둘 다 안 일어난다. 그 문제가 아직 안 풀렸기 때문이다. 결국 둘 다 그 문제만 틀린다.'
-    ]],
-    watch: [70, '예민 듀오', [
-      '둘이 서로의 책장 소리에 예민해진다. 한 명이 넘기면 다른 한 명이 힐끗 보고, 그게 신경 쓰여 또 넘긴다.',
-      '결국 서로가 서로의 소음원이 되어 둘 다 세 문제만 풀고 나온다. 집에 가서 서로에게 미안하다고 문자한다.'
-    ]],
-    omr: [66, 'OMR 참사', [
-      '둘 다 마킹을 미루는 게 인생 모토라, 종료 3분 전에 동시에 펜을 잡는다. 그리고 동시에 5번 답을 6번 칸에 쓴다.',
-      '감독관이 오면 둘 다 "이거 원래 이래요"라고 말한다. 아무도 안 믿는다.'
-    ]]
-  };
-
-  function pairKey(a, b) { return a < b ? a + '|' + b : b + '|' + a; }
-  function pairInfo(a, b) { return PAIRS[pairKey(a, b)] || null; }
-
-  var NEUTRAL = [
-    [72, '무난한 케미', '서로의 속도가 달라서 오히려 안 부딪힌다. 생각보다 괜찮은 자리.'],
-    [58, '묘한 케미', '서로가 서로에게 딱 절반의 방해다. 둘 다 중간에서 끝난다.'],
-    [44, '아슬한 케미', '한 명이 겨우 정신 차려야 둘 다 산다. 지금은 둘 다 위험하다.']
-  ];
-
-  function chemi(a, b) {
-    if (a === b && CHEMI_SAME[a]) return CHEMI_SAME[a];
-    var p = pairInfo(a, b);
-    if (p) return [p.s, p.t, p.why];
-    var bucket = (ORDER.indexOf(a) * 7 + ORDER.indexOf(b) * 13) % 3;
-    var n = NEUTRAL[bucket];
-    return [n[0], n[1], [
-      '한 명은 ' + TYPES[a].quirk + '. 다른 한 명은 ' + TYPES[b].quirk + '.',
-      n[2]
-    ]];
-  }
-  /* ── 상태 ─────────────────────────────────── */
-  var state = {
-    i: 0,
-    answers: [],
-    result: null,
-    view: null,
-    preview: false,
-    from: null,
-    busy: false
-  };
-
+  var DST = window.Destiny, DATA = window.DESTINY_DATA;
+  var E = DATA.ELEM, EO = DATA.ELEM_ORDER;
   var $ = function (id) { return document.getElementById(id); };
-  var root = document.documentElement;
+  var S = {
+    me: null, partner: null, from: null, mode: 'self',
+    relType: '친구', photo: null, photoNote: '', relation: null, cardUrl: null
+  };
+  var SOUND_KEY = 'gs_sound_v1';
 
-  /* ── 저장소 ───────────────────────────────── */
-  function loadStore() {
-    var base = { inc: {}, done: 0 };
-    try {
-      var raw = localStorage.getItem(STORE_KEY);
-      if (!raw) return base;
-      var p = JSON.parse(raw);
-      if (p && p.inc && typeof p.inc === 'object') {
-        ORDER.forEach(function (k) { base.inc[k] = Number(p.inc[k]) || 0; });
-      }
-      base.done = Number(p && p.done) || 0;
-    } catch (e) {}
-    return base;
-  }
-  function saveStore(s) {
-    try { localStorage.setItem(STORE_KEY, JSON.stringify(s)); } catch (e) {}
-  }
-  function counts(s) {
-    var c = {};
-    ORDER.forEach(function (k) { c[k] = SEED[k] + (s.inc[k] || 0); });
-    return c;
-  }
-  function totalOf(c) {
-    return ORDER.reduce(function (a, k) { return a + c[k]; }, 0);
-  }
-  function rankMap(c) {
-    var sorted = ORDER.slice().sort(function (a, b) { return c[b] - c[a]; });
-    var m = {};
-    sorted.forEach(function (k, i) { m[k] = i + 1; });
-    return m;
-  }
-  var store = loadStore();
-
-  /* ── 사운드 (Web Audio, 외부 파일 없음) ─────
-     초침 소리 없이, 낮은 볼륨의 따뜻한 일렉트릭 피아노 아르페지오와
-     잔잔한 앰비언트 패드만 느리게 흐르게 한다. */
+  /* ── 사운드(잔잔한 로파이 패드) ─────────────────── */
   var Sound = (function () {
     var ctx = null, master = null, arpBus = null;
     var arpTimer = null, padTimer = null, padOscs = [], chordIdx = 0, step = 0;
     var enabled = true, started = false;
-
-    /* 느린 4코드 순환 — Cmaj7 · Am7 · Fmaj7 · G6 */
+    /* 동양풍 5음계(D 단조 펜타토닉 계열) — 낮고 느리게 */
     var CHORDS = [
+      [146.83, 174.61, 220.00, 261.63],
       [130.81, 164.81, 196.00, 246.94],
-      [110.00, 130.81, 164.81, 196.00],
-      [87.31, 110.00, 130.81, 174.61],
-      [98.00, 123.47, 146.83, 196.00]
+      [110.00, 146.83, 174.61, 220.00],
+      [123.47, 146.83, 185.00, 220.00]
     ];
-    /* 코드별 아르페지오 음 — 높지 않게, 부드러운 범위 */
     var ARP = [
-      [523.25, 659.25, 783.99, 987.77, 783.99, 659.25],
-      [440.00, 523.25, 659.25, 783.99, 659.25, 523.25],
-      [349.23, 440.00, 523.25, 698.46, 523.25, 440.00],
-      [392.00, 493.88, 587.33, 783.99, 587.33, 493.88]
+      [440.00, 523.25, 659.25, 523.25, 440.00, 392.00],
+      [392.00, 440.00, 523.25, 659.25, 523.25, 440.00],
+      [329.63, 440.00, 523.25, 440.00, 329.63, 293.66],
+      [369.99, 440.00, 554.37, 440.00, 369.99, 329.63]
     ];
-
     try { if (localStorage.getItem(SOUND_KEY) === '0') enabled = false; } catch (e) {}
-
     function supported() { return !!(window.AudioContext || window.webkitAudioContext); }
     function ensure() {
       if (!supported()) return null;
@@ -530,15 +49,12 @@
       if (ctx.state === 'suspended' && ctx.resume) { try { ctx.resume(); } catch (e) {} }
       return ctx;
     }
-
-    /* 부드러운 사인 톤 (클릭음 등) */
     function tone(freq, dur, type, vol, delay, slideTo) {
       if (!ctx || !master) return;
       try {
         var t0 = ctx.currentTime + (delay || 0);
-        var o = ctx.createOscillator(), g = ctx.createGain();
-        var lp = ctx.createBiquadFilter();
-        lp.type = 'lowpass'; lp.frequency.value = 1800;
+        var o = ctx.createOscillator(), g = ctx.createGain(), lp = ctx.createBiquadFilter();
+        lp.type = 'lowpass'; lp.frequency.value = 1600;
         o.type = type || 'sine';
         o.frequency.setValueAtTime(freq, t0);
         if (slideTo) o.frequency.exponentialRampToValueAtTime(slideTo, t0 + dur);
@@ -549,22 +65,17 @@
         o.start(t0); o.stop(t0 + dur + 0.05);
       } catch (e) {}
     }
-
-    /* 따뜻한 일렉트릭 피아노 한 음 (사인 캐리어 + 감쇠하는 FM 변조) */
     function epNote(freq, vol, dur, delay) {
       if (!ctx || !master) return;
       try {
         var t0 = ctx.currentTime + (delay || 0);
         var car = ctx.createOscillator(), mod = ctx.createOscillator();
-        var modGain = ctx.createGain(), g = ctx.createGain();
-        var lp = ctx.createBiquadFilter();
-        lp.type = 'lowpass'; lp.frequency.value = 2200; lp.Q.value = 0.4;
-        car.type = 'sine';
-        car.frequency.setValueAtTime(freq, t0);
-        mod.type = 'sine';
-        mod.frequency.setValueAtTime(freq * 2, t0);
-        modGain.gain.setValueAtTime(freq * 0.55, t0);
-        modGain.gain.exponentialRampToValueAtTime(freq * 0.04, t0 + dur * 0.6);
+        var modGain = ctx.createGain(), g = ctx.createGain(), lp = ctx.createBiquadFilter();
+        lp.type = 'lowpass'; lp.frequency.value = 2000; lp.Q.value = 0.4;
+        car.type = 'sine'; car.frequency.setValueAtTime(freq, t0);
+        mod.type = 'sine'; mod.frequency.setValueAtTime(freq * 2, t0);
+        modGain.gain.setValueAtTime(freq * 0.5, t0);
+        modGain.gain.exponentialRampToValueAtTime(freq * 0.03, t0 + dur * 0.6);
         mod.connect(modGain); modGain.connect(car.frequency);
         g.gain.setValueAtTime(0.0001, t0);
         g.gain.exponentialRampToValueAtTime(vol, t0 + 0.05);
@@ -574,67 +85,44 @@
         car.stop(t0 + dur + 0.08); mod.stop(t0 + dur + 0.08);
       } catch (e) {}
     }
-
     function arpStep() {
       if (!ctx) return;
       var notes = ARP[chordIdx % ARP.length];
-      epNote(notes[step % notes.length], 0.026, 2.6, 0);
+      epNote(notes[step % notes.length], 0.024, 2.8, 0);
       step++;
     }
-
     function startPad() {
       if (!ctx) return;
       try {
-        /* 패드 버스 — 낮게 걸러 따뜻하게 */
-        var padGain = ctx.createGain();
-        padGain.gain.value = 0.022;
-        var padLp = ctx.createBiquadFilter();
-        padLp.type = 'lowpass'; padLp.frequency.value = 620; padLp.Q.value = 0.5;
-        var bus = ctx.createGain(); bus.gain.value = 1;
+        var padGain = ctx.createGain(); padGain.gain.value = 0.02;
+        var padLp = ctx.createBiquadFilter(); padLp.type = 'lowpass'; padLp.frequency.value = 560; padLp.Q.value = 0.6;
         padLp.connect(padGain); padGain.connect(master);
-
-        /* 아르페지오 버스 — 살짝만 열어 두어 튀지 않게 */
-        arpBus = ctx.createBiquadFilter();
-        arpBus.type = 'lowpass'; arpBus.frequency.value = 2000; arpBus.Q.value = 0.5;
-        arpBus.connect(bus); bus.connect(master);
-
+        arpBus = ctx.createBiquadFilter(); arpBus.type = 'lowpass'; arpBus.frequency.value = 1900; arpBus.Q.value = 0.5;
+        arpBus.connect(master);
         CHORDS[0].forEach(function (f, i) {
-          var o = ctx.createOscillator(), g = ctx.createGain();
+          var o = ctx.createOscillator(), g2 = ctx.createGain();
           o.type = i === 0 ? 'sine' : 'triangle';
           o.frequency.value = f;
-          g.gain.value = i === 0 ? 1 : 0.5;
-          o.connect(g); g.connect(padLp);
-          o.start();
-          padOscs.push(o);
+          g2.gain.value = i === 0 ? 1 : 0.45;
+          o.connect(g2); g2.connect(padLp); o.start(); padOscs.push(o);
         });
-
-        /* 코드는 10초에 한 번, 2.5초에 걸쳐 미끄러지듯 이동 */
         padTimer = setInterval(function () {
           if (!ctx) return;
           chordIdx = (chordIdx + 1) % CHORDS.length;
           var ch = CHORDS[chordIdx];
-          padOscs.forEach(function (o, i) {
-            try { o.frequency.setTargetAtTime(ch[i], ctx.currentTime, 1.4); } catch (e) {}
-          });
-        }, 10000);
-
-        /* 아르페지오는 1.25초 간격 — 느린 잔잔한 흐름 */
-        arpTimer = setInterval(arpStep, 1250);
+          padOscs.forEach(function (o, i) { try { o.frequency.setTargetAtTime(ch[i], ctx.currentTime, 1.6); } catch (e) {} });
+        }, 11000);
+        arpTimer = setInterval(arpStep, 1350);
         arpStep();
       } catch (e) {}
     }
-
     function start() {
       if (!ensure()) return;
-      if (started) {
-        try { master.gain.setTargetAtTime(0.5, ctx.currentTime, 0.4); } catch (e) {}
-        return;
-      }
+      if (started) { try { master.gain.setTargetAtTime(0.48, ctx.currentTime, 0.4); } catch (e) {} return; }
       started = true;
-      try { master.gain.cancelScheduledValues(ctx.currentTime); master.gain.setTargetAtTime(0.5, ctx.currentTime, 1.1); } catch (e) {}
+      try { master.gain.cancelScheduledValues(ctx.currentTime); master.gain.setTargetAtTime(0.48, ctx.currentTime, 1.2); } catch (e) {}
       startPad();
     }
-
     function stop() {
       if (arpTimer) { clearInterval(arpTimer); arpTimer = null; }
       if (padTimer) { clearInterval(padTimer); padTimer = null; }
@@ -643,7 +131,6 @@
       if (ctx && master) { try { master.gain.setTargetAtTime(0.0001, ctx.currentTime, 0.5); } catch (e) {} }
       started = false;
     }
-
     return {
       isOn: function () { return enabled; },
       setEnabled: function (v) {
@@ -655,453 +142,844 @@
       unlock: function () { if (enabled) start(); },
       click: function () {
         if (!enabled || !ctx) return;
-        tone(540, 0.18, 'sine', 0.028, 0, 660);
-        tone(270, 0.2, 'sine', 0.014, 0.01);
+        tone(520, 0.16, 'sine', 0.024, 0, 620);
       },
       reveal: function () {
         if (!enabled || !ctx) return;
-        [523.25, 659.25, 783.99, 987.77].forEach(function (f, i) {
-          epNote(f, 0.045, 1.9, i * 0.16);
-        });
-        epNote(261.63, 0.03, 3.2, 0.2);
-        if (master) {
-          try {
-            master.gain.setTargetAtTime(0.62, ctx.currentTime, 0.6);
-            master.gain.setTargetAtTime(0.5, ctx.currentTime + 2.2, 1.6);
-          } catch (e) {}
-        }
+        [392.00, 523.25, 587.33, 783.99].forEach(function (f, i) { epNote(f, 0.04, 2.2, i * 0.18); });
+        epNote(196.00, 0.03, 3.4, 0.2);
       }
     };
   })();
-  function paintSoundBtn() {
+  function paintSound() {
     var on = Sound.isOn();
     $('soundIcon').textContent = on ? '🔊' : '🔇';
     $('btnSound').setAttribute('aria-pressed', on ? 'true' : 'false');
-    var txt = $('btnSound').querySelector('.sound-txt');
-    if (txt) txt.textContent = on ? '사운드' : '꺼짐';
+    var t = $('btnSound').querySelector('.sound-txt');
+    if (t) t.textContent = on ? '배경음' : '꺼짐';
   }
 
-  /* ── 유틸 ─────────────────────────────────── */
+  /* ── 공통 ─────────────────────────────────────── */
   var toastTimer;
   function toast(msg) {
     var t = $('toast');
     t.textContent = msg;
     t.classList.add('is-on');
     clearTimeout(toastTimer);
-    toastTimer = setTimeout(function () { t.classList.remove('is-on'); }, 2400);
+    toastTimer = setTimeout(function () { t.classList.remove('is-on'); }, 2600);
   }
-  function fmt(n) { return Number(n).toLocaleString('ko-KR'); }
   function show(id) {
-    var screens = document.querySelectorAll('.screen');
-    for (var i = 0; i < screens.length; i++) screens[i].classList.remove('is-on');
-    var el = $(id);
-    if (el) el.classList.add('is-on');
-    document.body.classList.toggle('is-quiz', id === 'screen-quiz');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    ['screen-intro', 'screen-form', 'screen-scan', 'screen-result'].forEach(function (k) {
+      var el = $(k); if (el) el.classList.toggle('is-on', k === id);
+    });
+    try { window.scrollTo(0, 0); } catch (e) {}
   }
-  function hexToRgb(h) {
-    var m = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(h);
-    return m ? [parseInt(m[1], 16), parseInt(m[2], 16), parseInt(m[3], 16)] : [107, 75, 246];
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
   }
-  function setAccent(hex) {
-    root.style.setProperty('--q-accent', hex);
-    root.style.setProperty('--q-accent-rgb', hexToRgb(hex).join(','));
+  function attr(s) { return esc(s).replace(/`/g, '&#96;'); }
+  function dateText(b) {
+    var p = b.split('-');
+    return p[0] + '.' + p[1] + '.' + p[2];
   }
-  function param(name) {
-    var m = new RegExp('[?&]' + name + '=([^&#]*)').exec(location.search);
-    return m ? decodeURIComponent(m[1]) : null;
-  }
-
-  /* ── 인트로 ───────────────────────────────── */
-  function renderTeaser() {
-    var ai = TYPES.ai;
-    var featured = '<div class="tcard is-feature">' +
-      '<img class="tcard-art" src="' + ai.img + '" alt="" width="720" height="720" loading="lazy">' +
-      '<span class="tcard-body">' +
-        '<span class="tcard-feat-b">대표 유형</span>' +
-        '<span class="tcard-txt"><span aria-hidden="true">🕶️</span> ' + ai.name + '</span>' +
-        '<span class="tcard-sub">카메라 2개 · 렌즈에 답 뜨는 순간 · 배터리 3% 경고</span>' +
-      '</span></div>';
-    var rest = ORDER.filter(function (k) { return k !== 'ai'; }).map(function (k) {
-      var t = TYPES[k];
-      return '<div class="tcard" style="border-color:' + t.accent + '33">' +
-        '<span class="tcard-emoji" aria-hidden="true">' + t.emoji + '</span>' +
-        '<span class="tcard-txt">' + t.name + '</span></div>';
+  function elemChips(counts) {
+    return EO.map(function (k) {
+      return '<span class="pill" style="border-color:' + E[k].color + '44"><b style="color:' + E[k].color + '">' + E[k].han + '</b> ' + counts[k] + '</span>';
     }).join('');
-    $('teaser').innerHTML = featured + rest;
   }
-  function renderPeople() {
-    $('peopleTotal').textContent = fmt(totalOf(counts(store)));
-  }
-  function renderInvite() {
-    if (!state.from) return;
-    var t = TYPES[state.from];
-    if (!t) return;
-    $('inviteName').textContent = t.emoji + ' ' + t.name;
-    $('invite').hidden = false;
+  function lvLabel(lv) { return { strong: '강', mid: '보통', weak: '약' }[lv] || ''; }
+
+  /* ── 부팅 ─────────────────────────────────────── */
+  function boot() {
+    paintSound();
+    bindEvents();
+    if (DST && DST.ensureHanja) DST.ensureHanja().then(parseFrom, parseFrom);
+    else parseFrom();
   }
 
-  /* ── 랭킹 ─────────────────────────────────── */
-  function renderRanking() {
-    var c = counts(store);
-    var total = totalOf(c);
-    var sorted = ORDER.slice().sort(function (a, b) { return c[b] - c[a] || ORDER.indexOf(a) - ORDER.indexOf(b); });
-    var top = sorted[0], topT = TYPES[top];
+  function parseFrom() {
+    var q = new URLSearchParams(location.search);
+    var code = q.get('from');
+    if (!code) return;
+    var p = DST.decodeProfile(code);
+    if (!p) { toast('링크 정보를 읽지 못했어요. 그냥 내 정보로 볼 수 있어요.'); return; }
+    S.from = p;
+    var b = $('inviteBanner');
+    b.hidden = false;
+    $('inviteTitle').textContent = p.name + '님의 링크로 들어오셨어요';
+    $('inviteSub').textContent = p.name + '님(' + p.animal.name + '·' + p.saju.day.name + '일주)과의 6가지 관계를 볼 수 있습니다.';
+    $('btnStart').textContent = '내 정보 넣고 답하기';
+    $('formStep').textContent = '第一 · 내 정보 (초대 응답)';
+    $('formSub').textContent = p.name + '님에게 내 풀이를 보여주고, 두 사람의 6가지 관계를 함께 봅니다.';
+  }
 
-    ['', '2'].forEach(function (sfx) {
-      var img = $('rankImg' + sfx);
-      if (!img) return;
-      if (img.getAttribute('data-key') !== top) {
-        img.classList.add('is-fading');
-        setTimeout(function () {
-          img.src = topT.img;
-          img.alt = topT.name;
-          img.setAttribute('data-key', top);
-          img.classList.remove('is-fading');
-        }, 160);
+  /* ── 이벤트 ───────────────────────────────────── */
+  function bindEvents() {
+    $('btnSound').addEventListener('click', function () {
+      var on = Sound.setEnabled(!Sound.isOn());
+      paintSound();
+      toast(on ? '배경음을 켰습니다' : '배경음을 껐습니다');
+    });
+    $('btnStart').addEventListener('click', function () {
+      Sound.unlock(); Sound.click();
+      enterForm('self');
+    });
+    $('btnHowto').addEventListener('click', function () {
+      var el = $('howto');
+      el.hidden = !el.hidden;
+      if (!el.hidden) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+
+    $('btnPhoto').addEventListener('click', function () { $('fPhoto').click(); });
+    $('btnCamera').addEventListener('click', function () { $('fCamera').click(); });
+    $('fPhoto').addEventListener('change', function (e) { onPickPhoto(e.target.files[0]); });
+    $('fCamera').addEventListener('change', function (e) { onPickPhoto(e.target.files[0]); });
+    $('btnPhotoDel').addEventListener('click', function () { clearPhoto(); });
+
+    $('relChips').addEventListener('click', function (e) {
+      var b = e.target.closest('.chip'); if (!b) return;
+      Array.prototype.forEach.call($('relChips').children, function (c) { c.classList.toggle('is-on', c === b); });
+      S.relType = b.dataset.rel;
+      Sound.click();
+    });
+
+    $('destinyForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      submitForm();
+    });
+
+    $('btnSheetSave').addEventListener('click', function () {
+      if (S.cardUrl) {
+        var a = document.createElement('a');
+        a.href = S.cardUrl;
+        a.download = 'gwansang-' + (S.lastCardName || 'card') + '.png';
+        document.body.appendChild(a); a.click(); a.remove();
+        toast('이미지를 저장했어요');
       }
-      $('rankName' + sfx).textContent = topT.emoji + ' ' + topT.name;
-      $('rankCount' + sfx).innerHTML = '<b>' + fmt(c[top]) + '표</b> · ' + (c[top] / total * 100).toFixed(1) + '%';
-      $('rankTotal' + sfx).textContent = fmt(total);
-
-      var barsBox = $('rankBars' + sfx);
-      var max = c[sorted[0]];
-      barsBox.innerHTML = sorted.map(function (k, i) {
-        var t = TYPES[k];
-        var mine = state.result && state.result.key === k;
-        var w = Math.max(2, Math.round(c[k] / max * 100));
-        return '<div class="rbar' + (i === 0 ? ' is-top' : '') + (mine ? ' is-mine' : '') + '">' +
-          '<span class="rbar-rk">' + (i + 1) + '</span>' +
-          '<span class="rbar-nm">' + t.emoji + ' ' + t.label + (mine ? ' · 나' : '') + '</span>' +
-          '<span class="rbar-tr"><i data-w="' + w + '"></i></span>' +
-          '<span class="rbar-vl">' + fmt(c[k]) + '명 · ' + (c[k] / total * 100).toFixed(1) + '%</span>' +
-          '</div>';
-      }).join('');
-      requestAnimationFrame(function () {
-        var fills = barsBox.querySelectorAll('.rbar-tr i');
-        for (var j = 0; j < fills.length; j++) fills[j].style.width = fills[j].getAttribute('data-w') + '%';
-      });
+    });
+    $('sheet').addEventListener('click', function (e) {
+      if (e.target.hasAttribute('data-close')) $('sheet').hidden = true;
     });
   }
 
-  /* ── 퀴즈 ─────────────────────────────────── */
-  function start() {
-    state.i = 0;
-    state.answers = [];
-    state.preview = false;
-    state.view = null;
-    state.busy = false;
-    if (location.hash) history.replaceState(null, '', location.pathname + location.search);
-    preload();
-    show('screen-quiz');
-    renderQuestion();
+  /* ── 인트로 → 입력 ────────────────────────────── */
+  function enterForm(mode) {
+    S.mode = mode;
+    var relField = $('relField');
+    if (mode === 'partner') {
+      $('formStep').textContent = '第二 · 상대방 정보';
+      $('formTitle').textContent = '상대방 정보를 적어주세요';
+      $('formSub').textContent = (S.me ? S.me.name : '나') + ' 님과의 6가지 관계를 보려면 상대방 정보가 필요합니다.';
+      relField.hidden = false;
+      $('btnAnalyze').textContent = '6가지 관계 보기';
+    } else {
+      $('formStep').textContent = S.from ? '第一 · 내 정보 (초대 응답)' : '第一 · 내 정보';
+      $('formTitle').textContent = '내 정보를 적어주세요';
+      $('formSub').textContent = S.from
+        ? S.from.name + '님에게 내 풀이를 보여주고, 두 사람의 6가지 관계를 함께 봅니다.'
+        : '사진은 선택입니다. 이름과 생년월일만으로도 풀이가 나옵니다.';
+      relField.hidden = true;
+      $('btnAnalyze').textContent = '풀이 시작';
+    }
+    clearPhoto();
+    if (S.me && mode === 'self') {
+      $('fName').value = S.me.name;
+      $('fHanja').value = S.me.hanja || '';
+      $('fBirth').value = S.me.birth;
+    }
+    $('formErr').hidden = true;
+    show('screen-form');
   }
 
-  function preload() {
-    var list = {};
-    QUESTIONS.forEach(function (q) { list[q.img] = 1; });
-    ORDER.forEach(function (k) { list[TYPES[k].img] = 1; });
-    Object.keys(list).forEach(function (src) { var im = new Image(); im.src = src; });
-  }
-
-  function renderQuestion() {
-    var q = QUESTIONS[state.i];
-    var prev = state.answers[state.i];
-    setAccent(q.accent);
-
-    $('qNow').textContent = state.i + 1;
-    $('qTotal').textContent = QUESTIONS.length;
-    $('qbarFill').style.width = (state.i / QUESTIONS.length * 100) + '%';
-    $('qPeriod').textContent = state.i + 1;
-    $('qArea').textContent = q.area;
-    $('qSheetNo').textContent = '문항 ' + ('0' + (state.i + 1)).slice(-2) + ' / ' + QUESTIONS.length;
-    $('qTag').textContent = q.tag;
-    $('qText').textContent = q.q;
-    $('qImgTag').textContent = 'Q' + (state.i + 1) + ' · ' + q.label;
-
-    var img = $('qImg');
-    if (img.getAttribute('src') !== q.img) {
-      img.classList.add('is-fading');
-      var src = q.img;
-      var pos = q.pos || '';
-      var pending = new Image();
-      pending.onload = function () {
-        img.src = src;
-        img.style.objectPosition = pos;
-        img.alt = q.tag + ' 상황 일러스트';
-        img.classList.remove('is-fading');
+  /* ── 사진 ─────────────────────────────────────── */
+  function onPickPhoto(file) {
+    if (!file) return;
+    if (!/^image\//.test(file.type)) { toast('이미지 파일만 올릴 수 있어요'); return; }
+    if (file.size > 12 * 1024 * 1024) { toast('12MB 이하 사진을 써주세요'); return; }
+    var reader = new FileReader();
+    reader.onload = function () {
+      var img = new Image();
+      img.onload = function () {
+        S.photo = { img: img, dataUrl: reader.result };
+        $('photoImg').src = reader.result;
+        $('photoPrev').hidden = false;
+        toast('사진을 올렸어요 · 기기 안에서만 분석합니다');
       };
-      pending.onerror = function () { img.classList.remove('is-fading'); };
-      pending.src = src;
-    }
-
-    $('opts').innerHTML = q.opts.map(function (o, idx) {
-      return '<button class="opt' + (prev === idx ? ' is-picked' : '') + '" type="button" data-i="' + idx + '">' +
-        '<span class="opt-mark" aria-hidden="true">' + 'ABCD'[idx] + '</span>' +
-        '<span class="opt-t">' + o.t + '</span></button>';
-    }).join('');
-
-    $('btnBack').style.visibility = state.i === 0 ? 'hidden' : 'visible';
-  }
-
-  function pick(idx) {
-    if (state.busy) return;
-    var q = QUESTIONS[state.i];
-    if (!q.opts[idx]) return;
-    state.busy = true;
-    state.answers[state.i] = idx;
-    Sound.click();
-
-    var buttons = $('opts').querySelectorAll('.opt');
-    for (var i = 0; i < buttons.length; i++) buttons[i].classList.remove('is-picked');
-    buttons[idx].classList.add('is-picked');
-
-    setTimeout(function () {
-      state.busy = false;
-      if (state.i < QUESTIONS.length - 1) {
-        state.i++;
-        renderQuestion();
-      } else {
-        analyze();
-      }
-    }, 230);
-  }
-
-  function back() {
-    if (state.busy || state.i === 0) return;
-    state.i--;
-    renderQuestion();
-  }
-
-  /* ── 분석 ─────────────────────────────────── */
-  var ANALYZE_LINES = [
-    '답안지를 스캔하는 중',
-    '연필심 마모도 측정 중',
-    '감독관 시선 회피율 계산 중',
-    '옆자리 페이지 수 대조 중',
-    'AI 안경 배터리 확인 중',
-    '놈 유형 판독 중'
-  ];
-  function analyze() {
-    show('screen-analyzing');
-    var line = $('anLine'), n = 0;
-    line.textContent = ANALYZE_LINES[0];
-    var timer = setInterval(function () {
-      n = (n + 1) % ANALYZE_LINES.length;
-      line.textContent = ANALYZE_LINES[n];
-    }, 340);
-    setTimeout(function () {
-      clearInterval(timer);
-      if (navigator.vibrate) { try { navigator.vibrate(12); } catch (e) {} }
-      finish();
-    }, 1750);
-  }
-
-  function tally() {
-    var score = {}, max = {}, lastAt = {};
-    ORDER.forEach(function (k) { score[k] = 0; max[k] = 0; lastAt[k] = -1; });
-    QUESTIONS.forEach(function (q, qi) {
-      var seen = {};
-      q.opts.forEach(function (o) { seen[o.k] = 1; });
-      Object.keys(seen).forEach(function (k) { max[k] += 1; });
-      var a = state.answers[qi];
-      if (a == null) return;
-      var k = q.opts[a].k;
-      score[k] += 1;
-      lastAt[k] = qi;
-    });
-
-    var pct = {}, best = null, bestVal = -1;
-    ORDER.forEach(function (k) {
-      pct[k] = max[k] ? Math.round(score[k] / max[k] * 100) : 0;
-      var v = max[k] ? score[k] / max[k] : 0;
-      if (v > bestVal + 1e-9) { bestVal = v; best = k; }
-      else if (best && Math.abs(v - bestVal) <= 1e-9) {
-        if (lastAt[k] > lastAt[best] || (lastAt[k] === lastAt[best] && ORDER.indexOf(k) < ORDER.indexOf(best))) best = k;
-      }
-    });
-    return { key: best || 'honest', pct: pct };
-  }
-
-  function finish() {
-    var r = tally();
-    state.result = r;
-    var before = rankMap(counts(store))[r.key];
-    store.inc[r.key] = (store.inc[r.key] || 0) + 1;
-    store.done += 1;
-    saveStore(store);
-    var after = rankMap(counts(store))[r.key];
-
-    renderPeople();
-    Sound.reveal();
-    showResult(r.key, { pct: r.pct, preview: false });
-    history.replaceState(null, '', location.pathname + location.search + '#' + r.key);
-    setTimeout(function () {
-      if (after < before) toast('내 유형 순위 상승! ' + before + '위 → ' + after + '위');
-      else toast(TYPES[r.key].emoji + ' ' + TYPES[r.key].label + ' +1 · 총 ' + fmt(totalOf(counts(store))) + '명');
-    }, 900);
-  }
-
-  /* ── 케미 렌더 ────────────────────────────── */
-  function renderChemi(friendKey, myKey) {
-    var box = $('chemi');
-    var data = chemi(friendKey, myKey);
-    var f = TYPES[friendKey], m = TYPES[myKey];
-    $('chemImgA').src = f.img; $('chemImgA').alt = f.name;
-    $('chemImgB').src = m.img; $('chemImgB').alt = m.name;
-    $('chemNameA').textContent = SHORT[friendKey] || f.name;
-    $('chemNameB').textContent = SHORT[myKey] || m.name;
-    $('chemScore').textContent = data[0];
-    $('chemTitle').textContent = data[1];
-    $('chemLine').innerHTML = data[2].map(function (l) { return '<span>' + l + '</span>'; }).join('');
-    box.hidden = false;
-    $('btnChemShare').onclick = function () {
-      var url = SITE + '?from=' + myKey;
-      var text = '시험장 케미 결과: 나 "' + (SHORT[myKey] || m.name) + '" vs 너 "' + (SHORT[friendKey] || f.name) + '" → ' + data[0] + '점 (' + data[1] + ')\n' + data[2][1];
-      if (navigator.share) {
-        navigator.share({ title: '시험장 놈놈놈 케미', text: text, url: url }).catch(function () {});
-      } else {
-        copyText(url, '케미 결과 링크를 복사했어요');
-      }
+      img.onerror = function () { toast('사진을 읽지 못했어요'); };
+      img.src = reader.result;
     };
+    reader.readAsDataURL(file);
+  }
+  function clearPhoto() {
+    S.photo = null;
+    $('photoPrev').hidden = true;
+    $('photoImg').removeAttribute('src');
+    $('fPhoto').value = '';
+    $('fCamera').value = '';
   }
 
-  /* ── 결과 화면 ────────────────────────────── */
-  function showResult(key, opt) {
-    var t = TYPES[key];
-    var opts = opt || {};
-    state.view = key;
-    state.preview = !!opts.preview;
+  /* ── 제출 ─────────────────────────────────────── */
+  function submitForm() {
+    var name = ($('fName').value || '').replace(/\s+/g, '');
+    var hanja = ($('fHanja').value || '').replace(/\s+/g, '');
+    var birth = $('fBirth').value;
+    var err = $('formErr');
+    if (!name) return fail('이름을 넣어주세요.');
+    if (!/^[가-힣]{1,6}$/.test(name)) return fail('한글 이름만 넣어주세요. (예: 정주용)');
+    if (hanja && !/^[\u4E00-\u9FFF]{1,6}$/.test(hanja)) return fail('한자는 1~6자까지 넣을 수 있어요. (예: 鄭周容)');
+    if (!birth) return fail('생년월일을 골라주세요.');
+    var y = Number(birth.slice(0, 4));
+    if (y < 1930 || y > 2030) return fail('1930~2030년 사이로 넣어주세요.');
+    err.hidden = true;
 
-    root.style.setProperty('--accent', t.accent);
-    root.style.setProperty('--accent-tint', t.tint);
-    setAccent(t.accent);
+    var payload = { name: name, hanja: hanja, birth: birth, photo: S.photo };
+    var mode = S.mode;
 
-    var img = $('rImg');
-    img.src = t.img;
-    img.alt = t.name + ' 캐릭터 일러스트';
-    $('rName').textContent = t.name;
-    $('rTag').textContent = t.tagline;
-    $('rDesc').innerHTML = t.desc.map(function (line) {
-      var real = /^현실에서도/.test(line);
-      return '<span class="' + (real ? 'is-real' : '') + '">' + line + '</span>';
-    }).join('');
-    $('rBadge').textContent = (ORDER.indexOf(key) + 1) + '번 놈';
+    show('screen-scan');
+    Sound.unlock();
+    runScan(!!S.photo).then(function () {
+      return DST.ensureHanja().then(function () { return analyze(payload); });
+    }).then(function (p) {
+      if (!p) return;
+      if (mode === 'partner') {
+        S.partner = p;
+        S.relation = DST.relation(S.me, p, S.relType);
+        renderResult(p, { role: 'partner' });
+        renderRelations(S.relation, S.me, p, { focus: true });
+        show('screen-result');
+        Sound.reveal();
+        setTimeout(function () {
+          var el = document.querySelector('.rel-head');
+          if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 700);
+      } else {
+        S.me = p;
+        renderResult(p, { role: 'me' });
+        $('relationsRoot').innerHTML = '';
+        if (S.from) {
+          S.relation = DST.relation(p, S.from, S.relType);
+          renderRelations(S.relation, p, S.from, { focus: true });
+        }
+        show('screen-result');
+        Sound.reveal();
+        if (S.from) {
+          setTimeout(function () {
+            var el = document.querySelector('.rel-head');
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }, 900);
+        }
+      }
+      window.scrollTo(0, 0);
+    }).catch(function (e) {
+      window.__errs.push(String(e && e.message));
+      show('screen-form');
+      fail('풀이 중 문제가 생겼어요. 사진을 빼고 다시 시도해 주세요.');
+    });
+  }
+  function fail(msg) {
+    var err = $('formErr');
+    err.textContent = msg;
+    err.hidden = false;
+    err.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
 
-    $('rFacts').innerHTML = t.facts.map(function (f) { return '<li>' + f + '</li>'; }).join('');
-    $('rAiLine').textContent = t.aiLine;
+  function analyze(payload) {
+    return new Promise(function (resolve) {
+      var face = null, note = '';
+      if (payload.photo) {
+        try {
+          face = DST.analyzeFaceImage(payload.photo.img);
+          if (!face) note = '사진에서 얼굴을 확인하지 못해 사주·이름으로 풀이했습니다.';
+        } catch (e) {
+          window.__errs.push('face:' + e.message);
+          note = '사진 분석이 어려워 사주·이름으로 풀이했습니다.';
+        }
+      }
+      var p = DST.buildProfile({ name: payload.name, hanja: payload.hanja, birth: payload.birth, face: face });
+      p.faceNote = note;
+      p.photoUrl = payload.photo ? payload.photo.dataUrl : null;
+      resolve(p);
+    });
+  }
 
-    var scores = document.querySelector('#rcard .rc-scores');
-    if (opts.pct) {
-      scores.style.display = '';
-      var rows = ORDER.slice().sort(function (a, b) { return opts.pct[b] - opts.pct[a]; });
-      $('rBars').innerHTML = rows.map(function (k) {
-        var tt = TYPES[k], mine = k === key;
-        return '<div class="bar' + (mine ? ' is-mine' : '') + '">' +
-          '<div class="bar-h"><span>' + tt.emoji + ' ' + tt.label + (mine ? ' · 나' : '') + '</span><b>' + opts.pct[k] + '%</b></div>' +
-          '<div class="track"><i data-w="' + Math.max(2, opts.pct[k]) + '"></i></div></div>';
-      }).join('');
-      requestAnimationFrame(function () {
-        var fills = $('rBars').querySelectorAll('.track i');
-        for (var j = 0; j < fills.length; j++) fills[j].style.width = fills[j].getAttribute('data-w') + '%';
+  /* ── 스캔 애니메이션 ──────────────────────────── */
+  function runScan(hasPhoto) {
+    return new Promise(function (resolve) {
+      var cv = $('scanCanvas'), ctx = cv.getContext('2d');
+      var items = Array.prototype.slice.call($('scanSteps').children);
+      var prog = $('scanProgress'), note = $('scanNote');
+      var W = cv.width, H = cv.height;
+      var t = 0, raf = null;
+      var notes = ['얼굴의 비율을 재는 중…', '천간과 지지를 세우는 중…', '획수와 음오행을 맞추는 중…', '세 가지를 한 줄로 엮는 중…'];
+      function draw() {
+        t += 1;
+        ctx.clearRect(0, 0, W, H);
+        /* 배경 원 */
+        var g2 = ctx.createRadialGradient(W / 2, H / 2, 20, W / 2, H / 2, W / 2);
+        g2.addColorStop(0, 'rgba(217,185,111,.16)');
+        g2.addColorStop(1, 'rgba(20,17,12,0)');
+        ctx.fillStyle = g2; ctx.fillRect(0, 0, W, H);
+        ctx.strokeStyle = 'rgba(217,185,111,.35)'; ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.arc(W / 2, H / 2, W * 0.38, 0, Math.PI * 2); ctx.stroke();
+        ctx.beginPath(); ctx.arc(W / 2, H / 2, W * 0.30, 0, Math.PI * 2); ctx.stroke();
+        ctx.setLineDash([3, 7]);
+        ctx.beginPath(); ctx.arc(W / 2, H / 2, W * 0.45, 0, Math.PI * 2); ctx.stroke();
+        ctx.setLineDash([]);
+        /* 얼굴 실루엣 */
+        ctx.strokeStyle = 'rgba(240,222,180,.55)';
+        ctx.lineWidth = 1.6;
+        ctx.beginPath();
+        ctx.ellipse(W / 2, H * 0.5, W * 0.19, H * 0.25, 0, 0, Math.PI * 2);
+        ctx.stroke();
+        /* 삼정 라인 */
+        [0.30, 0.58].forEach(function (k, i) {
+          ctx.strokeStyle = 'rgba(217,185,111,' + (0.5 + 0.2 * Math.sin(t / 12 + i)) + ')';
+          ctx.beginPath(); ctx.moveTo(W * 0.29, H * k); ctx.lineTo(W * 0.71, H * k); ctx.stroke();
+        });
+        /* 스캔 점 */
+        for (var i2 = 0; i2 < 26; i2++) {
+          var a = (t / 90) + i2 * 0.24;
+          var r = W * (0.30 + (i2 % 4) * 0.045);
+          ctx.fillStyle = 'rgba(240,222,180,' + (0.25 + 0.6 * Math.abs(Math.sin(t / 22 + i2))) + ')';
+          ctx.beginPath();
+          ctx.arc(W / 2 + Math.cos(a) * r, H / 2 + Math.sin(a) * r * 0.98, 1.4, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        raf = requestAnimationFrame(draw);
+      }
+      draw();
+      var steps = hasPhoto ? [0, 420, 460, 500] : [0, 380, 420, 460];
+      var acc = 0, pct = 0;
+      items.forEach(function (li, i) {
+        acc += steps[i];
+        (function (idx, delay) {
+          setTimeout(function () {
+            items.forEach(function (x, j) {
+              x.classList.toggle('is-on', j === idx);
+              x.classList.toggle('is-done', j < idx);
+            });
+            prog.style.width = Math.round((idx / items.length) * 100) + '%';
+            note.textContent = notes[idx] || '';
+          }, delay);
+        })(i, acc);
       });
-    } else {
-      scores.style.display = 'none';
-    }
-
-    var fk = t.fantasy, nk = t.nemesis;
-    var pf = pairInfo(key, fk), pn = pairInfo(key, nk);
-    $('rPairs').innerHTML =
-      pairHtml('fantasy', fk, '환상의 짝꿍', pf) +
-      pairHtml('nemesis', nk, '최악의 상극', pn);
-
-    var ne = TYPES[nk];
-    $('rWorst').innerHTML = '<span class="worst-main">🚫 이 놈이랑 <b>앞뒤 자리</b> 앉으면 둘 다 망함 — <b>' +
-      ne.emoji + ' ' + ne.name + '</b></span><span class="worst-why">' + (pn && pn.fail ? pn.fail : '') + '</span>';
-
-    renderShop(key);
-
-    var banner = $('previewBanner');
-    if (state.preview) {
-      banner.hidden = false;
-      $('previewBannerText').textContent = state.result ? '미리보기 · 내 결과는 그대로 있어요' : '공유된 결과를 보는 중';
-      $('btnBannerBack').textContent = state.result ? '내 결과로' : '나도 해보기';
-    } else {
-      banner.hidden = true;
-    }
-
-    var chem = $('chemi');
-    if (!state.preview && state.result && state.from && TYPES[state.from]) {
-      renderChemi(state.from, key);
-    } else {
-      chem.hidden = true;
-    }
-
-    renderRanking();
-    show('screen-result');
+      var total = acc + 620;
+      setTimeout(function () {
+        items.forEach(function (x) { x.classList.remove('is-on'); x.classList.add('is-done'); });
+        prog.style.width = '100%';
+        note.textContent = '풀이가 나왔습니다';
+      }, total - 260);
+      setTimeout(function () {
+        cancelAnimationFrame(raf);
+        resolve();
+      }, total);
+    });
   }
 
-  /* ── 생존템 카드 ──────────────────────────── */
-  function renderShop(key) {
-    var block = $('shopBlock');
-    var it = AFFILIATE_ITEMS[key];
-    if (!block || !it) { if (block) block.hidden = true; return; }
-    block.hidden = false;
+  /* ══════════ 결과 렌더 ══════════ */
+  function renderResult(p, opts) {
+    opts = opts || {};
+    var html = '';
+    html += headBlock(p, opts);
+    html += faceBlock(p);
+    html += narrativeBlock(p);
+    html += samjeongBlock(p);
+    html += sajuBlock(p);
+    html += nameBlock(p);
+    html += fateBlock(p);
+    html += gilBlock(p);
+    html += actionsBlock(p, opts);
+    $('resultBody').innerHTML = html;
+    bindResult(p, opts);
+    renderShop(p);
+  }
 
-    var live = typeof it.url === 'string' && /^https?:\/\//.test(it.url);
-    var emoji = TYPES[key].emoji;
-    var inner = '<span class="shop-e" aria-hidden="true">' + emoji + '</span>' +
-      '<span class="shop-b"><b>' + it.name + '</b><span>' + it.desc + '</span></span>';
+  function headBlock(p, opts) {
+    var roleTag = opts.role === 'partner' ? '<span class="pill red">상대방</span>' : '';
+    var srcTag = p.fromLink ? '<span class="pill jade">링크로 받은 정보</span>' : (p.estimated ? '<span class="pill">사진 없이 사주 추정</span>' : '<span class="pill gold">사진 관상 반영</span>');
+    return '' +
+      '<div class="res-head">' +
+      '<h2 class="res-name">' + esc(p.name) +
+      (p.hanja ? ' <small>' + esc(p.hanja) + '</small>' : '') +
+      '<small>' + dateText(p.birth) + ' (양력)</small></h2>' +
+      '<div class="res-meta">' + roleTag +
+      '<span class="pill gold">' + p.animal.emoji + ' ' + p.animal.name + '</span>' +
+      '<span class="pill jade">' + p.saju.day.han + ' ' + p.saju.day.name + '일주</span>' +
+      '<span class="pill">' + p.saju.zodiac + '</span>' +
+      srcTag +
+      '</div></div>';
+  }
 
-    if (live) {
-      $('shopCard').innerHTML = '<a class="shop-card is-live" href="' + it.url + '" target="_blank" rel="sponsored nofollow noopener">' +
-        inner + '<span class="shop-cta">보러 가기 →</span></a>';
-      $('shopNote').textContent = '※ 이 페이지는 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 받을 수 있습니다.';
-    } else {
-      $('shopCard').innerHTML = '<div class="shop-card">' + inner +
-        '<span class="shop-cta is-soon">제휴 링크 준비 중</span></div>';
-      $('shopNote').textContent = '※ 아직 제휴 링크가 연결되지 않았어요. 쿠팡 파트너스 링크를 연결하면 이 카드가 바로 구매 링크로 바뀝니다.';
+  function faceBlock(p) {
+    if (p.face && p.photoUrl) {
+      var r = p.face.rect, m = p.face.marks, sm = p.face.samjeong;
+      var hud = '' +
+        '<svg class="face-hud" viewBox="0 0 1000 1000" preserveAspectRatio="none" aria-hidden="true">' +
+        '<rect x="' + (r.x * 1000) + '" y="' + (r.y * 1000) + '" width="' + (r.w * 1000) + '" height="' + (r.h * 1000) + '" fill="none" stroke="rgba(240,222,180,.85)" stroke-width="1.6" vector-effect="non-scaling-stroke"/>' +
+        '<line x1="' + (r.x * 1000) + '" y1="' + ((r.y + r.h * m.brow) * 1000) + '" x2="' + ((r.x + r.w) * 1000) + '" y2="' + ((r.y + r.h * m.brow) * 1000) + '" stroke="rgba(240,222,180,.65)" stroke-width="1" stroke-dasharray="6 6" vector-effect="non-scaling-stroke"/>' +
+        '<line x1="' + (r.x * 1000) + '" y1="' + ((r.y + r.h * m.nose) * 1000) + '" x2="' + ((r.x + r.w) * 1000) + '" y2="' + ((r.y + r.h * m.nose) * 1000) + '" stroke="rgba(240,222,180,.65)" stroke-width="1" stroke-dasharray="6 6" vector-effect="non-scaling-stroke"/>' +
+        '<line x1="' + ((r.x + r.w / 2) * 1000) + '" y1="' + (r.y * 1000) + '" x2="' + ((r.x + r.w / 2) * 1000) + '" y2="' + ((r.y + r.h) * 1000) + '" stroke="rgba(240,222,180,.4)" stroke-width="1" vector-effect="non-scaling-stroke"/>' +
+        '<circle cx="' + ((r.x + r.w / 2) * 1000) + '" cy="' + ((r.y + r.h * m.eye) * 1000) + '" r="3" fill="rgba(240,222,180,.9)"/>' +
+        '<circle cx="' + ((r.x + r.w / 2) * 1000) + '" cy="' + ((r.y + r.h * m.mouth) * 1000) + '" r="3" fill="rgba(240,222,180,.9)"/>' +
+        '</svg>' +
+        '<span class="hud-tag" style="left:' + (r.x * 100 + 1.5) + '%;top:' + (r.y * 100 + 1.5) + '%">상정 ' + sm.sang + '%</span>' +
+        '<span class="hud-tag" style="left:' + (r.x * 100 + 1.5) + '%;top:' + ((r.y + r.h * m.brow) * 100 + 1) + '%">중정 ' + sm.jung + '%</span>' +
+        '<span class="hud-tag" style="left:' + (r.x * 100 + 1.5) + '%;top:' + ((r.y + r.h * m.nose) * 100 + 1) + '%">하정 ' + sm.ha + '%</span>';
+      return '' +
+        '<div class="face-card">' +
+        '<img src="' + attr(p.photoUrl) + '" alt="관상 분석에 사용한 사진">' +
+        hud +
+        '<div class="face-badge"><span style="font-size:20px">' + p.animal.emoji + '</span><div><b>' + p.animal.name + '</b><br><span>' + p.animal.han + ' · 대칭도 ' + p.face.metrics.symmetry + '%</span></div></div>' +
+        '</div>' +
+        (p.faceNote ? '<p class="note-line">' + esc(p.faceNote) + '</p>' : '');
     }
+    var dom = E[p.saju.dominant];
+    return '' +
+      '<div class="face-card">' +
+      '<div class="face-sigil">' +
+      '<div class="sigil-ring"><div class="sigil-han">' + dom.han + '</div></div>' +
+      '<div class="face-sigil-badge" style="position:absolute;left:12px;bottom:12px;display:flex;gap:8px;align-items:center;background:rgba(20,17,12,.8);border:1px solid rgba(217,185,111,.5);border-radius:12px;padding:8px 12px;color:#fbf3de">' +
+      '<span style="font-size:20px">' + p.animal.emoji + '</span><div><b style="font-family:var(--font-serif);font-size:15px">' + p.animal.name + '</b><br><span style="font-size:10.5px;color:#d9c9a4">사주 ' + dom.ko + ' 기운으로 추정</span></div></div>' +
+      '<div class="sigil-note">사진을 올리면 얼굴 실측 관상으로 바뀝니다</div>' +
+      '</div></div>' +
+      '<button type="button" class="btn btn-ghost btn-sm btn-addphoto" style="margin-top:9px;width:100%">📷 사진 올려서 관상 정확도 높이기</button>' +
+      (p.faceNote ? '<p class="note-line">' + esc(p.faceNote) + '</p>' : '');
   }
 
-  function pairHtml(kind, key, label, info) {
-    var t = TYPES[key];
-    var score = info && info.s ? '<b class="pair-s">' + info.s + '</b>' : '';
-    var lines = ((info && info.why) || ['']).map(function (l) { return '<span>' + l + '</span>'; }).join('');
-    return '<button class="pair p-' + kind + '" type="button" data-k="' + key + '">' +
-      '<span class="pair-k">' + label + score + '</span>' +
-      '<span class="pair-n"><span class="pair-e" aria-hidden="true">' + t.emoji + '</span> ' + t.name + '</span>' +
-      '<span class="pair-r">' + lines + '</span></button>';
+  function narrativeBlock(p) {
+    return '' +
+      '<div class="quote">' + p.narrative.map(function (t) { return esc(t); }).join('<br><br>') + '</div>' +
+      '<div class="res-meta" style="margin-top:10px">' +
+      '<span class="pill">' + p.saju.label + '</span>' +
+      '<span class="pill">음 ' + p.saju.yin + ' · 양 ' + p.saju.yang + '</span>' +
+      (p.nm.useHanja ? '<span class="pill gold">한자 원획 사격</span>' : '<span class="pill">소리 획수 참고</span>') +
+      '</div>';
   }
 
-  /* ── 8종 목록 ─────────────────────────────── */
-  function renderList() {
-    $('typeList').innerHTML = ORDER.map(function (k) {
-      var t = TYPES[k];
-      return '<button class="litem" type="button" data-k="' + k + '">' +
-        '<span class="litem-e"><img src="' + t.img + '" alt="" width="720" height="720" loading="lazy"></span>' +
-        '<span class="litem-b"><span class="litem-n">' + t.emoji + ' ' + t.name + '</span>' +
-        '<span class="litem-t">' + t.tagline + '</span></span></button>';
+  function samjeongBlock(p) {
+    var sam = p.face ? p.face.samjeong : guessSamjeong(p);
+    var energy = p.face ? p.face.energy : null;
+    var rows = ['sang', 'jung', 'ha'].map(function (k) {
+      var info = DATA.SAMJEONG[k];
+      var pct = sam[k];
+      var lv = energy ? (energy[k] >= 88 ? 'strong' : (energy[k] >= 70 ? 'mid' : 'weak')) : (pct >= 37 ? 'strong' : (pct >= 30 ? 'mid' : 'weak'));
+      var color = k === 'sang' ? '#b0873c' : (k === 'jung' ? '#a5392a' : '#2c5b52');
+      return '' +
+        '<div class="tri-row">' +
+        '<div class="tl2">' + info.han + '<i>' + info.part.split(' · ')[0] + '</i></div>' +
+        '<div class="tri-track"><i style="width:' + pct + '%;background:' + color + '"></i></div>' +
+        '<div class="tv">' + pct + '%</div>' +
+        '</div>' +
+        '<p class="tri-text"><b>' + info.ko + ' · ' + info.key + '</b> <span class="lv ' + lv + '">' + lvLabel(lv) + '</span><br>' + esc(info[lv]) + '</p>';
     }).join('');
+
+    var og = p.face ? DST.ogwanOf(p.face) : null;
+    var ogList = Object.keys(DATA.OGWAN).map(function (k) {
+      var info = DATA.OGWAN[k];
+      var lv = og ? og[k].level : 'mid';
+      var detail = og ? '<span class="lv ' + lv + '">' + lvLabel(lv) + ' · ' + esc(og[k].v) + '</span>' : '';
+      return '' +
+        '<div class="ogwan-item">' +
+        '<div class="oi-han">' + info.ko + '</div>' +
+        '<div><strong>' + info.han + ' ' + info.part + ' — ' + info.key + detail + '</strong>' +
+        '<p>' + esc(info[lv]) + '</p></div>' +
+        '</div>';
+    }).join('');
+
+    return '' +
+      '<section class="sec">' +
+      '<div class="sec-h"><span class="h-han">相</span><h3>삼정·오관 관상학</h3><span class="h-sub">三停五觀</span></div>' +
+      '<div class="sec-box">' +
+      (p.face ? '<p class="sec-lede">얼굴을 <b>삼정(상·중·하)</b>과 <b>오관</b>으로 나눠 계측했습니다. 비율과 기운을 함께 봅니다.</p>'
+        : '<p class="sec-lede">사진이 없어 <b>사주·이름으로 추정한 삼정</b>입니다. 사진을 올리면 실측값으로 바뀝니다.</p>') +
+      '<div class="tri">' + rows + '</div>' +
+      '<div class="ogawn-list">' + ogList + '</div>' +
+      (p.face ? '<p class="note-line">측정값 — 대칭도 ' + p.face.metrics.symmetry + '% · 기색 ' + p.face.metrics.brightness + ' · 혈색 ' + p.face.metrics.redness + ' · 눈 ' + Math.round(p.face.metrics.eyeSpace * 100) + '% 간격 · 입 ' + Math.round(p.face.metrics.mouthWidth * 100) + '% 폭 · 턱 ' + Math.round(p.face.metrics.jawRatio * 100) + '%</p>' : '') +
+      '</div></section>';
   }
 
-  /* ── 9:16 카드 ────────────────────────────── */
-  var CARD_W = 1080, CARD_H = 1920;
-  var FONT = '"Apple SD Gothic Neo","Pretendard","Noto Sans KR","Noto Sans CJK KR","Malgun Gothic",sans-serif';
+  function guessSamjeong(p) {
+    /* 사진이 없을 때: 일간 오행으로 삼정 기운을 추정 */
+    var k = p.saju.dayStem.elem;
+    if (k === 'mok') return { sang: 37, jung: 32, ha: 31 };
+    if (k === 'hwa') return { sang: 36, jung: 35, ha: 29 };
+    if (k === 'to') return { sang: 30, jung: 34, ha: 36 };
+    if (k === 'geum') return { sang: 32, jung: 38, ha: 30 };
+    return { sang: 30, jung: 33, ha: 37 };
+  }
 
-  /* 카드에서는 두 줄로 자연스럽게 끊어 쓴다 (자동 축소) */
-  var CARD_NAMES = {
-    ai: ['AI 안경 몰래 끼고', '답 베끼는 놈'],
-    sleep: ['시험 10분 만에', '꿀잠 자는 놈'],
-    honest: ['정직하게 땀 뻘뻘', '열심히 푸는 놈'],
-    guess: ['아는 거 없는데 끝까지', '머리 굴려 찍는 놈'],
-    escape: ['다 풀었든 말든', '먼저 나가버리는 놈'],
-    deepfocus: ['지우개 가루 산 쌓고', '한 문제에 목숨 거는 놈'],
-    watch: ['옆자리 책장 넘기는 소리에', '멘탈 나가는 놈'],
-    omr: ['종료 3분 전 OMR 밀려 써서', '식은땀 흘리는 놈']
-  };
+  function sajuBlock(p) {
+    var s = p.saju;
+    var pls = [['년주', s.year], ['월주', s.month], ['일주', s.day]].map(function (o, i) {
+      var pl = o[1];
+      return '' +
+        '<div class="pl' + (i === 2 ? ' is-day' : '') + '">' +
+        '<div class="pl-k">' + o[0] + '</div>' +
+        '<div class="pl-han">' + pl.stem.han + ' ' + pl.branch.han + '</div>' +
+        '<div class="pl-ko">' + pl.name + '</div>' +
+        '<div class="pl-el">' + E[pl.stem.elem].han + '·' + E[pl.branch.elem].han + '</div>' +
+        '</div>';
+    }).join('');
 
-  function roundRect(ctx, x, y, w, h, r) {
+    var bars = EO.map(function (k) {
+      var v = s.counts[k];
+      return '<div class="el-bar"><span class="eb-han" style="color:' + E[k].color + '">' + E[k].han + '</span>' +
+        '<span class="eb-track"><i style="width:' + (v / 6 * 100) + '%;background:' + E[k].color + '"></i></span>' +
+        '<span class="eb-v">' + v + '개</span></div>';
+    }).join('');
+
+    var lackText = s.lack.length
+      ? s.lack.map(function (k) { return E[k].han + '(' + E[k].ko + ')'; }).join('·') + ' 기운이 비어 있습니다. ' +
+        E[s.lack[0]].lucky.color + ' 계열, ' + E[s.lack[0]].dir + ' 방향, ' + E[s.lack[0]].lucky.item + '으로 채워 보세요.'
+      : '다섯 기운이 모두 있습니다. ' + E[s.weakest].han + '(' + E[s.weakest].ko + ') 기운이 가장 얇으니 ' + E[s.weakest].lucky.item + '을 곁에 두면 좋습니다.';
+
+    return '' +
+      '<section class="sec">' +
+      '<div class="sec-h"><span class="h-han">柱</span><h3>사주 삼주 (四柱)</h3><span class="h-sub">60甲子</span></div>' +
+      '<div class="sec-box">' +
+      '<div class="pillar-table">' + pls + '</div>' +
+      '<div class="el-bars">' + bars + '</div>' +
+      '<dl class="kv">' +
+      '<div class="kv-row"><dt>일주</dt><dd><b>' + s.day.han + ' ' + s.day.name + '일주</b> — ' + esc(p.saju.dayStem.trait) + '</dd></div>' +
+      '<div class="kv-row"><dt>띠</dt><dd>' + s.zodiac + ' (' + s.year.branch.han + ' ' + s.year.branch.animal + ')</dd></div>' +
+      '<div class="kv-row"><dt>중심 기운</dt><dd>' + E[s.dominant].han + ' ' + E[s.dominant].ko + ' — ' + E[s.dominant].core + '. ' + esc(E[s.dominant].strength) + '이 강하고 ' + esc(E[s.dominant].weak) + '이 약점입니다.</dd></div>' +
+      '<div class="kv-row"><dt>부족한 기운</dt><dd>' + esc(lackText) + '</dd></div>' +
+      '<div class="kv-row"><dt>관상 연결</dt><dd>' + esc(p.saju.dayStem.face) + ' — 일간의 기질이 얼굴에 이렇게 드러납니다.</dd></div>' +
+      '</dl>' +
+      '<p class="note-line">년주는 입춘(2/4), 월주는 절입일 기준이라 경계일은 ±1일 차이가 날 수 있습니다.</p>' +
+      '</div></section>';
+  }
+
+  function nameBlock(p) {
+    var nm = p.nm;
+    var flow = nm.syllables.map(function (sy, i) {
+      var el = E[sy.elem];
+      var out = '<div class="flow-item" style="border-color:' + el.color + '55"><b style="color:' + el.color + '">' + esc(sy.ch) + '</b><span>' + el.han + ' ' + el.ko + '</span></div>';
+      if (i < nm.trans.length) {
+        var t = nm.trans[i];
+        var cls = t.rel === 'same' ? 'same' : (t.rel === 'give' || t.rel === 'take' ? 'saeng' : 'geuk');
+        var mark = t.rel === 'same' ? '=' : (cls === 'saeng' ? '→' : '×');
+        out += '<span class="flow-arrow ' + cls + '">' + mark + '</span>';
+      }
+      return out;
+    }).join('');
+
+    var sg = nm.sagyeok.map(function (s) {
+      var cls = s.s.g === '길' ? 'g-good' : (s.s.g === '흉' ? 'g-bad' : 'g-half');
+      return '<div class="sg ' + cls + '">' +
+        '<div class="sg-k">' + s.han + '<i>' + s.ko + ' · ' + s.life + '</i></div>' +
+        '<div class="sg-t">' + esc(s.s.k) + ' — ' + esc(s.s.t) + '</div>' +
+        '<div class="sg-v">' + s.v + '수<b>' + s.s.g + '</b></div>' +
+        '</div>';
+    }).join('');
+
+    var gil = nm.sagyeok.filter(function (s) { return s.s.g === '길'; }).length;
+    var heung = nm.sagyeok.filter(function (s) { return s.s.g === '흉'; }).length;
+    var verdict = '소리 흐름은 ' + nm.flow.map(function (k) { return E[k].ko; }).join(' → ') + '. ' +
+      (nm.geuk ? '중간에 상극이 ' + nm.geuk + '번 끊깁니다 — 그 자리에서 말이 어긋나기 쉽습니다.' : '상생으로 이어져 이름을 부를수록 기운이 붙습니다.') +
+      ' 사격 중 길이 ' + gil + '개, 흉이 ' + heung + '개. 총운 ' + nm.sagyeok[3].v + '수 ' + nm.sagyeok[3].s.k + '(' + nm.sagyeok[3].s.g + ')입니다.';
+
+    var hanjaChips = '';
+    if (nm.useHanja) {
+      hanjaChips = '<div class="hanja-strokes">' + nm.syllables.map(function (sy, i) {
+        var ch = nm.hanja[i] || '';
+        var st = nm.hanjaStrokes[i] || 0;
+        var mean = DATA.HANJA_MEAN[ch] || '';
+        return '<div class="hs"><b>' + esc(ch) + '</b>' + st + '획' + (mean ? ' · ' + esc(mean) : '') + '</div>';
+      }).join('') + '</div>';
+    } else {
+      hanjaChips = '<p class="note-line">한자를 넣으면 <b>원획수</b>로 다시 계산합니다. 지금은 한글 소리 획수(총 ' + nm.soundTotal + '획)로 본 참고값입니다.</p>';
+    }
+
+    return '' +
+      '<section class="sec">' +
+      '<div class="sec-h"><span class="h-han">名</span><h3>이름풀이 (姓名)</h3><span class="h-sub">音五行 · 四格</span></div>' +
+      '<div class="sec-box">' +
+      '<div class="flow">' + flow + '</div>' +
+      hanjaChips +
+      '<div class="sagyeok">' + sg + '</div>' +
+      '<p class="name-verdict">' + esc(verdict) + '</p>' +
+      (nm.hasHanjaInput && !nm.useHanja ? '<p class="note-line">한자 일부를 획수로 확인하지 못해 소리 획수로 계산했습니다. 자전에 있는 한자로 다시 넣어주세요.</p>' : '') +
+      (nm.useHanja ? '<p class="note-line">원획수 기준(氵·忄·艹·阝 등 부수 원획 보정). 자전·유파에 따라 ±1 차이가 있을 수 있습니다.</p>' : '') +
+      '</div></section>';
+  }
+
+  function fateBlock(p) {
+    function card(o, label) {
+      var score = o.score;
+      var tone = score >= 70 ? 'var(--jade)' : (score >= 50 ? '#b0873c' : 'var(--cinnabar)');
+      return '<div class="fate">' +
+        '<div class="f-k">' + label + '</div>' +
+        '<div class="f-v" style="color:' + tone + '">' + o.pillar.name + '일 · ' + (score >= 70 ? '길(吉)' : (score >= 50 ? '무난' : '주의')) + '</div>' +
+        '<div class="f-d">' + esc(fateText(p, o, label)) + '</div>' +
+        '<div class="f-bar"><i style="width:' + score + '%"></i></div>' +
+        '</div>';
+    }
+    return '' +
+      '<section class="sec">' +
+      '<div class="sec-h"><span class="h-han">運</span><h3>오늘과 올해</h3><span class="h-sub">日辰 · 歲運</span></div>' +
+      '<div class="fate-grid">' +
+      card(p.today, '오늘 · ' + p.today.dateText) +
+      card(p.year, '올해 · ' + p.year.year) +
+      '</div></section>';
+  }
+  function fateText(p, o, label) {
+    var e = E[o.pillar.stem.elem];
+    var rel = o.rel;
+    var base = label.indexOf('오늘') === 0
+      ? '오늘은 ' + o.pillar.name + '일, ' + e.ko + '(' + e.han + ') 기운이 도는 날입니다. '
+      : o.year.year + '년은 ' + o.pillar.name + '년, ' + e.ko + ' 기운의 해입니다. ';
+    var relText = {
+      give: '내 일주를 살려주는 기운이라 ' + (label.indexOf('오늘') === 0 ? '미뤄둔 일을 꺼내기 좋습니다.' : '새로 시작하는 일이 잘 풀립니다.'),
+      take: '내가 그 기운을 살려주는 자리라 ' + (label.indexOf('오늘') === 0 ? '누군가를 도와주면 그게 나에게 돌아옵니다.' : '베푸는 자리에서 복이 쌓입니다.'),
+      same: '같은 기운이 겹쳐 ' + (label.indexOf('오늘') === 0 ? '익숙한 일은 잘 되고 새로운 일은 미루는 게 좋습니다.' : '한 우물을 깊게 파는 해입니다.'),
+      control: '내 기운을 누르는 날이라 ' + (label.indexOf('오늘') === 0 ? '큰 결정·계약·고백은 피하세요.' : '큰 지출과 보증을 조심하세요.'),
+      controlled: '내가 그 기운을 누르는 자리라 ' + (label.indexOf('오늘') === 0 ? '말이 세게 나가기 쉽습니다. 한 번 더 듣고 말하세요.' : '사람과의 마찰이 생기기 쉬우니 말을 아끼세요.')
+    }[rel];
+    var linkTag = o.link && o.link.tags.length ? ' (' + o.link.tags.join('·') + ')' : '';
+    return base + relText + linkTag;
+  }
+
+  function gilBlock(p) {
+    function box(kind, p) {
+      var items = kind === 'bad' ? p.avoid : p.keep;
+      return '<div class="gil-box ' + kind + '">' +
+        '<div class="gil-head"><span class="gb-icon">' + (kind === 'bad' ? '⚠️' : '🍀') + '</span>' +
+        '<h4>' + (kind === 'bad' ? '피해야 할 것 (흉)' : '곁에 두어야 할 것 (길)') + '</h4>' +
+        '<span class="gb-sub">' + (kind === 'bad' ? 'AVOID' : 'KEEP') + '</span></div>' +
+        '<ul class="gil-list">' + items.map(function (it) {
+          return '<li><b>' + esc(it.t) + '</b><span>' + esc(it.d) + '</span></li>';
+        }).join('') + '</ul></div>';
+    }
+    return '<section class="sec">' +
+      '<div class="sec-h"><span class="h-han">吉</span><h3>내게 붙는 것, 내게 붙지 않는 것</h3><span class="h-sub">吉凶</span></div>' +
+      '<div class="two-col">' + box('bad', p) + box('good', p) + '</div></section>';
+  }
+
+  function actionsBlock(p, opts) {
+    var isPartner = opts.role === 'partner';
+    return '<div class="actions">' +
+      '<button type="button" class="btn btn-primary btn-block" id="btnSaveCard">📸 9:16 스토리 카드 저장</button>' +
+      (isPartner ? '' :
+        '<div class="row">' +
+        '<button type="button" class="btn btn-ghost" id="btnShare">🔗 내 링크 보내기</button>' +
+        '<button type="button" class="btn btn-ghost" id="btnPartner">💞 상대방 입력 → 6가지 관계</button>' +
+        '</div>') +
+      (S.from && !isPartner ? '<p class="note-line">아래에 ' + esc(S.from.name) + '님과의 6가지 관계가 이어집니다.</p>' : '') +
+      '<div class="share-box" id="shareBox" hidden></div>' +
+      '<button type="button" class="btn btn-ghost btn-sm" id="btnRestart">처음부터 다시</button>' +
+      '</div>';
+  }
+
+  function bindResult(p, opts) {
+    var b1 = $('btnSaveCard');
+    if (b1) b1.addEventListener('click', function () { saveCard(p); });
+    var add = document.querySelector('.btn-addphoto');
+    if (add) add.addEventListener('click', function () {
+      enterForm('self');
+      $('fName').value = p.name; $('fHanja').value = p.hanja || ''; $('fBirth').value = p.birth;
+      $('formSub').textContent = '사진을 올리면 관상 삼정·오관이 실측값으로 바뀝니다.';
+    });
+    var bp = $('btnPartner');
+    if (bp) bp.addEventListener('click', function () { Sound.click(); enterForm('partner'); });
+    var bs = $('btnShare');
+    if (bs) bs.addEventListener('click', function () { shareProfile(p); });
+    var br = $('btnRestart');
+    if (br) br.addEventListener('click', function () {
+      S.me = null; S.partner = null; S.relation = null; S.from = null;
+      $('relationsRoot').innerHTML = ''; $('shopBox').innerHTML = '';
+      history.replaceState(null, '', location.pathname);
+      $('inviteBanner').hidden = true;
+      $('btnStart').textContent = '내 운명 보기';
+      show('screen-intro');
+    });
+  }
+
+  /* ── 공유 ─────────────────────────────────────── */
+  function shareProfile(p) {
+    var code = DST.encodeProfile(p);
+    var url = location.origin + location.pathname + '?from=' + code;
+    var box = $('shareBox');
+    box.hidden = false;
+    box.innerHTML = '<div class="share-url"><input id="shareUrl" readonly value="' + attr(url) + '"><button type="button" id="btnCopy">복사</button></div>' +
+      '<p class="note-line">이 링크를 받은 사람은 ' + esc(p.name) + '님의 6가지 관계를 볼 수 있습니다. 링크에는 이름·생년월일·동물상만 담기고 <b>사진은 담기지 않습니다</b>.</p>';
+    $('btnCopy').addEventListener('click', function () { copyText(url); });
+    if (navigator.share) {
+      navigator.share({
+        title: '관상철학관 — ' + p.name,
+        text: p.name + '님의 관상·사주·이름풀이. 링크를 열면 나와의 6가지 관계를 볼 수 있어요.',
+        url: url
+      }).catch(function () {});
+    } else {
+      copyText(url);
+    }
+  }
+  function copyText(txt) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(txt).then(function () { toast('링크를 복사했어요'); }).catch(function () { fallbackCopy(txt); });
+    } else fallbackCopy(txt);
+  }
+  function fallbackCopy(txt) {
+    var ta = document.createElement('textarea');
+    ta.value = txt; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); toast('링크를 복사했어요'); } catch (e) { toast('길게 눌러 복사해 주세요'); }
+    ta.remove();
+  }
+
+  /* ══════════ 6대 관계 ══════════ */
+  function renderRelations(rel, A, B, opts) {
+    opts = opts || {};
+    var g2 = rel.grade;
+    var html = '' +
+      '<div class="rel-head">' +
+      '<p class="step-tag">第六 · 緣 — 六親</p>' +
+      '<h2 class="rel-title">' + esc(A.name) + ' × ' + esc(B.name) + ' · 6가지 관계</h2>' +
+      '<p class="rel-sub">카드를 누르면 자세한 풀이가 펼쳐집니다. ' + esc(rel.relType) + ' 포지션을 기준으로 봤습니다.</p>' +
+      '<div class="rel-hero">' +
+      '<div class="ring" style="--p:' + rel.score + '"><span>' + rel.score + '<i>점</i></span></div>' +
+      '<div class="rh-body"><b>' + esc(rel.headline) + '</b>' +
+      '<p>' + esc(relSummary(rel, A, B)) + '</p>' +
+      '<div class="rh-tags">' +
+      '<span class="pill gold">' + esc(g2.label) + '</span>' +
+      '<span class="pill jade">' + E[rel.elRel === 'same' ? A.saju.dominant : B.saju.dominant].han + ' 기운 ' + relWordKo(rel.elRel) + '</span>' +
+      (rel.link.tags.length ? '<span class="pill">' + rel.link.tags.join(' · ') + '</span>' : '') +
+      '</div></div></div>' +
+      '<div class="pair-line"><b>' + esc(A.name) + '</b><span class="vs">緣</span><b>' + esc(B.name) + '</b></div>' +
+      '<div class="rel-grid" id="relGrid">' +
+      rel.cards.map(function (c) {
+        return '<button type="button" class="rel-card' + (c.negative ? ' neg' : (c.positive ? ' pos' : '')) + '" data-card="' + c.id + '">' +
+          '<div class="rc-top"><span class="rc-icon">' + c.icon + '</span><span class="rc-title">' + c.title + '</span></div>' +
+          '<p class="rc-sum">' + esc(c.summary) + '</p>' +
+          '<div class="rc-foot"><span class="rc-badge">' + esc(c.badge) + '</span><span class="rc-more">자세히 ▾</span></div>' +
+          '</button>';
+      }).join('') +
+      '</div>' +
+      '<div class="rel-actions">' +
+      '<button type="button" class="btn btn-primary btn-block" id="btnSaveRelCard">📸 6가지 관계 카드 저장</button>' +
+      (A.name === (S.me && S.me.name) && !B.fromLink ?
+        '<button type="button" class="btn btn-ghost" id="btnRelShare">🔗 이 조합 링크 보내기</button>' : '') +
+      '<button type="button" class="btn btn-ghost btn-sm" id="btnRelRestart">다른 사람과 해보기</button>' +
+      '</div>' +
+      '</div>';
+    $('relationsRoot').innerHTML = html;
+    var grid = $('relGrid');
+    var detail = document.createElement('div');
+    detail.className = 'rel-detail';
+    detail.hidden = true;
+    var openId = null;
+    grid.addEventListener('click', function (e) {
+      var card = e.target.closest('.rel-card');
+      if (!card) return;
+      Sound.click();
+      var id = card.dataset.card;
+      if (openId === id) {
+        detail.hidden = true; card.classList.remove('is-open'); openId = null; return;
+      }
+      Array.prototype.forEach.call(grid.querySelectorAll('.rel-card'), function (c) { c.classList.remove('is-open'); });
+      card.classList.add('is-open');
+      detail.innerHTML = detailHtml(rel.cards.filter(function (c) { return c.id === id; })[0], A, B, rel);
+      detail.hidden = false;
+      card.insertAdjacentElement('afterend', detail);
+      openId = id;
+    });
+    var bsr = $('btnSaveRelCard');
+    if (bsr) bsr.addEventListener('click', function () { saveRelationCard(rel, A, B); });
+    var brs = $('btnRelShare');
+    if (brs) brs.addEventListener('click', function () {
+      var url = location.origin + location.pathname + '?from=' + DST.encodeProfile(A);
+      copyText(url);
+      toast('내 링크를 복사했어요 — 상대가 열면 같은 풀이가 나옵니다');
+    });
+    var brr = $('btnRelRestart');
+    if (brr) brr.addEventListener('click', function () { enterForm('partner'); });
+  }
+
+  function relWordKo(rel) {
+    return { same: '비화', give: '상생', take: '상생', control: '상극', controlled: '상극' }[rel] || '비화';
+  }
+  function relSummary(rel, A, B) {
+    var c = rel.cards[0];
+    return '성격 ' + c.score + '점 · 재물 ' + rel.cards[3].signed + ' · 최고 포지션은 ' + rel.best.key + ', 가장 조심할 포지션은 ' + rel.worst.key + '입니다.';
+  }
+
+  function detailHtml(card, A, B, rel) {
+    var h = '<h4>' + card.icon + ' ' + card.title + '</h4><p class="rd-sub">' + esc(card.sub) + ' · ' + esc(card.badge) + (card.signed !== undefined ? ' (' + (card.signed > 0 ? '+' : '') + card.signed + ')' : '') + '</p>';
+    if (card.blocks) {
+      h += card.blocks.map(function (b) {
+        return '<div class="rd-block"><h5>' + esc(b.h) + '</h5><ul>' + b.lines.map(function (l) { return '<li>' + esc(l) + '</li>'; }).join('') + '</ul></div>';
+      }).join('');
+    }
+    if (card.positions) {
+      h += '<div class="rd-block"><h5>' + esc('포지션별') + '</h5><div class="rd-pos">' + card.positions.map(function (o) {
+        return '<div class="rd-pos-row"><div><div class="rp-k">' + o.icon + ' ' + esc(o.key) + '</div><div class="rp-l">' + esc(o.line) + '</div></div>' +
+          '<span class="rp-v ' + o.tone + '">' + o.score + ' · ' + esc(o.grade) + '</span></div>';
+      }).join('') + '</div></div>';
+    }
+    if (card.signed !== undefined) {
+      var s = card.signed, w = Math.abs(s) / 10 * 50;
+      h += '<div class="money-gauge">' +
+        '<div class="mg-top"><span class="mg-num ' + (s >= 0 ? 'plus' : 'minus') + '">' + (s > 0 ? '+' : '') + s + '</span><span class="mg-lbl">같이 일할 때 재물 판정 (−10 ~ +10)</span></div>' +
+        '<div class="mg-track"><i style="left:50%;width:1px;background:rgba(23,20,15,.35)"></i>' +
+        (s >= 0 ? '<i class="plus" style="left:50%;width:' + w + '%"></i>' : '<i class="minus" style="right:50%;width:' + w + '%"></i>') +
+        '</div><div class="mg-scale"><span>−10</span><span>0</span><span>+10</span></div></div>' +
+        '<div class="money-roles">' + (card.moneyRoles || []).map(function (m) {
+          return '<div class="mrol"><b>' + esc(m.who) + ' · ' + esc(m.role) + '형</b><span>' + esc(m.desc) + '</span></div>';
+        }).join('') + '</div>';
+    }
+    if (card.reasons) {
+      h += '<div class="rd-block"><h5>왜 그런가</h5><ul>' + card.reasons.map(function (r) { return '<li>' + esc(r) + '</li>'; }).join('') + '</ul></div>';
+    }
+    if (card.items) {
+      h += '<div class="rd-block"><h5>' + (card.negative ? '지뢰 목록' : '행운 목록') + '</h5><div class="rd-items">' +
+        card.items.map(function (it) { return '<div class="rd-item"><b>' + esc(it.t) + '</b><span>' + esc(it.d) + '</span></div>'; }).join('') + '</div></div>';
+    }
+    return h;
+  }
+
+  /* ══════════ 개운템 ══════════ */
+  var SHOP = [
+    { el: 'su', name: '3D 암막 수면안대 (빅트리 프리미엄)', desc: '수(水) 기운 · 잠을 지키는 회복템', url: 'https://link.coupang.com/a/iL1KHZ3jC8' },
+    { el: 'geum', name: '블루라이트 차단 안경 (베델루스 뿔테)', desc: '금(金) 기운 · 눈(감찰관)을 지키는', url: 'https://link.coupang.com/a/iL2Wt3Soay' },
+    { el: 'geum', name: '고탄력 통기성 손목보호대 2P', desc: '금(金) 기운 · 몸의 균형', url: 'https://link.coupang.com/a/iL2YTn6Uoe' },
+    { el: 'mok', name: '컬러 아크릴 미니 주사위 50개입', desc: '목(木) 기운 · 새로 시작하는 판', url: 'https://link.coupang.com/a/iL22LXSDG8' },
+    { el: 'to', name: '거실 구름 실내화 슬리퍼', desc: '토(土) 기운 · 집의 중심', url: 'https://link.coupang.com/a/iL25RPizEO' },
+    { el: 'geum', name: '펜텔 아인 점보 지우개 특대형 2개', desc: '금(金) 기운 · 정리하는 손', url: 'https://link.coupang.com/a/iL29DZgAmq' },
+    { el: 'su', name: '굿나잇 이어플러그 프리미엄 15쌍', desc: '수(水) 기운 · 소리를 낮추는', url: 'https://link.coupang.com/a/iL3bUS7ttY' },
+    { el: 'to', name: '컴퓨터용 사인펜 + 수정테이프 세트', desc: '토(土) 기운 · 기록하고 남기는', url: 'https://link.coupang.com/a/iL3efXwP6q' }
+  ];
+  function renderShop(p) {
+    var box = $('shopBox');
+    if (!box) return;
+    var dom = p.saju.dominant;
+    var lack = p.saju.lack[0] || p.saju.weakest;
+    var pick = [];
+    SHOP.forEach(function (it) { if (it.el === dom && pick.length < 2) pick.push(it); });
+    SHOP.forEach(function (it) { if (it.el === lack && pick.length < 3 && pick.indexOf(it) < 0) pick.push(it); });
+    if (pick.length < 3) {
+      SHOP.forEach(function (it) { if (pick.indexOf(it) < 0 && pick.length < 3) pick.push(it); });
+    }
+    box.innerHTML = '<section class="shop">' +
+      '<div class="shop-h"><h3>개운템 추천</h3><span class="h-sub">COUPANG PARTNERS</span></div>' +
+      '<p class="shop-sub">' + esc(p.name) + '님의 ' + E[dom].han + '(' + E[dom].ko + ') 기운과 비어 있는 ' + E[lack].han + '(' + E[lack].ko + ') 기운에 맞춰 골랐습니다.</p>' +
+      '<div class="shop-items">' + pick.map(function (it) {
+        return '<a class="shop-item" href="' + attr(it.url) + '" target="_blank" rel="noopener sponsored">' +
+          '<span class="si-el" style="color:' + E[it.el].color + '">' + E[it.el].han + '</span>' +
+          '<span class="si-b"><b>' + esc(it.name) + '</b><span>' + esc(it.desc) + '</span></span>' +
+          '<span class="si-go">보기 →</span></a>';
+      }).join('') + '</div>' +
+      '<p class="shop-note">※ 이 페이지는 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 받을 수 있습니다. 개운템은 재미를 위한 제안이며 효능을 보장하지 않습니다.</p>' +
+      '</section>';
+  }
+
+  /* ══════════ 9:16 카드 ══════════ */
+  var CW = 1080, CH = 1920;
+  var FONT_SERIF = '"Noto Serif KR","Apple SD Gothic Neo",Georgia,serif';
+  var FONT_SANS = '"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif';
+
+  function rr(ctx, x, y, w, h, r) {
     if (ctx.roundRect) { ctx.beginPath(); ctx.roundRect(x, y, w, h, r); return; }
     ctx.beginPath();
     ctx.moveTo(x + r, y);
@@ -1111,343 +989,323 @@
     ctx.arcTo(x, y, x + w, y, r);
     ctx.closePath();
   }
-  function wrapLines(ctx, text, maxWidth) {
-    var words = text.split(' ');
-    var lines = [], line = '';
+  function wrapText(ctx, text, maxW) {
+    var words = String(text).split(' '), lines = [], line = '';
     for (var i = 0; i < words.length; i++) {
-      var test = line ? line + ' ' + words[i] : words[i];
-      if (ctx.measureText(test).width > maxWidth && line) { lines.push(line); line = words[i]; }
-      else { line = test; }
+      var t = line ? line + ' ' + words[i] : words[i];
+      if (ctx.measureText(t).width > maxW && line) { lines.push(line); line = words[i]; }
+      else line = t;
     }
     if (line) lines.push(line);
     return lines;
   }
-  function loadImg(src) {
+  function fitFont(ctx, text, maxW, size, min, weight, family) {
+    var s = size;
+    while (s > min) {
+      ctx.font = weight + ' ' + s + 'px ' + (family || FONT_SERIF);
+      if (ctx.measureText(text).width <= maxW) break;
+      s -= 2;
+    }
+    return s;
+  }
+  function drawHanjiBg(ctx) {
+    ctx.fillStyle = '#f7f2e6'; ctx.fillRect(0, 0, CW, CH);
+    ctx.strokeStyle = 'rgba(176,87,60,.05)'; ctx.lineWidth = 1;
+    for (var x = 0; x < CW; x += 54) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, CH); ctx.stroke(); }
+    for (var y = 0; y < CH; y += 54) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(CW, y); ctx.stroke(); }
+    var g2 = ctx.createRadialGradient(CW / 2, 0, 60, CW / 2, 0, 1100);
+    g2.addColorStop(0, 'rgba(255,250,236,.95)'); g2.addColorStop(1, 'rgba(247,242,230,0)');
+    ctx.fillStyle = g2; ctx.fillRect(0, 0, CW, CH);
+    ctx.strokeStyle = 'rgba(176,135,60,.55)'; ctx.lineWidth = 3;
+    ctx.strokeRect(46, 46, CW - 92, CH - 92);
+    ctx.strokeStyle = 'rgba(176,135,60,.22)'; ctx.lineWidth = 1;
+    ctx.strokeRect(58, 58, CW - 116, CH - 116);
+  }
+  function drawCard(p) {
+    var cv = $('cardCanvas'), ctx = cv.getContext('2d');
+    cv.width = CW; cv.height = CH;
+    drawHanjiBg(ctx);
+    var PAD = 96, y = 150;
+
+    /* 헤더 */
+    ctx.fillStyle = '#a5392a'; rr(ctx, PAD, y - 52, 78, 78, 12); ctx.fill();
+    ctx.fillStyle = '#fff2df'; ctx.textAlign = 'center';
+    ctx.font = '700 44px ' + FONT_SERIF;
+    ctx.fillText('觀', PAD + 39, y + 4);
+    ctx.textAlign = 'left';
+    ctx.fillStyle = '#17140f'; ctx.font = '700 40px ' + FONT_SERIF;
+    ctx.fillText('관상철학관', PAD + 98, y - 2);
+    ctx.fillStyle = '#8a8172'; ctx.font = '600 22px ' + FONT_SANS;
+    ctx.fillText('觀相 · 四柱 · 姓名', PAD + 98, y + 30);
+
+    y = 300;
+    /* 이름 */
+    var nmSize = fitFont(ctx, p.name, CW - PAD * 2, 92, 52, '900');
+    ctx.font = '900 ' + nmSize + 'px ' + FONT_SERIF;
+    ctx.fillStyle = '#17140f';
+    ctx.fillText(p.name, PAD, y);
+    y += 46;
+    ctx.font = '600 27px ' + FONT_SANS; ctx.fillStyle = '#8a8172';
+    ctx.fillText((p.hanja ? p.hanja + ' · ' : '') + dateText(p.birth) + ' 양력', PAD, y);
+
+    /* 사진 or 실 */
+    var boxY = y + 46, boxH = 640, boxW = CW - PAD * 2;
+    if (p.photoUrl && p.face) {
+      ctx.save();
+      rr(ctx, PAD, boxY, boxW, boxH, 26);
+      ctx.clip();
+      ctx.fillStyle = '#14110c'; ctx.fillRect(PAD, boxY, boxW, boxH);
+      var im = p._img;
+      if (im) {
+        var r = p.face.rect;
+        var sx = im.naturalWidth * r.x, sy = im.naturalHeight * r.y;
+        var sw = im.naturalWidth * r.w, sh = im.naturalHeight * r.h;
+        /* 얼굴 박스를 3:2 박스에 채움 */
+        var sc = Math.max(boxW / sw, boxH / sh);
+        var dw = sw * sc, dh = sh * sc;
+        ctx.drawImage(im, sx, sy, sw, sh, PAD + (boxW - dw) / 2, boxY + (boxH - dh) / 2, dw, dh);
+        /* HUD */
+        ctx.strokeStyle = 'rgba(240,222,180,.8)'; ctx.lineWidth = 2;
+        var fx = PAD + (boxW - dw) / 2, fy = boxY + (boxH - dh) / 2;
+        var m = p.face.marks;
+        ctx.setLineDash([8, 8]);
+        [m.brow, m.nose].forEach(function (k) {
+          ctx.beginPath(); ctx.moveTo(fx, fy + dh * k); ctx.lineTo(fx + dw, fy + dh * k); ctx.stroke();
+        });
+        ctx.setLineDash([]);
+        ctx.strokeStyle = 'rgba(217,185,111,.9)';
+        ctx.strokeRect(fx + 4, fy + 4, dw - 8, dh - 8);
+      }
+      ctx.restore();
+      ctx.strokeStyle = 'rgba(176,135,60,.6)'; ctx.lineWidth = 2;
+      rr(ctx, PAD, boxY, boxW, boxH, 26); ctx.stroke();
+    } else {
+      /* 실(seal) 카드 */
+      var dom0 = E[p.saju.dominant];
+      ctx.save();
+      rr(ctx, PAD, boxY, boxW, boxH, 26); ctx.clip();
+      var gg = ctx.createLinearGradient(PAD, boxY, PAD + boxW, boxY + boxH);
+      gg.addColorStop(0, '#221d15'); gg.addColorStop(1, '#100e0a');
+      ctx.fillStyle = gg; ctx.fillRect(PAD, boxY, boxW, boxH);
+      ctx.strokeStyle = 'rgba(217,185,111,.4)'; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.arc(PAD + boxW / 2, boxY + boxH / 2, 200, 0, Math.PI * 2); ctx.stroke();
+      ctx.setLineDash([6, 12]);
+      ctx.beginPath(); ctx.arc(PAD + boxW / 2, boxY + boxH / 2, 244, 0, Math.PI * 2); ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.textAlign = 'center';
+      ctx.fillStyle = '#d9b96f'; ctx.font = '900 190px ' + FONT_SERIF;
+      ctx.fillText(dom0.han, PAD + boxW / 2, boxY + boxH / 2 + 66);
+      ctx.textAlign = 'left';
+      ctx.restore();
+    }
+
+    y = boxY + boxH + 34;
+    /* 배지 줄 */
+    var badges = [p.animal.emoji + ' ' + p.animal.name, p.saju.day.han + ' ' + p.saju.day.name + '일주', p.saju.zodiac];
+    var bx = PAD;
+    badges.forEach(function (t) {
+      ctx.font = '700 26px ' + FONT_SANS;
+      var w = ctx.measureText(t).width + 44;
+      ctx.fillStyle = 'rgba(255,253,247,.95)';
+      rr(ctx, bx, y - 30, w, 48, 24); ctx.fill();
+      ctx.strokeStyle = 'rgba(176,135,60,.55)'; ctx.lineWidth = 1.5; ctx.stroke();
+      ctx.fillStyle = '#3b352b';
+      ctx.fillText(t, bx + 22, y + 2);
+      bx += w + 10;
+    });
+    y += 66;
+
+    /* 오행 */
+    ctx.font = '700 24px ' + FONT_SANS; ctx.fillStyle = '#8a8172';
+    var elTxt = EO.map(function (k) { return E[k].han + ' ' + p.saju.counts[k]; }).join('   ');
+    ctx.fillText(elTxt, PAD, y);
+    y += 44;
+
+    /* 삼정 미니바 */
+    var sm = p.face ? p.face.samjeong : guessSamjeong(p);
+    var totalW = CW - PAD * 2, bh = 16;
+    var cols = { sang: '#b0873c', jung: '#a5392a', ha: '#2c5b52' };
+    var x0 = PAD;
+    ['sang', 'jung', 'ha'].forEach(function (k) {
+      var w = totalW * sm[k] / 100;
+      ctx.fillStyle = cols[k];
+      ctx.fillRect(x0, y, w, bh);
+      x0 += w;
+    });
+    y += bh + 26;
+    ctx.font = '600 21px ' + FONT_SANS; ctx.fillStyle = '#5c5346';
+    ctx.fillText('상정 ' + sm.sang + '%   중정 ' + sm.jung + '%   하정 ' + sm.ha + '%', PAD, y);
+    y += 46;
+
+    /* 총평 */
+    var line = p.narrative && p.narrative[0] ? p.narrative[0] : '';
+    ctx.font = '600 25px ' + FONT_SERIF; ctx.fillStyle = '#3b352b';
+    var lines = wrapText(ctx, line, totalW).slice(0, 2);
+    lines.forEach(function (ln) { ctx.fillText(ln, PAD, y); y += 36; });
+    y += 26;
+
+    /* 피할 것 / 곁에 둘 것 */
+    function box2(title, sub, item, color, bg) {
+      ctx.fillStyle = bg; rr(ctx, PAD, y, totalW, 176, 18); ctx.fill();
+      ctx.strokeStyle = color + '55'; ctx.lineWidth = 2; ctx.stroke();
+      ctx.fillStyle = color;
+      ctx.font = '800 25px ' + FONT_SERIF;
+      ctx.fillText(title, PAD + 24, y + 42);
+      ctx.font = '600 19px ' + FONT_SANS; ctx.fillStyle = '#8a8172';
+      ctx.fillText(sub, PAD + 24 + ctx.measureText(title).width + 160, y + 42);
+      ctx.fillStyle = '#3b352b'; ctx.font = '700 23px ' + FONT_SERIF;
+      var t1 = wrapText(ctx, item.t, totalW - 48).slice(0, 1)[0] || '';
+      ctx.fillText(t1, PAD + 24, y + 82);
+      ctx.fillStyle = '#5c5346'; ctx.font = '500 21px ' + FONT_SANS;
+      var t2 = wrapText(ctx, item.d, totalW - 48).slice(0, 2);
+      t2.forEach(function (ln, i) { ctx.fillText(ln, PAD + 24, y + 118 + i * 28); });
+      y += 196;
+    }
+    box2('⚠ 피해야 할 것', '흉', p.avoid[0], '#a5392a', 'rgba(250,238,234,.92)');
+    box2('🍀 곁에 둘 것', '길', p.keep[0], '#2c5b52', 'rgba(238,247,236,.92)');
+
+    /* 오늘 */
+    ctx.fillStyle = '#8a8172'; ctx.font = '700 22px ' + FONT_SANS;
+    ctx.fillText('오늘 · ' + p.today.dateText + ' — ' + p.today.pillar.name + '일', PAD, y + 14);
+    ctx.fillStyle = '#3b352b'; ctx.font = '500 21px ' + FONT_SANS;
+    var todayLine = p.today.score >= 70 ? '기운이 내 편입니다. 미뤄둔 일을 꺼내기 좋은 날.' : (p.today.score >= 50 ? '무난한 하루. 큰 결정보다 정리하기 좋습니다.' : '내 기운을 누르는 날. 큰 계약·고백은 미루세요.');
+    ctx.fillText(todayLine, PAD, y + 44);
+
+    /* 푸터 */
+    ctx.fillStyle = '#17140f'; ctx.font = '700 26px ' + FONT_SANS;
+    ctx.fillText('나도 관상·사주·이름풀이 보기', PAD, CH - 128);
+    ctx.fillStyle = '#8a8172'; ctx.font = '500 21px ' + FONT_SANS;
+    ctx.fillText('handobin9782-lang.github.io/mind-test', PAD, CH - 92);
+    ctx.fillStyle = 'rgba(23,20,15,.4)'; ctx.font = '500 17px ' + FONT_SANS;
+    ctx.fillText('재미로 보는 관상·사주·이름풀이 · 의료·투자 판단 근거 아님', PAD, CH - 62);
+    ctx.fillStyle = '#a5392a'; ctx.fillRect(0, CH - 12, CW, 12);
+  }
+
+  function drawRelCard(rel, A, B) {
+    var cv = $('cardCanvas'), ctx = cv.getContext('2d');
+    cv.width = CW; cv.height = CH;
+    drawHanjiBg(ctx);
+    var PAD = 96, y = 150;
+    ctx.fillStyle = '#a5392a'; rr(ctx, PAD, y - 52, 78, 78, 12); ctx.fill();
+    ctx.fillStyle = '#fff2df'; ctx.font = '700 44px ' + FONT_SERIF; ctx.textAlign = 'center';
+    ctx.fillText('緣', PAD + 39, y + 4); ctx.textAlign = 'left';
+    ctx.fillStyle = '#17140f'; ctx.font = '700 40px ' + FONT_SERIF;
+    ctx.fillText('6가지 관계', PAD + 98, y - 2);
+    ctx.fillStyle = '#8a8172'; ctx.font = '600 22px ' + FONT_SANS;
+    ctx.fillText('六親 · 緣', PAD + 98, y + 30);
+
+    y = 320;
+    ctx.font = '900 74px ' + FONT_SERIF; ctx.fillStyle = '#17140f';
+    ctx.fillText(A.name + ' × ' + B.name, PAD, y);
+    y += 56;
+    ctx.font = '600 26px ' + FONT_SANS; ctx.fillStyle = '#5c5346';
+    ctx.fillText(rel.grade.label + ' · ' + relWordKo(rel.elRel) + ' · ' + rel.relType, PAD, y);
+
+    y += 40;
+    /* 점수 링 */
+    var cx0 = PAD + 130, cy0 = y + 130, rad = 120;
+    ctx.lineWidth = 18; ctx.strokeStyle = 'rgba(23,20,15,.1)';
+    ctx.beginPath(); ctx.arc(cx0, cy0, rad, 0, Math.PI * 2); ctx.stroke();
+    ctx.strokeStyle = '#a5392a'; ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.arc(cx0, cy0, rad, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * rel.score / 100); ctx.stroke();
+    ctx.textAlign = 'center';
+    ctx.fillStyle = '#17140f'; ctx.font = '900 76px ' + FONT_SERIF;
+    ctx.fillText(String(rel.score), cx0, cy0 + 22);
+    ctx.font = '600 24px ' + FONT_SANS; ctx.fillStyle = '#8a8172';
+    ctx.fillText('점', cx0, cy0 + 56);
+    ctx.textAlign = 'left';
+    ctx.fillStyle = '#3b352b'; ctx.font = '700 30px ' + FONT_SERIF;
+    var hl = wrapText(ctx, rel.headline, CW - PAD - (cx0 + rad + 30));
+    hl.slice(0, 3).forEach(function (ln, i) { ctx.fillText(ln, cx0 + rad + 30, cy0 - 30 + i * 40); });
+
+    y = cy0 + rad + 60;
+    /* 6개 카드 */
+    var colW = (CW - PAD * 2 - 20) / 2, rowH = 190;
+    rel.cards.forEach(function (c, i) {
+      var col = i % 2, row = Math.floor(i / 2);
+      var x = PAD + col * (colW + 20), yy = y + row * (rowH + 18);
+      ctx.fillStyle = 'rgba(255,253,247,.95)';
+      rr(ctx, x, yy, colW, rowH, 18); ctx.fill();
+      ctx.strokeStyle = 'rgba(176,135,60,.45)'; ctx.lineWidth = 1.6; ctx.stroke();
+      ctx.fillStyle = '#17140f'; ctx.font = '700 26px ' + FONT_SERIF;
+      ctx.fillText(c.icon + ' ' + c.title, x + 20, yy + 44);
+      ctx.fillStyle = '#5c5346'; ctx.font = '500 20px ' + FONT_SANS;
+      wrapText(ctx, c.summary, colW - 40).slice(0, 3).forEach(function (ln, k) {
+        ctx.fillText(ln, x + 20, yy + 82 + k * 27);
+      });
+      ctx.fillStyle = '#8a8172'; ctx.font = '700 18px ' + FONT_SANS;
+      ctx.fillText((c.badge || '').slice(0, 18), x + 20, yy + rowH - 18);
+    });
+    y += 3 * (rowH + 18) + 26;
+
+    ctx.fillStyle = '#17140f'; ctx.font = '700 26px ' + FONT_SANS;
+    ctx.fillText('나도 6가지 관계 보기', PAD, CH - 128);
+    ctx.fillStyle = '#8a8172'; ctx.font = '500 21px ' + FONT_SANS;
+    ctx.fillText('handobin9782-lang.github.io/mind-test', PAD, CH - 92);
+    ctx.fillStyle = 'rgba(23,20,15,.4)'; ctx.font = '500 17px ' + FONT_SANS;
+    ctx.fillText('재미로 보는 궁합 · 의료·투자 판단 근거 아님', PAD, CH - 62);
+    ctx.fillStyle = '#a5392a'; ctx.fillRect(0, CH - 12, CW, 12);
+  }
+
+  function loadImgEl(src) {
     return new Promise(function (res, rej) {
       var im = new Image();
       im.onload = function () { res(im); };
       im.onerror = rej;
       im.src = src;
-      if (im.complete && im.naturalWidth) res(im);
     });
   }
-
-  function drawCard(key, pct, img) {
-    var t = TYPES[key];
-    var ctx = $('cardCanvas').getContext('2d');
-    var W = CARD_W, H = CARD_H, PAD = 76;
-
-    ctx.clearRect(0, 0, W, H);
-    ctx.fillStyle = '#fdfaf2';
-    ctx.fillRect(0, 0, W, H);
-    ctx.strokeStyle = 'rgba(22,23,29,0.05)';
-    ctx.lineWidth = 2;
-    for (var yy = 64; yy < H; yy += 60) {
-      ctx.beginPath(); ctx.moveTo(0, yy); ctx.lineTo(W, yy); ctx.stroke();
-    }
-    for (var xx = 0; xx < W; xx += 48) {
-      ctx.fillStyle = t.accent;
-      ctx.fillRect(xx, 0, 32, 14);
-      ctx.fillStyle = '#ffe94d';
-      ctx.fillRect(xx + 32, 0, 16, 14);
-    }
-
-    ctx.textAlign = 'left';
-    ctx.fillStyle = '#16171d';
-    ctx.font = '900 40px ' + FONT;
-    ctx.fillText('시험 중 나는..?', PAD, 104);
-    ctx.textAlign = 'right';
-    ctx.fillStyle = '#71757f';
-    ctx.font = '800 30px ' + FONT;
-    ctx.fillText('시험장 놈놈놈 테스트', W - PAD, 102);
-    ctx.strokeStyle = 'rgba(22,23,29,0.18)';
-    ctx.lineWidth = 3;
-    ctx.beginPath(); ctx.moveTo(PAD, 132); ctx.lineTo(W - PAD, 132); ctx.stroke();
-
-    var iw = 620, ix = (W - iw) / 2, iy = 172;
-    ctx.save();
-    ctx.shadowColor = 'rgba(22,23,29,0.20)';
-    ctx.shadowBlur = 26;
-    ctx.shadowOffsetY = 10;
-    ctx.fillStyle = '#fffdf7';
-    roundRect(ctx, ix - 16, iy - 16, iw + 32, iw + 32, 40);
-    ctx.fill();
-    ctx.restore();
-    ctx.save();
-    roundRect(ctx, ix - 16, iy - 16, iw + 32, iw + 32, 40);
-    ctx.strokeStyle = '#16171d';
-    ctx.lineWidth = 6;
-    ctx.stroke();
-    ctx.restore();
-    ctx.save();
-    roundRect(ctx, ix, iy, iw, iw, 30);
-    ctx.clip();
-    if (img) {
-      var s = Math.max(iw / img.width, iw / img.height);
-      var dw = img.width * s, dh = img.height * s;
-      ctx.drawImage(img, ix + (iw - dw) / 2, iy + (iw - dh) / 2, dw, dh);
-    } else {
-      ctx.fillStyle = t.tint; ctx.fillRect(ix, iy, iw, iw);
-    }
-    ctx.restore();
-
-    var y = 862;
-    ctx.textAlign = 'center';
-    ctx.fillStyle = '#71757f';
-    ctx.font = '900 26px ' + FONT;
-    ctx.fillText('당 신 은', W / 2, y);
-
-    ctx.fillStyle = '#16171d';
-    var nameLines = CARD_NAMES[key] || wrapLines(ctx, t.name, W - PAD * 2 - 30);
-    var nameMaxW = W - PAD * 2 - 20;
-    var nameSize = 76;
-    while (nameSize > 42) {
-      ctx.font = '900 ' + nameSize + 'px ' + FONT;
-      var widest = 0;
-      nameLines.forEach(function (ln) { widest = Math.max(widest, ctx.measureText(ln).width); });
-      if (widest <= nameMaxW) break;
-      nameSize -= 2;
-    }
-    ctx.font = '900 ' + nameSize + 'px ' + FONT;
-    var nameLh = nameSize + 14;
-    y += nameSize + 10;
-    nameLines.forEach(function (ln) {
-      ctx.fillText(ln, W / 2, y);
-      y += nameLh;
-    });
-    y -= 12;
-
-    ctx.fillStyle = '#3a3d47';
-    ctx.font = '700 33px ' + FONT;
-    y += 6;
-    (t.card || t.desc.slice(0, 2)).forEach(function (line) {
-      wrapLines(ctx, line, W - PAD * 2 - 70).forEach(function (ln) {
-        ctx.fillText(ln, W / 2, y);
-        y += 46;
-      });
-    });
-
-    y += 12;
-    ctx.font = '800 30px ' + FONT;
-    var tw = ctx.measureText(t.tagline).width;
-    var pw = tw + 64, ph = 62;
-    ctx.fillStyle = t.accent;
-    roundRect(ctx, (W - pw) / 2, y, pw, ph, 31);
-    ctx.fill();
-    ctx.fillStyle = '#ffffff';
-    ctx.fillText(t.tagline, W / 2, y + 41);
-    y += ph + 32;
-
-    ctx.save();
-    ctx.setLineDash([10, 12]);
-    ctx.strokeStyle = 'rgba(22,23,29,0.28)';
-    ctx.lineWidth = 3;
-    ctx.beginPath(); ctx.moveTo(PAD, y); ctx.lineTo(W - PAD, y); ctx.stroke();
-    ctx.restore();
-    y += 18;
-
-    if (pct) {
-      var rows = ORDER.slice().sort(function (a, b) { return pct[b] - pct[a]; }).slice(0, 4);
-      var rowH = Math.min(72, (1670 - y) / rows.length);
-      rows.forEach(function (k) {
-        var tt = TYPES[k];
-        var bx = PAD + 250, bw = W - PAD - 190 - bx;
-        ctx.textAlign = 'left';
-        ctx.fillStyle = k === key ? '#16171d' : '#71757f';
-        ctx.font = (k === key ? '900 ' : '800 ') + '30px ' + FONT;
-        ctx.fillText(tt.emoji + '  ' + tt.label, PAD, y + 26);
-        ctx.fillStyle = 'rgba(22,23,29,0.10)';
-        roundRect(ctx, bx, y + 6, bw, 22, 11);
-        ctx.fill();
-        ctx.fillStyle = t.accent;
-        roundRect(ctx, bx, y + 6, Math.max(14, bw * pct[k] / 100), 22, 11);
-        ctx.fill();
-        ctx.textAlign = 'right';
-        ctx.fillStyle = '#16171d';
-        ctx.font = '900 30px ' + FONT;
-        ctx.fillText(pct[k] + '%', W - PAD, y + 27);
-        y += rowH;
-      });
-    }
-
-    // 최악의 상극 한 줄
-    if (pct && y < 1700) {
-      var ne = TYPES[t.nemesis];
-      ctx.textAlign = 'center';
-      ctx.fillStyle = 'rgba(224,54,47,0.92)';
-      ctx.font = '800 25px ' + FONT;
-      ctx.fillText('🚫 최악의 상극 · ' + ne.emoji + ' ' + ne.label + ' — 앞뒤 자리 앉으면 둘 다 망함', W / 2, y + 34);
-    }
-
-    ctx.textAlign = 'center';
-    ctx.fillStyle = '#16171d';
-    ctx.font = '900 34px ' + FONT;
-    ctx.fillText('너는 어떤 놈이야?', W / 2, 1738);
-    ctx.fillStyle = '#71757f';
-    ctx.font = '700 28px ' + FONT;
-    ctx.fillText('handobin9782-lang.github.io/mind-test', W / 2, 1788);
-    ctx.fillStyle = 'rgba(22,23,29,0.45)';
-    ctx.font = '700 24px ' + FONT;
-    ctx.fillText('시험장 놈놈놈 테스트 · 8가지 유형 · 10문항', W / 2, 1832);
-
-    ctx.fillStyle = t.accent;
-    ctx.fillRect(0, H - 10, W, 10);
-  }
-
-  function cardBlob() {
-    return new Promise(function (resolve, reject) {
-      if (!state.view) return reject(new Error('no result'));
-      var key = state.view;
-      var pct = (state.result && state.result.key === key) ? state.result.pct : null;
-      loadImg(TYPES[key].img).then(function (im) {
-        drawCard(key, pct, im);
-        var cv = $('cardCanvas');
-        if (cv.toBlob) cv.toBlob(function (b) { b ? resolve(b) : reject(new Error('blob')); }, 'image/png');
-        else { try { resolve(dataUrlToBlob(cv.toDataURL('image/png'))); } catch (e) { reject(e); } }
-      }).catch(reject);
+  function canvasToBlob(cv) {
+    return new Promise(function (res, rej) {
+      if (cv.toBlob) cv.toBlob(function (b) { b ? res(b) : rej(new Error('blob')); }, 'image/png');
+      else {
+        try {
+          var url = cv.toDataURL('image/png'), parts = url.split(','), bin = atob(parts[1]);
+          var arr = new Uint8Array(bin.length);
+          for (var i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
+          res(new Blob([arr], { type: 'image/png' }));
+        } catch (e) { rej(e); }
+      }
     });
   }
-  function dataUrlToBlob(url) {
-    var parts = url.split(','), bin = atob(parts[1]);
-    var arr = new Uint8Array(bin.length);
-    for (var i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
-    return new Blob([arr], { type: 'image/png' });
+  function openSheet(blob, title, fname) {
+    if (S.cardUrl) URL.revokeObjectURL(S.cardUrl);
+    S.cardUrl = URL.createObjectURL(blob);
+    S.lastCardName = fname;
+    $('sheetTitle').textContent = title;
+    $('sheetImg').innerHTML = '<img src="' + S.cardUrl + '" alt="' + attr(title) + '">';
+    $('sheet').hidden = false;
   }
-
-  function saveCard() {
-    var btn = $('btnSave'), old = btn.textContent;
-    btn.disabled = true;
-    btn.textContent = '카드 만드는 중...';
-    cardBlob().then(function (blob) {
-      var url = URL.createObjectURL(blob);
-      var a = document.createElement('a');
-      a.href = url;
-      a.download = 'mind-test-' + state.view + '.png';
-      document.body.appendChild(a);
-      a.click();
-      setTimeout(function () {
-        URL.revokeObjectURL(url);
-        a.remove();
-        btn.disabled = false;
-        btn.textContent = old;
-        toast('9:16 카드 저장 · 사진 앱에서 확인하세요');
-      }, 900);
-    }).catch(function () {
-      btn.disabled = false;
-      btn.textContent = old;
+  function saveCard(p) {
+    toast('카드를 만드는 중…');
+    var ready = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
+    ready.then(function () {
+      return p.photoUrl ? loadImgEl(p.photoUrl).catch(function () { return null; }) : Promise.resolve(null);
+    }).then(function (im) {
+      p._img = im;
+      drawCard(p);
+      return canvasToBlob($('cardCanvas'));
+    }).then(function (blob) {
+      openSheet(blob, p.name + '님의 관상·사주 카드', 'gwansang-' + p.name);
+    }).catch(function (e) {
+      window.__errs.push('card:' + (e && e.message));
       toast('카드를 만들지 못했어요. 다시 시도해 주세요.');
     });
   }
-
-  function inviteUrl(key) { return SITE + '?from=' + key; }
-  function inviteText(key) {
-    var t = TYPES[key];
-    return '시험장 놈놈놈 테스트에서 나 "' + t.emoji + ' ' + t.name + '" 나옴ㅋㅋ 너는 뭐 나오는지 해봐!';
-  }
-
-  function shareResult() {
-    var key = state.view;
-    var url = inviteUrl(key);
-    var text = inviteText(key);
-    var btn = $('btnShare');
-    btn.disabled = true;
-    cardBlob().then(function (blob) {
-      btn.disabled = false;
-      var file = null;
-      try { file = new File([blob], 'mind-test-' + key + '.png', { type: 'image/png' }); } catch (e) {}
-      if (file && navigator.canShare && navigator.canShare({ files: [file] })) {
-        return navigator.share({ files: [file], title: '시험 중 나는..?', text: text + '\n' + url }).catch(function () {});
-      }
-      if (navigator.share) return navigator.share({ title: '시험 중 나는..?', text: text, url: url }).catch(function () {});
-      copyText(url, '링크를 복사했어요. 친구에게 붙여넣기!');
-    }).catch(function () {
-      btn.disabled = false;
-      if (navigator.share) navigator.share({ title: '시험 중 나는..?', text: text, url: url }).catch(function () {});
-      else copyText(url, '링크를 복사했어요. 친구에게 붙여넣기!');
+  function saveRelationCard(rel, A, B) {
+    toast('카드를 만드는 중…');
+    var ready = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
+    ready.then(function () {
+      drawRelCard(rel, A, B);
+      return canvasToBlob($('cardCanvas'));
+    }).then(function (blob) {
+      openSheet(blob, A.name + ' × ' + B.name + ' 6가지 관계', 'relation-' + A.name + '-' + B.name);
+    }).catch(function (e) {
+      window.__errs.push('relcard:' + (e && e.message));
+      toast('카드를 만들지 못했어요.');
     });
   }
 
-  function copyText(text, okMsg) {
-    var done = function () { toast(okMsg || '복사했어요'); };
-    var fail = function () {
-      var ta = document.createElement('textarea');
-      ta.value = text;
-      ta.setAttribute('readonly', '');
-      ta.style.position = 'fixed';
-      ta.style.opacity = '0';
-      document.body.appendChild(ta);
-      ta.select();
-      try { document.execCommand('copy'); done(); } catch (e) { toast('복사가 안 돼요. 주소창의 링크를 복사해 주세요.'); }
-      ta.remove();
-    };
-    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done).catch(fail);
-    else fail();
-  }
-
-  function copyLink() {
-    var key = state.view || (state.result && state.result.key) || null;
-    if (!key) { copyText(SITE, '링크를 복사했어요'); return; }
-    copyText(inviteUrl(key) + '  ' + inviteText(key), '초대 링크와 멘트를 복사했어요. 붙여넣기만 하면 돼요!');
-  }
-
-  /* ── 이벤트 ───────────────────────────────── */
-  document.addEventListener('click', function (e) {
-    var opt = e.target.closest ? e.target.closest('.opt') : null;
-    if (opt) { pick(Number(opt.getAttribute('data-i'))); return; }
-    var pair = e.target.closest ? e.target.closest('.pair') : null;
-    if (pair) { showResult(pair.getAttribute('data-k'), { preview: true }); return; }
-    var li = e.target.closest ? e.target.closest('.litem') : null;
-    if (li) { showResult(li.getAttribute('data-k'), { preview: true }); return; }
-  });
-
-  $('btnStart').addEventListener('click', start);
-  $('btnStartFromList').addEventListener('click', start);
-  $('btnBack').addEventListener('click', back);
-  $('btnRetry').addEventListener('click', start);
-  $('btnSave').addEventListener('click', saveCard);
-  $('btnShare').addEventListener('click', shareResult);
-  $('btnCopy').addEventListener('click', copyLink);
-  $('btnList').addEventListener('click', function () { renderRanking(); show('screen-list'); });
-  $('btnListFromIntro').addEventListener('click', function () { renderRanking(); show('screen-list'); });
-  $('btnBackFromList').addEventListener('click', function () { show(state.result ? 'screen-result' : 'screen-intro'); });
-  $('btnBannerBack').addEventListener('click', function () {
-    if (state.result) showResult(state.result.key, { pct: state.result.pct });
-    else start();
-  });
-
-  $('btnSound').addEventListener('click', function () {
-    var on = Sound.setEnabled(!Sound.isOn());
-    paintSoundBtn();
-    if (on) toast('사운드 켜짐 · 잔잔한 시험장 배경음');
-  });
-
-  document.addEventListener('pointerdown', function () { Sound.unlock(); }, { once: true });
-
-  document.addEventListener('keydown', function (e) {
-    if (!$('screen-quiz').classList.contains('is-on')) return;
-    if (e.key >= '1' && e.key <= '4') {
-      var idx = Number(e.key) - 1;
-      if (QUESTIONS[state.i].opts[idx]) pick(idx);
-    } else if (e.key === 'Backspace' || e.key === 'ArrowLeft') {
-      back();
-    }
-  });
-
-  /* ── 시작 ─────────────────────────────────── */
-  renderTeaser();
-  renderList();
-  renderPeople();
-  paintSoundBtn();
-  $('qTotal').textContent = QUESTIONS.length;
-  $('year').textContent = new Date().getFullYear();
-
-  (function boot() {
-    var f = param('from');
-    if (f && TYPES[f]) { state.from = f; renderInvite(); }
-    var h = (location.hash || '').replace(/^#\/?/, '');
-    if (h && TYPES[h]) {
-      renderRanking();
-      showResult(h, { preview: true });
-    }
-  })();
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
+  else boot();
 })();

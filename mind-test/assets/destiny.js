@@ -400,28 +400,28 @@
       var fh = fw * 1.34;
       var x0 = eyes.mx - fw / 2;
       var y0 = eyes.my - fh * 0.40;
-      /* 볼 폭으로 보정 — 중앙 스킨 런 */
-      var cheekY = Math.round(clamp(y0 + fh * 0.62, 0, H - 1));
-      var xc = Math.round(clamp(eyes.mx, 0, W - 1)), found = -1;
-      if (skin[cheekY * W + xc]) found = xc;
-      else {
-        for (var d2 = 1; d2 < Math.round(W * 0.05); d2++) {
-          if (xc - d2 >= 0 && skin[cheekY * W + xc - d2]) { found = xc - d2; break; }
-          if (xc + d2 < W && skin[cheekY * W + xc + d2]) { found = xc + d2; break; }
+      /* 볼 폭으로 보정 — 중앙과 겹치는 가장 넓은 스킨 런 */
+      var cheekY = Math.round(clamp(y0 + fh * 0.60, 0, H - 1));
+      var want0 = eyes.mx - fw * 0.22, want1 = eyes.mx + fw * 0.22;
+      var bestRun = null, runStart = -1;
+      for (var xs = 0; xs < W; xs++) {
+        if (skin[cheekY * W + xs]) { if (runStart < 0) runStart = xs; }
+        else if (runStart >= 0) {
+          var rw0 = xs - runStart;
+          if (xs - 1 >= want0 && runStart <= want1 && rw0 > (bestRun ? bestRun.w : 0)) bestRun = { a: runStart, b: xs - 1, w: rw0 };
+          runStart = -1;
         }
       }
-      if (found >= 0) {
-        var a = found, b = found;
-        while (a > 0 && skin[cheekY * W + a - 1]) a--;
-        while (b < W - 1 && skin[cheekY * W + b + 1]) b++;
-        var rw = b - a + 1;
-        if (rw > fw * 0.6 && rw < fw * 1.7) {
-          var fw2 = rw * 1.04;
-          x0 = (a + b) / 2 - fw2 / 2;
-          fw = fw2;
-          fh = fw * 1.34;
-          y0 = eyes.my - fh * 0.40;
-        }
+      if (runStart >= 0) {
+        var rw1 = W - runStart;
+        if (runStart <= want1 && rw1 > (bestRun ? bestRun.w : 0)) bestRun = { a: runStart, b: W - 1, w: rw1 };
+      }
+      if (bestRun && bestRun.w > fw * 0.55 && bestRun.w < fw * 1.8) {
+        var fw2 = bestRun.w * 1.04;
+        x0 = (bestRun.a + bestRun.b) / 2 - fw2 / 2;
+        fw = fw2;
+        fh = fw * 1.34;
+        y0 = eyes.my - fh * 0.40;
       }
       x0 = clamp(x0, 0, Math.max(0, W - fw));
       y0 = clamp(y0, 0, Math.max(0, H - fh));
@@ -492,13 +492,14 @@
 
     /* 대칭도 */
     var symSum = 0, symN = 0;
+    var symIn = Math.round(fw * 0.06);
     for (var yy = by0; yy < by0 + fh; yy++) {
-      for (var xx = bx0; xx < bx0 + Math.floor(fw / 2); xx++) {
+      for (var xx = bx0 + symIn; xx < bx0 + Math.floor(fw / 2); xx++) {
         var mx2 = bx1 - (xx - bx0);
         if (skin[yy * W + xx] && skin[yy * W + mx2]) { symSum += Math.abs(lum[yy * W + xx] - lum[yy * W + mx2]); symN++; }
       }
     }
-    var symmetry = symN > 40 ? clamp(100 - (symSum / symN) * 1.15, 30, 98) : 62;
+    var symmetry = symN > 40 ? clamp(100 - (symSum / symN) * 2.1, 30, 98) : 62;
 
     /* 밝기·혈색 */
     var bSum = 0, redSum = 0, bN = 0;
@@ -559,10 +560,10 @@
       if (pk1.r > 0.02) eyeY = pk1.y;
     }
 
-    /* 눈 크기·간격 — 눈 라인 좁은 밴드, 양 판 가장자리 제외 */
+    /* 눈 크기·간격 — 눈 라인 좁은 밴드, 중앙 ±0.30fw만 */
     var eyeTop = Math.max(by0, Math.round(eyeY - fh * 0.028));
     var eyeBot = Math.min(by0 + fh, Math.round(eyeY + fh * 0.032));
-    var ex0 = Math.round(bx0 + fw * 0.08), ex1 = Math.round(bx1 - fw * 0.08);
+    var ex0 = Math.round(bx0 + fw * 0.20), ex1 = Math.round(bx1 - fw * 0.20);
     var lx = 0, ln = 0, rx = 0, rn = 0, darkTot = 0, area = 0;
     for (var y7 = eyeTop; y7 < eyeBot; y7++) {
       for (var x7 = ex0; x7 <= ex1; x7++) {
@@ -574,7 +575,7 @@
       }
     }
     var eyeSize = area ? darkTot / area : 0;
-    var eyeSpace = (ln > 2 && rn > 2) ? clamp(Math.abs((rx / rn) - (lx / ln)) / fw, 0.20, 0.58) : 0.40;
+    var eyeSpace = (ln > 2 && rn > 2) ? clamp(Math.abs((rx / rn) - (lx / ln)) / fw, 0.22, 0.55) : 0.40;
 
     /* 입 라인 — 중앙 영역의 붉은 기운/어두움 피크 */
     var mouthY = by0 + fh * 0.76, bestSc = -1;
@@ -617,17 +618,16 @@
     var mouthWidth = mouthRun ? clamp(mouthRun.w / fw, 0.12, 0.62) : 0.30;
     var lipDensity = mouthRun ? clamp(mouthRun.w / (fw * 1.6), 0.05, 0.5) : 0.2;
 
-    /* 턱·귀 — 중앙 스킨 런 기준 */
-    var midRun = centerRun(by0 + fh * 0.58, isSkinAt);
-    var jawRun = centerRun(by0 + fh * 0.88, isSkinAt);
-    var eyeRun = centerRun(eyeY, isSkinAt);
-    var maxRunW = 0;
-    for (var yr = by0 + fh * 0.35; yr < by0 + fh * 0.95; yr += Math.max(1, fh * 0.06)) {
-      var rw = centerRun(yr, isSkinAt);
-      if (rw && rw.w > maxRunW) maxRunW = rw.w;
+    /* 턱·귀 — 박스 안 스킨 좌우 범위 기준 */
+    function rowExtent(yy3) {
+      var a = -1, b = -1, y3 = Math.round(clamp(yy3, by0, by0 + fh - 1));
+      for (var x3b = bx0; x3b <= bx1; x3b++) if (skin[y3 * W + x3b]) { if (a < 0) a = x3b; b = x3b; }
+      return a < 0 ? 0 : (b - a + 1);
     }
-    var jawRatio = (maxRunW && jawRun) ? clamp(jawRun.w / maxRunW, 0.35, 1) : 0.7;
-    var earRatio = (midRun && eyeRun) ? clamp(eyeRun.w / midRun.w, 0.6, 1.15) : 0.95;
+    var wEye = rowExtent(eyeY), wMid = rowExtent(by0 + fh * 0.55), wJaw = rowExtent(by0 + fh * 0.86), wMax = 0;
+    for (var yr2 = by0 + fh * 0.35; yr2 < by0 + fh * 0.95; yr2 += Math.max(1, fh * 0.05)) wMax = Math.max(wMax, rowExtent(yr2));
+    var jawRatio = (wMax && wJaw) ? clamp(wJaw / wMax, 0.35, 1) : 0.7;
+    var earRatio = wMid ? clamp(wEye / wMid, 0.6, 1.15) : 0.95;
 
     /* 삼정: 눈썹선·코끝·턱으로 구획 */
     var browY = Math.max(by0 + fh * 0.12, eyeY - fh * 0.12);
@@ -652,7 +652,7 @@
     var metrics = {
       faceRatio: r1(faceRatio), symmetry: Math.round(symmetry),
       brightness: Math.round(clamp(brightness / 255 * 100, 0, 100)),
-      redness: Math.round(clamp((redness - 8) / 35 * 100, 0, 100)),
+      redness: Math.round(clamp((redness - 8) / 50 * 100, 0, 100)),
       eyeSize: r1(eyeSize), eyeSpace: r1(eyeSpace),
       noseWidth: r1(noseWidth), noseContrast: r1(noseContrast),
       mouthWidth: r1(mouthWidth), lipDensity: r1(lipDensity),

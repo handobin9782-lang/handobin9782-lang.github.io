@@ -15,9 +15,9 @@
   function tokens(s) {
     var out = [];
     if (seg) {
-      for (var it = seg.segment(s), r = it.next(); !r.done; r = it.next()) {
-        if (r.value.isWordLike) out.push(r.value.segment.toLowerCase());
-      }
+      Array.from(seg.segment(s)).forEach(function (part) {
+        if (part.isWordLike) out.push(part.segment.toLowerCase());
+      });
     } else {
       var m = s.toLowerCase().match(/[\p{L}\p{N}][\p{L}\p{N}'’-]*/gu);
       out = m || [];

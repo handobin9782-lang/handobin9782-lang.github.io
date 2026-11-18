@@ -44,14 +44,15 @@
     });
   }
 
-  function clearOutputs() {
+  function resetView() {
     outputs.forEach(function (o) {
       if (o.outUrl) URL.revokeObjectURL(o.outUrl);
       if (o.thumbUrl) URL.revokeObjectURL(o.thumbUrl);
     });
     outputs = [];
-    results.innerHTML = '';
+    results.replaceChildren();
     summary.textContent = '';
+    status.textContent = '';
     btnAll.disabled = true;
   }
 
@@ -83,7 +84,7 @@
     return { file: file, blob: blob, mime: mime, ow: ow, oh: oh, nw: nw, nh: nh };
   }
 
-  function renderItem(o) {
+  function buildItem(o, sink) {
     var li = document.createElement('div');
     li.className = 'result';
     var img = document.createElement('img');
@@ -91,6 +92,7 @@
     img.src = thumbUrl;
     img.alt = '';
     img.loading = 'lazy';
+
     var info = document.createElement('div');
     info.className = 'info';
     var nm = document.createElement('div');
@@ -99,58 +101,62 @@
     var meta = document.createElement('div');
     meta.className = 'meta';
     var pct = o.file.size > 0 ? Math.round((1 - o.blob.size / o.file.size) * 100) : 0;
-    var dims = (o.ow !== o.nw || o.oh !== o.nh) ? ' · ' + o.nw + '×' + o.nh : ' · ' + o.ow + '×' + o.oh;
+    var dims = ' · ' + o.nw + '×' + o.nh;
     meta.textContent = bytes(o.file.size) + ' → ' + bytes(o.blob.size) + dims;
     info.appendChild(nm);
     info.appendChild(meta);
+
     var save = document.createElement('div');
-    save.className = 'save';
-    save.textContent = pct >= 0
-      ? pct + '% ' + I.smaller
-      : Math.abs(pct) + '% ' + I.larger;
-    if (pct < 0) save.className = 'fail';
+    save.className = pct >= 0 ? 'save' : 'fail';
+    save.textContent = pct >= 0 ? pct + '% ' + I.smaller : Math.abs(pct) + '% ' + I.larger;
+
     var a = document.createElement('a');
     a.className = 'btn sm ghost';
     a.textContent = I.download;
     var outUrl = URL.createObjectURL(o.blob);
     a.href = outUrl;
     a.download = baseName(o.file.name) + '.' + extOf(o.mime);
+
     li.appendChild(img);
     li.appendChild(info);
     li.appendChild(save);
     li.appendChild(a);
-    results.appendChild(li);
-    outputs.push({ el: a, outUrl: outUrl, thumbUrl: thumbUrl, blob: o.blob, name: a.download });
-    return { before: o.file.size, after: o.blob.size };
+    sink.push({ outUrl: outUrl, thumbUrl: thumbUrl, name: a.download });
+    return li;
   }
 
-  function schedule() {
-    clearTimeout(runTimer);
-    runTimer = setTimeout(run, 130);
+  function buildFail(file) {
+    var li = document.createElement('div');
+    li.className = 'result fail';
+    li.textContent = file.name + ' — ' + I.failed;
+    return li;
   }
 
   async function run() {
     if (!files.length) return;
     var my = ++runId;
-    clearOutputs();
+    resetView();
     status.textContent = I.processing + ' (0/' + files.length + ')';
-    var before = 0, after = 0, done = 0;
+    var nodes = [], sink = [], before = 0, after = 0, done = 0;
+
     for (var i = 0; i < files.length; i++) {
       try {
         var o = await compressOne(files[i]);
-        if (my !== runId) return;
-        var r = renderItem(o);
-        before += r.before; after += r.after;
+        if (my !== runId) { sink.forEach(revoke); return; }
+        nodes.push(buildItem(o, sink));
+        before += o.file.size;
+        after += o.blob.size;
       } catch (e) {
-        var li = document.createElement('div');
-        li.className = 'result fail';
-        li.textContent = files[i].name + ' — ' + I.failed;
-        results.appendChild(li);
+        nodes.push(buildFail(files[i]));
       }
       done++;
-      if (my !== runId) return;
+      if (my !== runId) { sink.forEach(revoke); return; }
       status.textContent = I.processing + ' (' + done + '/' + files.length + ')';
     }
+
+    if (my !== runId) { sink.forEach(revoke); return; }
+    results.replaceChildren.apply(results, nodes);
+    outputs = sink;
     status.textContent = '';
     if (before > 0) {
       var saved = Math.round((1 - after / before) * 100);
@@ -160,12 +166,23 @@
     btnAll.disabled = outputs.length === 0;
   }
 
+  function revoke(o) {
+    if (o.outUrl) URL.revokeObjectURL(o.outUrl);
+    if (o.thumbUrl) URL.revokeObjectURL(o.thumbUrl);
+  }
+
+  function schedule() {
+    clearTimeout(runTimer);
+    runTimer = setTimeout(run, 150);
+  }
+
   function addFiles(list) {
     var added = 0;
     for (var i = 0; i < list.length; i++) {
       var f = list[i];
       if (!f || (f.type && f.type.indexOf('image/') !== 0)) continue;
-      files.push(f); added++;
+      files.push(f);
+      added++;
     }
     if (added) schedule();
   }
@@ -202,7 +219,7 @@
   });
   btnClear.addEventListener('click', function () {
     files = [];
-    clearOutputs();
-    status.textContent = '';
+    runId++;
+    resetView();
   });
 })();

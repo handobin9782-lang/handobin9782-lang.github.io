@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>글자수 세기 — 글자·단어·바이트·읽기 시간</title>
+  <meta name="description" content="글자수와 단어수를 실시간으로 세는 무료 도구. UTF-8 바이트, 문장·문단 수, 읽기 시간, 자주 쓰인 단어까지 보여 줍니다. 입력한 글은 전송되지 않습니다.">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="theme-color" content="#0b1020">
+  <link rel="canonical" href="https://handobin9782-lang.github.io/tools/ko/word-counter.html">
+  <link rel="alternate" hreflang="en" href="https://handobin9782-lang.github.io/tools/en/word-counter.html">
+  <link rel="alternate" hreflang="ja" href="https://handobin9782-lang.github.io/tools/ja/word-counter.html">
+  <link rel="alternate" hreflang="es" href="https://handobin9782-lang.github.io/tools/es/word-counter.html">
+  <link rel="alternate" hreflang="de" href="https://handobin9782-lang.github.io/tools/de/word-counter.html">
+  <link rel="alternate" hreflang="ko" href="https://handobin9782-lang.github.io/tools/ko/word-counter.html">
+  <link rel="alternate" hreflang="x-default" href="https://handobin9782-lang.github.io/tools/en/word-counter.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="글로벌 미니툴">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:title" content="글자수 세기 — 글자·단어·바이트·읽기 시간">
+  <meta property="og:description" content="글자수와 단어수를 실시간으로 세는 무료 도구. UTF-8 바이트, 문장·문단 수, 읽기 시간, 자주 쓰인 단어까지 보여 줍니다. 입력한 글은 전송되지 않습니다.">
+  <meta property="og:url" content="https://handobin9782-lang.github.io/tools/ko/word-counter.html">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="글자수 세기 — 글자·단어·바이트·읽기 시간">
+  <meta name="twitter:description" content="글자수와 단어수를 실시간으로 세는 무료 도구. UTF-8 바이트, 문장·문단 수, 읽기 시간, 자주 쓰인 단어까지 보여 줍니다. 입력한 글은 전송되지 않습니다.">
+  <link rel="stylesheet" href="../assets/style.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230b1020'/%3E%3Ctext x='50' y='72' font-size='56' text-anchor='middle' fill='%2338d399'%3E%F0%9F%A7%B0%3C/text%3E%3C/svg%3E">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "입력하는 동안 글자·단어·바이트 세기",
+      "url": "https://handobin9782-lang.github.io/tools/ko/word-counter.html",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "Any",
+      "inLanguage": "ko",
+      "browserRequirements": "Requires JavaScript",
+      "description": "글자수와 단어수를 실시간으로 세는 무료 도구. UTF-8 바이트, 문장·문단 수, 읽기 시간, 자주 쓰인 단어까지 보여 줍니다. 입력한 글은 전송되지 않습니다.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "inLanguage": "ko",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "입력한 글이 저장되거나 전송되나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "아니요. 세는 작업은 페이지 안의 자바스크립트로 합니다. 전송도 저장도 기록도 없고, 오프라인에서도 동작합니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "한글·일본어 단어수는 정확한가요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "글자수는 정확합니다. 단어수는 브라우저의 분절 기능을 쓴 근사치입니다. 번역 견적에는 글자수나 바이트가 더 확실합니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "글자수와 바이트가 왜 다른가요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "글자는 문자 하나의 수, 바이트는 UTF-8에서 차지하는 저장 공간입니다. 영문자는 1바이트, 한글·일본어·중국어는 3바이트, 이모지는 4바이트입니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "SEO 메타 설명에도 쓸 수 있나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "네. 위 표에 흔한 한도를 정리했습니다. 구글은 메타 설명을 보통 155~160자에서 잘라 보여 줍니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "공백과 줄바꿈도 세나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "‘공백 포함 글자수’에는 들어가고, ‘공백 제외’와 단어수에서는 빠집니다. 줄바꿈은 두 수치 모두에서 한 글자로 셉니다."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9910389156575302" crossorigin="anonymous"></script>
+</head>
+<body>
+<header class="topbar">
+  <div class="wrap bar">
+    <a class="brand" href="./"><span class="logo">🧰</span> 글로벌 미니툴</a>
+    <nav class="langs" aria-label="언어">
+      <a href="../en/word-counter.html" hreflang="en" lang="en">EN</a>
+      <a href="../ja/word-counter.html" hreflang="ja" lang="ja">日本語</a>
+      <a href="../es/word-counter.html" hreflang="es" lang="es">ES</a>
+      <a href="../de/word-counter.html" hreflang="de" lang="de">DE</a>
+      <a href="../ko/word-counter.html" hreflang="ko" lang="ko" aria-current="page">KO</a>
+    </nav>
+  </div>
+  <nav class="toolnav" aria-label="글로벌 미니툴">
+    <a href="./">홈</a>
+    <a href="image-compressor.html">이미지 압축</a>
+    <a href="compound-dividend.html">복리·배당</a>
+    <a href="word-counter.html" aria-current="page">글자수 세기</a>
+    <a href="pdf-merge.html">PDF 합치기</a>
+  </nav>
+</header>
+<main class="wrap">
+<div class="crumb"><a href="./">홈</a> › 입력하는 동안 글자·단어·바이트 세기</div>
+  <h1>입력하는 동안 글자·단어·바이트 세기</h1>
+  <p class="lead">보고서, 자막 파일, SNS 글을 붙여 넣으면 모든 수치가 바로 갱신됩니다. 글자수 제한, 번역 견적, 메타 설명, 발표 분량 확인에 쓰기 좋습니다.</p>
+
+  <div class="card">
+    <div class="field">
+      <label for="text">입력한 글</label>
+      <textarea id="text" placeholder="여기에 입력하거나 붙여 넣으세요…" spellcheck="false"></textarea>
+    </div>
+    <div class="actions">
+      <button class="btn ghost sm" id="sampleBtn" type="button">예시 넣기</button>
+      <button class="btn ghost sm" id="clearBtn" type="button">비우기</button>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="k">글자수</div><div class="v" id="cChars">0</div></div>
+    <div class="stat"><div class="k">글자수(공백 제외)</div><div class="v" id="cCharsNoSpace">0</div></div>
+    <div class="stat"><div class="k">단어수</div><div class="v accent" id="cWords">0</div></div>
+    <div class="stat"><div class="k">문장 수</div><div class="v" id="cSentences">0</div></div>
+    <div class="stat"><div class="k">문단 수</div><div class="v" id="cParagraphs">0</div></div>
+    <div class="stat"><div class="k">바이트(UTF-8)</div><div class="v" id="cBytes">0</div></div>
+    <div class="stat"><div class="k">읽기 시간</div><div class="v" id="cRead">0</div></div>
+    <div class="stat"><div class="k">말하기 시간</div><div class="v" id="cSpeak">0</div></div>
+    <div class="stat"><div class="k">서로 다른 단어</div><div class="v" id="cUnique">0</div></div>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0;font-size:15px;color:var(--muted);font-weight:600">자주 쓰인 단어</h2>
+    <div id="density"></div>
+  </div>
+
+  <h2>자주 쓰는 글자수 제한</h2>
+  <div class="table-wrap"><table><tbody><tr><td>X(트위터) 게시물</td><td>280자</td></tr><tr><td>메타 설명(SEO)</td><td>155~160자</td></tr><tr><td>유튜브 제목</td><td>100자</td></tr><tr><td>SMS 한 통</td><td>160바이트</td></tr><tr><td>인스타그램 캡션</td><td>2,200자</td></tr><tr><td>구글 광고 제목</td><td>30자</td></tr></tbody></table></div>
+
+
+<h2>단어는 어떻게 세나</h2>
+<p>영어·스페인어처럼 띄어쓰기로 단어를 구분하는 언어에서는 글자·숫자·아포스트로피가 이어진 덩어리를 한 단어로 셉니다. 워드프로세서와 같은 기준이라 따옴표나 숫자가 두 번 세어지지 않습니다. 한국어와 일본어는 띄어쓰기만으로 단어를 나누기 어려워 브라우저의 기본 단어 분절 기능(Intl.Segmenter)을 씁니다. 사전 분석처럼 정확하지는 않고 실용적인 근사치입니다.</p>
+<h2>바이트가 왜 중요한가</h2>
+<p>많은 시스템이 글자수가 아니라 바이트로 한도를 정합니다. SMS 한 통은 160바이트, 데이터베이스 열이나 API 필드가 2,000바이트로 제한되기도 합니다. UTF-8에서 영문자는 1바이트, 한글·일본어·중국어 글자와 이모지는 3~4바이트입니다. 한글 500자는 대략 1,500바이트가 되니, 바이트로 검사하는 입력란에 붙이기 전에 확인해 두면 좋습니다.</p>
+<h2>읽기 시간과 말하기 시간</h2>
+<p>읽기 시간은 띄어쓰기 언어 기준 분당 200단어, 한국어·일본어는 분당 500자로 계산합니다. 보통 글을 조용히 읽는 속도 범위입니다. 말하기 시간은 분당 130단어로, 발표할 때 편한 속도입니다. 둘 다 추정치이고, 어려운 전문 글은 더 느리고 쉬운 대화체는 더 빠릅니다.</p>
+<h2>자주 묻는 질문</h2>
+<details class="faq"><summary>입력한 글이 저장되거나 전송되나요?</summary><p>아니요. 세는 작업은 페이지 안의 자바스크립트로 합니다. 전송도 저장도 기록도 없고, 오프라인에서도 동작합니다.</p></details>
+<details class="faq"><summary>한글·일본어 단어수는 정확한가요?</summary><p>글자수는 정확합니다. 단어수는 브라우저의 분절 기능을 쓴 근사치입니다. 번역 견적에는 글자수나 바이트가 더 확실합니다.</p></details>
+<details class="faq"><summary>글자수와 바이트가 왜 다른가요?</summary><p>글자는 문자 하나의 수, 바이트는 UTF-8에서 차지하는 저장 공간입니다. 영문자는 1바이트, 한글·일본어·중국어는 3바이트, 이모지는 4바이트입니다.</p></details>
+<details class="faq"><summary>SEO 메타 설명에도 쓸 수 있나요?</summary><p>네. 위 표에 흔한 한도를 정리했습니다. 구글은 메타 설명을 보통 155~160자에서 잘라 보여 줍니다.</p></details>
+<details class="faq"><summary>공백과 줄바꿈도 세나요?</summary><p>‘공백 포함 글자수’에는 들어가고, ‘공백 제외’와 단어수에서는 빠집니다. 줄바꿈은 두 수치 모두에서 한 글자로 셉니다.</p></details>
+</main>
+<script type="application/json" id="i18n">{"lang": "ko", "locale": "ko-KR", "mode": "chars", "timeFmt": "{m}분 {s}초", "stopwords": ["이", "그", "저", "것", "수", "등", "및", "더", "좀", "잘", "안", "못", "왜", "또", "즉", "때", "곳", "분", "명", "개", "년", "월", "일", "위해", "대해", "통해", "에서", "으로", "하고", "하여", "하는", "있는", "없는", "같은", "대한", "우리", "저는", "제가", "그리고", "그러나", "하지만", "그래서", "또는", "때문", "경우", "정도", "이런", "그런", "저런", "어떤", "모든", "각", "매우", "아주", "너무", "많이", "다시", "이제", "아직", "벌써", "만약", "비록", "다만", "즉시", "서로", "함께", "모두", "다른", "같이", "의해", "의한", "한다", "했다", "됩니다", "입니다", "합니다", "있습니다", "없습니다", "것으로", "것을", "것이", "이다", "이며", "하고", "에서", "에게", "부터", "까지", "보다", "처럼", "만큼", "라고", "라는"], "densityEmpty": "글을 입력하면 자주 쓰인 단어가 나옵니다.", "sample": "복리는 시간을 편으로 만든 사람만 얻는 구조입니다. 매달 작은 금액을 적립하고 20년 동안 그대로 두는 것만으로 원금보다 큰 자산이 되기도 합니다. 중요한 것은 화려한 수익률이 아니라 오래 이어갈 수 있는 습관입니다."}</script><script src="../assets/word-counter.js" defer></script>
+</body>
+</html>

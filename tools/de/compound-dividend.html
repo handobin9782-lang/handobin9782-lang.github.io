@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Zinseszins- und Dividendenrechner (DRIP)</title>
+  <meta name="description" content="Kostenloser Zinseszinsrechner mit monatlichen Raten und Dividenden-Reinvestition. Jahrestabelle, DRIP an oder aus, mehrere Währungen. Ohne Registrierung.">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="theme-color" content="#0b1020">
+  <link rel="canonical" href="https://handobin9782-lang.github.io/tools/de/compound-dividend.html">
+  <link rel="alternate" hreflang="en" href="https://handobin9782-lang.github.io/tools/en/compound-dividend.html">
+  <link rel="alternate" hreflang="ja" href="https://handobin9782-lang.github.io/tools/ja/compound-dividend.html">
+  <link rel="alternate" hreflang="es" href="https://handobin9782-lang.github.io/tools/es/compound-dividend.html">
+  <link rel="alternate" hreflang="de" href="https://handobin9782-lang.github.io/tools/de/compound-dividend.html">
+  <link rel="alternate" hreflang="ko" href="https://handobin9782-lang.github.io/tools/ko/compound-dividend.html">
+  <link rel="alternate" hreflang="x-default" href="https://handobin9782-lang.github.io/tools/en/compound-dividend.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Mini-Werkzeuge">
+  <meta property="og:locale" content="de_DE">
+  <meta property="og:title" content="Zinseszins- und Dividendenrechner (DRIP)">
+  <meta property="og:description" content="Kostenloser Zinseszinsrechner mit monatlichen Raten und Dividenden-Reinvestition. Jahrestabelle, DRIP an oder aus, mehrere Währungen. Ohne Registrierung.">
+  <meta property="og:url" content="https://handobin9782-lang.github.io/tools/de/compound-dividend.html">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Zinseszins- und Dividendenrechner (DRIP)">
+  <meta name="twitter:description" content="Kostenloser Zinseszinsrechner mit monatlichen Raten und Dividenden-Reinvestition. Jahrestabelle, DRIP an oder aus, mehrere Währungen. Ohne Registrierung.">
+  <link rel="stylesheet" href="../assets/style.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230b1020'/%3E%3Ctext x='50' y='72' font-size='56' text-anchor='middle' fill='%2338d399'%3E%F0%9F%A7%B0%3C/text%3E%3C/svg%3E">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Zinseszins mit reinvestierten Dividenden",
+      "url": "https://handobin9782-lang.github.io/tools/de/compound-dividend.html",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "Any",
+      "inLanguage": "de",
+      "browserRequirements": "Requires JavaScript",
+      "description": "Kostenloser Zinseszinsrechner mit monatlichen Raten und Dividenden-Reinvestition. Jahrestabelle, DRIP an oder aus, mehrere Währungen. Ohne Registrierung.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "inLanguage": "de",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Was bedeutet DRIP?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Dividend Reinvestment Plan, also Dividenden-Reinvestition. Statt die Dividende als Bargeld zu nehmen, werden weitere Anteile desselben Investments gekauft, sodass die nächste Dividende auf einen größeren Stand gezahlt wird. Über Jahrzehnte ist das der Unterschied zwischen linearem und exponentiellem Wachstum."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "DRIP an oder aus?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Aus, wenn Sie die Erträge zum Leben brauchen; an, wenn Sie das langfristige Wachstum sehen wollen. Die meisten Gesamtrendite-Projektionen setzen Reinvestition voraus."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Sind Steuern berücksichtigt?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Nein. Je nach Land nehmen Steuern auf Dividenden und Kursgewinne 15–30 % oder mehr des Gewinns, und Fondsgebühren kosten jedes Jahr etwas. Ziehen Sie beides ab, wenn Sie eine realistische Zahl wollen."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Wie wird die Monatsrate berechnet?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Mit der zwölften Wurzel der Jahresrate: (1 + r)^(1/12) − 1. Eine einfache Division durch zwölf überschätzt das Jahresergebnis etwas."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Welche Rendite ist realistisch?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Das weiß vorher niemand. Rechnen Sie zwei- oder dreimal – etwa mit 4 %, 7 % und 10 % – und planen Sie mit dem vorsichtigen Fall, nicht mit dem besten."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Welche Währung soll ich wählen?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Die, in der Sie denken. Der Rechner formatiert nur die Zahlen; er rechnet nicht zwischen Währungen um."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9910389156575302" crossorigin="anonymous"></script>
+</head>
+<body>
+<header class="topbar">
+  <div class="wrap bar">
+    <a class="brand" href="./"><span class="logo">🧰</span> Mini-Werkzeuge</a>
+    <nav class="langs" aria-label="Sprache">
+      <a href="../en/compound-dividend.html" hreflang="en" lang="en">EN</a>
+      <a href="../ja/compound-dividend.html" hreflang="ja" lang="ja">日本語</a>
+      <a href="../es/compound-dividend.html" hreflang="es" lang="es">ES</a>
+      <a href="../de/compound-dividend.html" hreflang="de" lang="de" aria-current="page">DE</a>
+      <a href="../ko/compound-dividend.html" hreflang="ko" lang="ko">KO</a>
+    </nav>
+  </div>
+  <nav class="toolnav" aria-label="Mini-Werkzeuge">
+    <a href="./">Start</a>
+    <a href="image-compressor.html">Bilder komprimieren</a>
+    <a href="compound-dividend.html" aria-current="page">Zinseszins</a>
+    <a href="word-counter.html">Wortzähler</a>
+    <a href="pdf-merge.html">PDF zusammenfügen</a>
+  </nav>
+</header>
+<main class="wrap">
+<div class="crumb"><a href="./">Start</a> › Zinseszins mit reinvestierten Dividenden</div>
+  <h1>Zinseszins mit reinvestierten Dividenden</h1>
+  <p class="lead">Geben Sie ein, womit Sie starten, was Sie monatlich dazugeben und welche Rendite und Dividendenrendite Sie erwarten. Der Rechner zeigt den Kontostand Jahr für Jahr – mit reinvestierten Dividenden (DRIP) oder als Barauszahlung.</p>
+
+  <div class="card">
+    <div class="row">
+      <div class="field"><label for="initial">Anfangsinvestition</label><input type="number" id="initial" value="10000" min="0" step="100" inputmode="numeric"></div>
+      <div class="field"><label for="monthly">Monatliche Rate</label><input type="number" id="monthly" value="500" min="0" step="10" inputmode="numeric"></div>
+      <div class="field"><label for="years">Anlagedauer (Jahre)</label><input type="number" id="years" value="20" min="1" max="60" step="1" inputmode="numeric"></div>
+    </div>
+    <div class="row" style="margin-top:12px">
+      <div class="field"><label for="ret">Jährliche Kursrendite (%)</label><input type="number" id="ret" value="7" min="-90" max="40" step="0.1" inputmode="decimal"></div>
+      <div class="field"><label for="yld">Dividendenrendite (%)</label><input type="number" id="yld" value="2" min="0" max="30" step="0.1" inputmode="decimal"></div>
+      <div class="field"><label for="currency">Währung</label><select id="currency"></select></div>
+    </div>
+    <div class="check" style="margin-top:14px">
+      <input type="checkbox" id="drip" checked>
+      <label for="drip" style="font-size:14px;color:var(--text);font-weight:500">Dividenden reinvestieren (DRIP)<br><span class="muted" style="font-weight:400">Aus: Dividenden werden als Bargeld ausgezahlt und getrennt erfasst.</span></label>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="k">Endstand</div><div class="v accent" id="oFinal">—</div></div>
+    <div class="stat"><div class="k">Insgesamt eingezahlt</div><div class="v" id="oInvested">—</div></div>
+    <div class="stat"><div class="k">Erhaltene Dividenden</div><div class="v" id="oDividends">—</div></div>
+    <div class="stat"><div class="k">Gesamtrendite</div><div class="v" id="oReturn">—</div><div class="s">Gewinn <span id="oGain"></span></div></div>
+    <div class="stat" id="cashCard"><div class="k">Ausgezahlte Bardividenden</div><div class="v" id="oCash">—</div></div>
+    <div class="stat" id="wealthCard"><div class="k">Gesamtvermögen (Stand + Bargeld)</div><div class="v" id="oWealth">—</div></div>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0;font-size:15px;color:var(--muted);font-weight:600">Kontostand gegenüber eingezahltem Geld</h2>
+    <canvas id="chart" height="260"></canvas>
+  </div>
+
+  <div id="tableBlock">
+    <h2>Projektion Jahr für Jahr</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Jahr</th><th>Eingezahlt</th><th>Dividenden im Jahr</th><th>Dividenden kumuliert</th><th>Bargeld kumuliert</th><th>Jahresendstand</th></tr></thead>
+        <tbody id="tblBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <p class="note">Eine Hochrechnung, kein Versprechen. Renditen und Dividenden sind nicht garantiert, Steuern, Gebühren und Inflation sind nicht enthalten.</p>
+
+
+<h2>So wird gerechnet</h2>
+<p>Die Jahresrendite wird mit (1 + r)^(1/12) − 1 in eine Monatsrate umgerechnet, nicht mit r ÷ 12; so ergeben zwölf Monate im Zinseszins genau den Jahreswert. Dividenden werden jeden Monat auf den aktuellen Stand berechnet und entweder wieder angelegt (DRIP) oder als Bargeld gesammelt. Raten werden am Monatsende eingezahlt.</p>
+<p>Kursgewinn und Dividende werden getrennt eingegeben, weil es zwei verschiedene Dinge sind: Ein Fonds kann 6 % im Jahr steigen und zusätzlich 3 % ausschütten. Mit DRIP verzinst sich beides gemeinsam, ohne DRIP sehen Sie die tatsächlichen Ausschüttungen.</p>
+<h2>Was in welches Feld gehört</h2>
+<ul><li><b>Anfangsinvestition</b> — was Sie bereits halten, in der gewählten Währung.</li><li><b>Monatliche Rate</b> — was Sie jeden Monat dazugeben, beginnend mit dem ersten.</li><li><b>Kursrendite</b> — erwartetes durchschnittliches Kursplus pro Jahr. 5–8 % sind für globale Aktien eine gängige Langfristannahme; die Vergangenheit ist keine Garantie.</li><li><b>Dividendenrendite</b> — die jährliche Ausschüttung in Prozent des Stands. Breite Indexfonds liegen oft bei 1–2 %, Dividendenstrategien bei 3–5 %.</li><li><b>DRIP</b> — an: Dividenden kaufen mehr desselben Investments; aus: sie werden ausgezahlt.</li></ul>
+<h2>Die Tabelle lesen</h2>
+<p>Jede Zeile ist ein Jahr. „Eingezahlt“ ist das kumulierte Geld von Ihnen, also Ihr Einstand. „Dividenden kumuliert“ ist alles, was die Anlage ausgeschüttet hat. „Jahresendstand“ ist der Wert, wenn Dividenden reinvestiert wurden; ohne DRIP zeigt die Bargeldspalte die Auszahlungen, und das Gesamtvermögen ist Stand plus Bargeld.</p>
+<h2>Häufige Fragen</h2>
+<details class="faq"><summary>Was bedeutet DRIP?</summary><p>Dividend Reinvestment Plan, also Dividenden-Reinvestition. Statt die Dividende als Bargeld zu nehmen, werden weitere Anteile desselben Investments gekauft, sodass die nächste Dividende auf einen größeren Stand gezahlt wird. Über Jahrzehnte ist das der Unterschied zwischen linearem und exponentiellem Wachstum.</p></details>
+<details class="faq"><summary>DRIP an oder aus?</summary><p>Aus, wenn Sie die Erträge zum Leben brauchen; an, wenn Sie das langfristige Wachstum sehen wollen. Die meisten Gesamtrendite-Projektionen setzen Reinvestition voraus.</p></details>
+<details class="faq"><summary>Sind Steuern berücksichtigt?</summary><p>Nein. Je nach Land nehmen Steuern auf Dividenden und Kursgewinne 15–30 % oder mehr des Gewinns, und Fondsgebühren kosten jedes Jahr etwas. Ziehen Sie beides ab, wenn Sie eine realistische Zahl wollen.</p></details>
+<details class="faq"><summary>Wie wird die Monatsrate berechnet?</summary><p>Mit der zwölften Wurzel der Jahresrate: (1 + r)^(1/12) − 1. Eine einfache Division durch zwölf überschätzt das Jahresergebnis etwas.</p></details>
+<details class="faq"><summary>Welche Rendite ist realistisch?</summary><p>Das weiß vorher niemand. Rechnen Sie zwei- oder dreimal – etwa mit 4 %, 7 % und 10 % – und planen Sie mit dem vorsichtigen Fall, nicht mit dem besten.</p></details>
+<details class="faq"><summary>Welche Währung soll ich wählen?</summary><p>Die, in der Sie denken. Der Rechner formatiert nur die Zahlen; er rechnet nicht zwischen Währungen um.</p></details>
+</main>
+<script type="application/json" id="i18n">{"locale": "de-DE", "currency": "EUR", "currencies": [{"v": "EUR", "label": "Euro (€)"}, {"v": "USD", "label": "US-Dollar ($)"}, {"v": "JPY", "label": "Japanischer Yen (¥)"}, {"v": "GBP", "label": "Britisches Pfund (£)"}, {"v": "KRW", "label": "Südkoreanischer Won (₩)"}]}</script><script src="../assets/compound.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>文字数カウント — 文字・単語・バイト数・読了時間</title>
+  <meta name="description" content="文字数と単語数をリアルタイムで数える無料ツール。UTF-8のバイト数、文と段落の数、読了時間、頻出語も表示します。文章は送信されません。">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="theme-color" content="#0b1020">
+  <link rel="canonical" href="https://handobin9782-lang.github.io/tools/ja/word-counter.html">
+  <link rel="alternate" hreflang="en" href="https://handobin9782-lang.github.io/tools/en/word-counter.html">
+  <link rel="alternate" hreflang="ja" href="https://handobin9782-lang.github.io/tools/ja/word-counter.html">
+  <link rel="alternate" hreflang="es" href="https://handobin9782-lang.github.io/tools/es/word-counter.html">
+  <link rel="alternate" hreflang="de" href="https://handobin9782-lang.github.io/tools/de/word-counter.html">
+  <link rel="alternate" hreflang="ko" href="https://handobin9782-lang.github.io/tools/ko/word-counter.html">
+  <link rel="alternate" hreflang="x-default" href="https://handobin9782-lang.github.io/tools/en/word-counter.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="グローバルミニツール">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:title" content="文字数カウント — 文字・単語・バイト数・読了時間">
+  <meta property="og:description" content="文字数と単語数をリアルタイムで数える無料ツール。UTF-8のバイト数、文と段落の数、読了時間、頻出語も表示します。文章は送信されません。">
+  <meta property="og:url" content="https://handobin9782-lang.github.io/tools/ja/word-counter.html">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="文字数カウント — 文字・単語・バイト数・読了時間">
+  <meta name="twitter:description" content="文字数と単語数をリアルタイムで数える無料ツール。UTF-8のバイト数、文と段落の数、読了時間、頻出語も表示します。文章は送信されません。">
+  <link rel="stylesheet" href="../assets/style.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230b1020'/%3E%3Ctext x='50' y='72' font-size='56' text-anchor='middle' fill='%2338d399'%3E%F0%9F%A7%B0%3C/text%3E%3C/svg%3E">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "入力しながら文字数・単語数・バイト数を数える",
+      "url": "https://handobin9782-lang.github.io/tools/ja/word-counter.html",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "Any",
+      "inLanguage": "ja",
+      "browserRequirements": "Requires JavaScript",
+      "description": "文字数と単語数をリアルタイムで数える無料ツール。UTF-8のバイト数、文と段落の数、読了時間、頻出語も表示します。文章は送信されません。",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "inLanguage": "ja",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "入力した文章は保存・送信されますか",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "いいえ。カウントはページ内のJavaScriptで行っています。送信も保存も記録もなく、オフラインでも動きます。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "日本語の単語数は正確ですか",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "文字数は正確です。単語数はブラウザの分割機能による近似値です。翻訳の見積もりには文字数かバイト数を使うほうが確実です。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "文字数とバイト数が違うのはなぜですか",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "文字は符号の数、バイトはUTF-8で占める記憶量です。英字は1バイト、日本語・韓国語・中国語は3バイト、絵文字は4バイトになります。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "SEOの説明文にも使えますか",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "はい。上の表に一般的な上限をまとめました。Googleはメタディスクリプションを155〜160文字程度で切ることが多いです。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "空白や改行も数えますか",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "「空白を含む文字数」には含まれます。「空白を除く」と単語数では除外されます。改行はどちらにも1文字として数えられます。"
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9910389156575302" crossorigin="anonymous"></script>
+</head>
+<body>
+<header class="topbar">
+  <div class="wrap bar">
+    <a class="brand" href="./"><span class="logo">🧰</span> グローバルミニツール</a>
+    <nav class="langs" aria-label="言語">
+      <a href="../en/word-counter.html" hreflang="en" lang="en">EN</a>
+      <a href="../ja/word-counter.html" hreflang="ja" lang="ja" aria-current="page">日本語</a>
+      <a href="../es/word-counter.html" hreflang="es" lang="es">ES</a>
+      <a href="../de/word-counter.html" hreflang="de" lang="de">DE</a>
+      <a href="../ko/word-counter.html" hreflang="ko" lang="ko">KO</a>
+    </nav>
+  </div>
+  <nav class="toolnav" aria-label="グローバルミニツール">
+    <a href="./">ホーム</a>
+    <a href="image-compressor.html">画像圧縮</a>
+    <a href="compound-dividend.html">複利・配当</a>
+    <a href="word-counter.html" aria-current="page">文字数カウント</a>
+    <a href="pdf-merge.html">PDF結合</a>
+  </nav>
+</header>
+<main class="wrap">
+<div class="crumb"><a href="./">ホーム</a> › 入力しながら文字数・単語数・バイト数を数える</div>
+  <h1>入力しながら文字数・単語数・バイト数を数える</h1>
+  <p class="lead">レポート、字幕ファイル、SNS投稿を貼り付けると、すべての数値がその場で更新されます。文字数制限、翻訳の見積もり、メタディスクリプション、スピーチの長さの確認に便利です。</p>
+
+  <div class="card">
+    <div class="field">
+      <label for="text">テキスト</label>
+      <textarea id="text" placeholder="ここに入力または貼り付けてください…" spellcheck="false"></textarea>
+    </div>
+    <div class="actions">
+      <button class="btn ghost sm" id="sampleBtn" type="button">サンプルを入れる</button>
+      <button class="btn ghost sm" id="clearBtn" type="button">クリア</button>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="k">文字数</div><div class="v" id="cChars">0</div></div>
+    <div class="stat"><div class="k">文字数（空白を除く）</div><div class="v" id="cCharsNoSpace">0</div></div>
+    <div class="stat"><div class="k">単語数</div><div class="v accent" id="cWords">0</div></div>
+    <div class="stat"><div class="k">文の数</div><div class="v" id="cSentences">0</div></div>
+    <div class="stat"><div class="k">段落数</div><div class="v" id="cParagraphs">0</div></div>
+    <div class="stat"><div class="k">バイト数（UTF-8）</div><div class="v" id="cBytes">0</div></div>
+    <div class="stat"><div class="k">読了時間</div><div class="v" id="cRead">0</div></div>
+    <div class="stat"><div class="k">音読時間</div><div class="v" id="cSpeak">0</div></div>
+    <div class="stat"><div class="k">異なり単語数</div><div class="v" id="cUnique">0</div></div>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0;font-size:15px;color:var(--muted);font-weight:600">頻出する単語</h2>
+    <div id="density"></div>
+  </div>
+
+  <h2>よく使われる文字数制限</h2>
+  <div class="table-wrap"><table><tbody><tr><td>X（旧Twitter）の投稿</td><td>280文字</td></tr><tr><td>メタディスクリプション</td><td>155〜160文字</td></tr><tr><td>YouTubeのタイトル</td><td>100文字</td></tr><tr><td>SMS（1通）</td><td>160バイト</td></tr><tr><td>Instagramのキャプション</td><td>2,200文字</td></tr><tr><td>Google広告の見出し</td><td>30文字</td></tr></tbody></table></div>
+
+
+<h2>単語はどう数えていますか</h2>
+<p>英語やスペイン語など語間を空白で区切る言語では、文字・数字・アポストロフィの連なりを1語として数えます。ワープロと同じ方式なので、引用符や数字が二重に数えられることはありません。日本語には語間の空白がないため、ブラウザ標準の単語分割（Intl.Segmenter）を使っています。これは辞書による厳密な解析ではなく、実用上十分な近似値です。</p>
+<h2>バイト数が必要な理由</h2>
+<p>文字数ではなくバイト数で上限を定めている仕組みが多くあります。SMSは1通160バイト、データベースの列やAPIの項目が2,000バイトまでということもあります。UTF-8では英字は1バイト、アクセント付きの文字は主に2バイト、日本語・韓国語・中国語の文字や絵文字は3〜4バイトです。日本語500文字はおよそ1,500バイトになるので、バイト数で判定するフォームに貼る前に確認しておくと安心です。</p>
+<h2>読了時間と音読時間</h2>
+<p>読了時間は、空白で区切る言語では1分200語、日本語では1分500文字として計算します。音読時間は1分130語で、プレゼンで話しやすい速さです。どちらも目安であり、専門的な文章は遅く、やさしい会話文は速くなります。</p>
+<h2>よくある質問</h2>
+<details class="faq"><summary>入力した文章は保存・送信されますか</summary><p>いいえ。カウントはページ内のJavaScriptで行っています。送信も保存も記録もなく、オフラインでも動きます。</p></details>
+<details class="faq"><summary>日本語の単語数は正確ですか</summary><p>文字数は正確です。単語数はブラウザの分割機能による近似値です。翻訳の見積もりには文字数かバイト数を使うほうが確実です。</p></details>
+<details class="faq"><summary>文字数とバイト数が違うのはなぜですか</summary><p>文字は符号の数、バイトはUTF-8で占める記憶量です。英字は1バイト、日本語・韓国語・中国語は3バイト、絵文字は4バイトになります。</p></details>
+<details class="faq"><summary>SEOの説明文にも使えますか</summary><p>はい。上の表に一般的な上限をまとめました。Googleはメタディスクリプションを155〜160文字程度で切ることが多いです。</p></details>
+<details class="faq"><summary>空白や改行も数えますか</summary><p>「空白を含む文字数」には含まれます。「空白を除く」と単語数では除外されます。改行はどちらにも1文字として数えられます。</p></details>
+</main>
+<script type="application/json" id="i18n">{"lang": "ja", "locale": "ja-JP", "mode": "chars", "timeFmt": "{m}分{s}秒", "stopwords": ["の", "に", "は", "を", "た", "が", "で", "て", "と", "し", "れ", "さ", "ある", "いる", "も", "する", "から", "な", "こと", "として", "い", "や", "れる", "など", "なっ", "ない", "この", "ため", "その", "あっ", "よう", "また", "もの", "という", "あり", "まで", "られ", "なる", "へ", "か", "だ", "これ", "によって", "により", "おり", "より", "による", "ず", "なり", "られる", "において", "ば", "なかっ", "なく", "しかし", "について", "せ", "だっ", "その後", "できる", "それ", "う", "ので", "なお", "のみ", "でき", "き", "つ", "および", "いう", "さらに", "でも", "ら", "たり", "その他", "たち", "ます", "ん", "なら", "に対して", "特に", "せる", "及び", "これら", "とき", "では", "にて", "ほか", "ながら", "うち", "そして", "ただし", "それぞれ", "または", "お", "ほど", "に対する", "ほとんど", "です", "とも", "ところ", "ここ", "私", "あなた"], "densityEmpty": "入力すると頻出語が表示されます。", "sample": "複利は、時間を味方につけた人だけが手にできる仕組みです。毎月わずかな金額を積み立て、二十年そのままにしておくだけで、元本を上回る資産に育つことがあります。大切なのは、派手な利回りよりも、続けられる仕組みをつくることです。"}</script><script src="../assets/word-counter.js" defer></script>
+</body>
+</html>

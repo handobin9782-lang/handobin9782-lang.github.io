@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Wortzähler — Zeichen, Wörter, Bytes und Lesezeit</title>
+  <meta name="description" content="Kostenloser Wort- und Zeichenzähler mit UTF-8-Bytes, Sätzen, Absätzen, Lesezeit und Worthäufigkeit. Funktioniert offline, Ihr Text wird nicht hochgeladen.">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="theme-color" content="#0b1020">
+  <link rel="canonical" href="https://handobin9782-lang.github.io/tools/de/word-counter.html">
+  <link rel="alternate" hreflang="en" href="https://handobin9782-lang.github.io/tools/en/word-counter.html">
+  <link rel="alternate" hreflang="ja" href="https://handobin9782-lang.github.io/tools/ja/word-counter.html">
+  <link rel="alternate" hreflang="es" href="https://handobin9782-lang.github.io/tools/es/word-counter.html">
+  <link rel="alternate" hreflang="de" href="https://handobin9782-lang.github.io/tools/de/word-counter.html">
+  <link rel="alternate" hreflang="ko" href="https://handobin9782-lang.github.io/tools/ko/word-counter.html">
+  <link rel="alternate" hreflang="x-default" href="https://handobin9782-lang.github.io/tools/en/word-counter.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Mini-Werkzeuge">
+  <meta property="og:locale" content="de_DE">
+  <meta property="og:title" content="Wortzähler — Zeichen, Wörter, Bytes und Lesezeit">
+  <meta property="og:description" content="Kostenloser Wort- und Zeichenzähler mit UTF-8-Bytes, Sätzen, Absätzen, Lesezeit und Worthäufigkeit. Funktioniert offline, Ihr Text wird nicht hochgeladen.">
+  <meta property="og:url" content="https://handobin9782-lang.github.io/tools/de/word-counter.html">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Wortzähler — Zeichen, Wörter, Bytes und Lesezeit">
+  <meta name="twitter:description" content="Kostenloser Wort- und Zeichenzähler mit UTF-8-Bytes, Sätzen, Absätzen, Lesezeit und Worthäufigkeit. Funktioniert offline, Ihr Text wird nicht hochgeladen.">
+  <link rel="stylesheet" href="../assets/style.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230b1020'/%3E%3Ctext x='50' y='72' font-size='56' text-anchor='middle' fill='%2338d399'%3E%F0%9F%A7%B0%3C/text%3E%3C/svg%3E">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Wörter, Zeichen und Bytes beim Tippen zählen",
+      "url": "https://handobin9782-lang.github.io/tools/de/word-counter.html",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "Any",
+      "inLanguage": "de",
+      "browserRequirements": "Requires JavaScript",
+      "description": "Kostenloser Wort- und Zeichenzähler mit UTF-8-Bytes, Sätzen, Absätzen, Lesezeit und Worthäufigkeit. Funktioniert offline, Ihr Text wird nicht hochgeladen.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "inLanguage": "de",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Wird mein Text gespeichert oder gesendet?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Nein. Das Zählen läuft im Browser mit JavaScript. Nichts wird übertragen, gespeichert oder protokolliert, und das Werkzeug funktioniert offline."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Wie werden japanische und chinesische Zeichen gezählt?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Zeichen werden exakt gezählt; die Wortzahl stammt aus dem Segmentierer des Browsers und ist eine Näherung. Für Übersetzungsangebote sind Zeichen oder Bytes die verlässlichere Einheit."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Warum unterscheiden sich Zeichen und Bytes?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ein Zeichen ist ein Codepunkt, ein Byte der Speicherplatz in UTF-8. Englische Buchstaben belegen ein Byte, japanische, koreanische und chinesische Zeichen drei, Emoji vier."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Taucht der Zähler für SEO-Beschreibungen?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ja. Die Tabelle oben zeigt die üblichen Grenzen; Google kürzt Meta-Beschreibungen meist bei etwa 155–160 Zeichen."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Werden Leerzeichen und Zeilenumbrüche gezählt?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Die Zeichenzahl mit Leerzeichen enthält sie; die Zahl ohne Leerzeichen und die Wortzahl nicht. Zeilenumbrüche zählen in beiden Zahlen als ein Zeichen."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9910389156575302" crossorigin="anonymous"></script>
+</head>
+<body>
+<header class="topbar">
+  <div class="wrap bar">
+    <a class="brand" href="./"><span class="logo">🧰</span> Mini-Werkzeuge</a>
+    <nav class="langs" aria-label="Sprache">
+      <a href="../en/word-counter.html" hreflang="en" lang="en">EN</a>
+      <a href="../ja/word-counter.html" hreflang="ja" lang="ja">日本語</a>
+      <a href="../es/word-counter.html" hreflang="es" lang="es">ES</a>
+      <a href="../de/word-counter.html" hreflang="de" lang="de" aria-current="page">DE</a>
+      <a href="../ko/word-counter.html" hreflang="ko" lang="ko">KO</a>
+    </nav>
+  </div>
+  <nav class="toolnav" aria-label="Mini-Werkzeuge">
+    <a href="./">Start</a>
+    <a href="image-compressor.html">Bilder komprimieren</a>
+    <a href="compound-dividend.html">Zinseszins</a>
+    <a href="word-counter.html" aria-current="page">Wortzähler</a>
+    <a href="pdf-merge.html">PDF zusammenfügen</a>
+  </nav>
+</header>
+<main class="wrap">
+<div class="crumb"><a href="./">Start</a> › Wörter, Zeichen und Bytes beim Tippen zählen</div>
+  <h1>Wörter, Zeichen und Bytes beim Tippen zählen</h1>
+  <p class="lead">Fügen Sie einen Aufsatz, eine Untertiteldatei oder einen Social-Media-Beitrag ein: Alle Zahlen aktualisieren sich sofort. Praktisch für Zeichenlimits, Übersetzungsangebote, Meta-Beschreibungen und die Länge eines Vortrags.</p>
+
+  <div class="card">
+    <div class="field">
+      <label for="text">Ihr Text</label>
+      <textarea id="text" placeholder="Tippen oder Text hier einfügen …" spellcheck="false"></textarea>
+    </div>
+    <div class="actions">
+      <button class="btn ghost sm" id="sampleBtn" type="button">Beispiel laden</button>
+      <button class="btn ghost sm" id="clearBtn" type="button">Leeren</button>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="k">Zeichen</div><div class="v" id="cChars">0</div></div>
+    <div class="stat"><div class="k">Zeichen (ohne Leerzeichen)</div><div class="v" id="cCharsNoSpace">0</div></div>
+    <div class="stat"><div class="k">Wörter</div><div class="v accent" id="cWords">0</div></div>
+    <div class="stat"><div class="k">Sätze</div><div class="v" id="cSentences">0</div></div>
+    <div class="stat"><div class="k">Absätze</div><div class="v" id="cParagraphs">0</div></div>
+    <div class="stat"><div class="k">Bytes (UTF-8)</div><div class="v" id="cBytes">0</div></div>
+    <div class="stat"><div class="k">Lesezeit</div><div class="v" id="cRead">0</div></div>
+    <div class="stat"><div class="k">Sprechzeit</div><div class="v" id="cSpeak">0</div></div>
+    <div class="stat"><div class="k">Verschiedene Wörter</div><div class="v" id="cUnique">0</div></div>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0;font-size:15px;color:var(--muted);font-weight:600">Häufigste Wörter</h2>
+    <div id="density"></div>
+  </div>
+
+  <h2>Übliche Zeichenlimits</h2>
+  <div class="table-wrap"><table><tbody><tr><td>Beitrag auf X / Twitter</td><td>280 Zeichen</td></tr><tr><td>Meta-Beschreibung</td><td>155–160 Zeichen</td></tr><tr><td>YouTube-Titel</td><td>100 Zeichen</td></tr><tr><td>SMS (eine Nachricht)</td><td>160 Bytes</td></tr><tr><td>Instagram-Bildunterschrift</td><td>2.200 Zeichen</td></tr><tr><td>Google-Ads-Anzeigentitel</td><td>30 Zeichen</td></tr></tbody></table></div>
+
+
+<h2>Was zählt als Wort?</h2>
+<p>In Sprachen, die Wörter mit Leerzeichen trennen, ist ein Wort jede Folge aus Buchstaben, Ziffern oder Apostrophen – dieselbe Regel wie in Textverarbeitungen, sodass Anführungszeichen und Zahlen nicht doppelt zählen. Japanisch kennt keine Wortabstände, deshalb nutzt die Seite den Wortsegmentierer des Browsers (Intl.Segmenter); das Ergebnis ist eine gute Näherung, keine exakte Wörterbuchanalyse.</p>
+<h2>Warum Bytes zählen</h2>
+<p>Viele Systeme begrenzen Bytes, nicht Zeichen. Eine SMS erlaubt 160 Bytes; eine Datenbankspalte oder ein API-Feld kann auf 2.000 Bytes begrenzt sein. In UTF-8 belegt ein englischer Buchstabe ein Byte, die meisten Buchstaben mit Akzent zwei, japanische, koreanische und chinesische Zeichen sowie Emoji drei oder vier. Ein japanischer Text mit 500 Zeichen liegt daher bei etwa 1.500 Bytes – gut zu wissen, bevor er in ein Formular kommt, das Bytes zählt.</p>
+<h2>Lese- und Sprechzeit</h2>
+<p>Die Lesezeit rechnet bei Sprachen mit Leerzeichen mit 200 Wörtern pro Minute und bei Japanisch mit 500 Zeichen pro Minute – der übliche Bereich für stilles Lesen eines durchschnittlichen Textes. Die Sprechzeit nutzt 130 Wörter pro Minute, ein angenehmes Vortragstempo. Beides sind Schätzungen: dichter Fachtext ist langsamer, einfacher Dialog schneller.</p>
+<h2>Häufige Fragen</h2>
+<details class="faq"><summary>Wird mein Text gespeichert oder gesendet?</summary><p>Nein. Das Zählen läuft im Browser mit JavaScript. Nichts wird übertragen, gespeichert oder protokolliert, und das Werkzeug funktioniert offline.</p></details>
+<details class="faq"><summary>Wie werden japanische und chinesische Zeichen gezählt?</summary><p>Zeichen werden exakt gezählt; die Wortzahl stammt aus dem Segmentierer des Browsers und ist eine Näherung. Für Übersetzungsangebote sind Zeichen oder Bytes die verlässlichere Einheit.</p></details>
+<details class="faq"><summary>Warum unterscheiden sich Zeichen und Bytes?</summary><p>Ein Zeichen ist ein Codepunkt, ein Byte der Speicherplatz in UTF-8. Englische Buchstaben belegen ein Byte, japanische, koreanische und chinesische Zeichen drei, Emoji vier.</p></details>
+<details class="faq"><summary>Taucht der Zähler für SEO-Beschreibungen?</summary><p>Ja. Die Tabelle oben zeigt die üblichen Grenzen; Google kürzt Meta-Beschreibungen meist bei etwa 155–160 Zeichen.</p></details>
+<details class="faq"><summary>Werden Leerzeichen und Zeilenumbrüche gezählt?</summary><p>Die Zeichenzahl mit Leerzeichen enthält sie; die Zahl ohne Leerzeichen und die Wortzahl nicht. Zeilenumbrüche zählen in beiden Zahlen als ein Zeichen.</p></details>
+</main>
+<script type="application/json" id="i18n">{"lang": "de", "locale": "de-DE", "mode": "words", "timeFmt": "{m} Min. {s} Sek.", "stopwords": ["der", "die", "das", "den", "dem", "des", "und", "oder", "aber", "in", "im", "an", "am", "auf", "für", "mit", "von", "zu", "zum", "zur", "bei", "aus", "nach", "über", "unter", "vor", "durch", "gegen", "ohne", "um", "ist", "sind", "war", "waren", "sein", "wird", "werden", "wurde", "hat", "haben", "hatte", "es", "sie", "er", "ich", "wir", "ihr", "nicht", "kein", "keine", "auch", "als", "wie", "so", "nur", "noch", "schon", "sehr", "mehr", "wenn", "dann", "dass", "dieser", "diese", "dieses", "ein", "eine", "einen", "einem", "einer", "eines", "sich", "man", "kann", "können", "muss", "soll", "will", "dabei", "damit", "doch", "also", "etwa", "jedoch", "sowie", "was", "wer", "wo", "warum", "weil", "bis", "seit", "hier", "dort", "alle", "alles", "viele", "zum", "ja", "nein"], "densityEmpty": "Tippen Sie etwas, um die häufigsten Wörter zu sehen.", "sample": "Der Zinseszins ist die stillste Kraft der Geldanlage. Ein kleiner Betrag, jeden Monat investiert und zwanzig Jahre lang vergessen, kann am Ende mehr wert sein als das gesamte eingezahlte Geld. Entscheidend ist nicht die spektakuläre Rendite, sondern die Regelmäßigkeit."}</script><script src="../assets/word-counter.js" defer></script>
+</body>
+</html>

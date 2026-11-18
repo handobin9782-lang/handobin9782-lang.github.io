@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Calculadora de interés compuesto y reinversión de dividendos (DRIP)</title>
+  <meta name="description" content="Calculadora gratuita de interés compuesto con aportaciones mensuales y reinversión de dividendos. Tabla año a año, DRIP activado o desactivado y varias monedas.">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="theme-color" content="#0b1020">
+  <link rel="canonical" href="https://handobin9782-lang.github.io/tools/es/compound-dividend.html">
+  <link rel="alternate" hreflang="en" href="https://handobin9782-lang.github.io/tools/en/compound-dividend.html">
+  <link rel="alternate" hreflang="ja" href="https://handobin9782-lang.github.io/tools/ja/compound-dividend.html">
+  <link rel="alternate" hreflang="es" href="https://handobin9782-lang.github.io/tools/es/compound-dividend.html">
+  <link rel="alternate" hreflang="de" href="https://handobin9782-lang.github.io/tools/de/compound-dividend.html">
+  <link rel="alternate" hreflang="ko" href="https://handobin9782-lang.github.io/tools/ko/compound-dividend.html">
+  <link rel="alternate" hreflang="x-default" href="https://handobin9782-lang.github.io/tools/en/compound-dividend.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Mini Herramientas">
+  <meta property="og:locale" content="es_ES">
+  <meta property="og:title" content="Calculadora de interés compuesto y reinversión de dividendos (DRIP)">
+  <meta property="og:description" content="Calculadora gratuita de interés compuesto con aportaciones mensuales y reinversión de dividendos. Tabla año a año, DRIP activado o desactivado y varias monedas.">
+  <meta property="og:url" content="https://handobin9782-lang.github.io/tools/es/compound-dividend.html">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Calculadora de interés compuesto y reinversión de dividendos (DRIP)">
+  <meta name="twitter:description" content="Calculadora gratuita de interés compuesto con aportaciones mensuales y reinversión de dividendos. Tabla año a año, DRIP activado o desactivado y varias monedas.">
+  <link rel="stylesheet" href="../assets/style.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230b1020'/%3E%3Ctext x='50' y='72' font-size='56' text-anchor='middle' fill='%2338d399'%3E%F0%9F%A7%B0%3C/text%3E%3C/svg%3E">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Crecimiento compuesto con dividendos reinvertidos",
+      "url": "https://handobin9782-lang.github.io/tools/es/compound-dividend.html",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "Any",
+      "inLanguage": "es",
+      "browserRequirements": "Requires JavaScript",
+      "description": "Calculadora gratuita de interés compuesto con aportaciones mensuales y reinversión de dividendos. Tabla año a año, DRIP activado o desactivado y varias monedas.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "inLanguage": "es",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "¿Qué significa DRIP?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Plan de reinversión de dividendos. En lugar de cobrar el dividendo, se compran más participaciones del mismo activo, así que el siguiente dividendo se paga sobre un saldo mayor. A lo largo de décadas, eso es la diferencia entre un crecimiento lineal y uno exponencial."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Es mejor activar o desactivar el DRIP?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Desactívalo para ver los ingresos con los que podrías vivir; actívalo para ver el crecimiento a largo plazo. La mayoría de las proyecciones de rentabilidad total suponen reinversión."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Incluye los impuestos?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Según el país, los impuestos sobre dividendos y plusvalías pueden llevarse entre el 15 % y el 30 % o más de la ganancia, y las comisiones de los fondos restan algo cada año. Réstalos si quieres una cifra realista."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Cómo se calcula el tipo mensual?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Con la raíz doceava del tipo anual: (1 + r)^(1/12) − 1. Dividir simplemente entre doce infla ligeramente el resultado anual."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Qué rentabilidad es realista?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Nadie lo sabe de antemano. Haz el cálculo dos o tres veces —por ejemplo al 4 %, al 7 % y al 10 %— y planifica con el escenario pesimista, no con el mejor."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Qué moneda debo usar?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "La que uses para pensar. La calculadora solo da formato a los números; no convierte entre monedas."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9910389156575302" crossorigin="anonymous"></script>
+</head>
+<body>
+<header class="topbar">
+  <div class="wrap bar">
+    <a class="brand" href="./"><span class="logo">🧰</span> Mini Herramientas</a>
+    <nav class="langs" aria-label="Idioma">
+      <a href="../en/compound-dividend.html" hreflang="en" lang="en">EN</a>
+      <a href="../ja/compound-dividend.html" hreflang="ja" lang="ja">日本語</a>
+      <a href="../es/compound-dividend.html" hreflang="es" lang="es" aria-current="page">ES</a>
+      <a href="../de/compound-dividend.html" hreflang="de" lang="de">DE</a>
+      <a href="../ko/compound-dividend.html" hreflang="ko" lang="ko">KO</a>
+    </nav>
+  </div>
+  <nav class="toolnav" aria-label="Mini Herramientas">
+    <a href="./">Inicio</a>
+    <a href="image-compressor.html">Comprimir imágenes</a>
+    <a href="compound-dividend.html" aria-current="page">Interés compuesto</a>
+    <a href="word-counter.html">Contador de palabras</a>
+    <a href="pdf-merge.html">Unir PDF</a>
+  </nav>
+</header>
+<main class="wrap">
+<div class="crumb"><a href="./">Inicio</a> › Crecimiento compuesto con dividendos reinvertidos</div>
+  <h1>Crecimiento compuesto con dividendos reinvertidos</h1>
+  <p class="lead">Introduce con cuánto empiezas, cuánto añades cada mes y la rentabilidad y el dividendo que esperas. La calculadora muestra el saldo año a año, con los dividendos reinvertidos (DRIP) o cobrados en efectivo.</p>
+
+  <div class="card">
+    <div class="row">
+      <div class="field"><label for="initial">Inversión inicial</label><input type="number" id="initial" value="10000" min="0" step="100" inputmode="numeric"></div>
+      <div class="field"><label for="monthly">Aportación mensual</label><input type="number" id="monthly" value="500" min="0" step="10" inputmode="numeric"></div>
+      <div class="field"><label for="years">Periodo (años)</label><input type="number" id="years" value="20" min="1" max="60" step="1" inputmode="numeric"></div>
+    </div>
+    <div class="row" style="margin-top:12px">
+      <div class="field"><label for="ret">Rentabilidad anual por precio (%)</label><input type="number" id="ret" value="7" min="-90" max="40" step="0.1" inputmode="decimal"></div>
+      <div class="field"><label for="yld">Rentabilidad por dividendo (%)</label><input type="number" id="yld" value="2" min="0" max="30" step="0.1" inputmode="decimal"></div>
+      <div class="field"><label for="currency">Moneda</label><select id="currency"></select></div>
+    </div>
+    <div class="check" style="margin-top:14px">
+      <input type="checkbox" id="drip" checked>
+      <label for="drip" style="font-size:14px;color:var(--text);font-weight:500">Reinvertir los dividendos (DRIP)<br><span class="muted" style="font-weight:400">Desactivado: los dividendos se cobran en efectivo y se contabilizan aparte.</span></label>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="k">Saldo final</div><div class="v accent" id="oFinal">—</div></div>
+    <div class="stat"><div class="k">Total aportado</div><div class="v" id="oInvested">—</div></div>
+    <div class="stat"><div class="k">Dividendos recibidos</div><div class="v" id="oDividends">—</div></div>
+    <div class="stat"><div class="k">Rentabilidad total</div><div class="v" id="oReturn">—</div><div class="s">Ganancia <span id="oGain"></span></div></div>
+    <div class="stat" id="cashCard"><div class="k">Dividendos cobrados en efectivo</div><div class="v" id="oCash">—</div></div>
+    <div class="stat" id="wealthCard"><div class="k">Patrimonio total (saldo + efectivo)</div><div class="v" id="oWealth">—</div></div>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0;font-size:15px;color:var(--muted);font-weight:600">Saldo frente a dinero aportado</h2>
+    <canvas id="chart" height="260"></canvas>
+  </div>
+
+  <div id="tableBlock">
+    <h2>Proyección año a año</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Año</th><th>Aportado</th><th>Dividendos del año</th><th>Dividendos acumulados</th><th>Efectivo acumulado</th><th>Saldo final</th></tr></thead>
+        <tbody id="tblBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <p class="note">Es una proyección, no una promesa. La rentabilidad y los dividendos no están garantizados, y los impuestos, las comisiones y la inflación no están incluidos.</p>
+
+
+<h2>Cómo se calcula</h2>
+<p>La rentabilidad anual se convierte en mensual con (1 + r)^(1/12) − 1 en lugar de r ÷ 12, de modo que doce meses componen exactamente la cifra anual. Los dividendos se calculan cada mes sobre el saldo vigente y se reinvierten (DRIP) o se acumulan en efectivo. Las aportaciones se añaden al final de cada mes.</p>
+<p>El crecimiento por precio y los dividendos se introducen por separado porque son cosas distintas: un fondo puede subir un 6 % al año y repartir otro 3 %. Con DRIP activado ambos componen juntos; desactivado, ves los ingresos que realmente cobrarías.</p>
+<h2>Qué poner en cada campo</h2>
+<ul><li><b>Inversión inicial</b> — lo que ya tienes, en la moneda elegida.</li><li><b>Aportación mensual</b> — lo que añades cada mes, empezando por el primero.</li><li><b>Rentabilidad por precio</b> — el crecimiento anual medio que esperas. Un 5–8 % es una hipótesis habitual a largo plazo para renta variable global; el pasado no garantiza nada.</li><li><b>Rentabilidad por dividendo</b> — el reparto anual como porcentaje del saldo. Los fondos indexados amplios suelen dar un 1–2 %; las estrategias de alto dividendo, un 3–5 %.</li><li><b>DRIP</b> — activado, los dividendos compran más del mismo activo; desactivado, se cobran en efectivo.</li></ul>
+<h2>Cómo leer la tabla</h2>
+<p>Cada fila es un año. «Aportado» es el dinero acumulado que has puesto, tu coste. «Dividendos acumulados» es todo lo que la inversión te ha pagado. «Saldo final» es lo que vale la cartera si los dividendos se reinvirtieron; con DRIP desactivado, la columna de efectivo muestra lo cobrado y el patrimonio total es el saldo más ese efectivo.</p>
+<h2>Preguntas frecuentes</h2>
+<details class="faq"><summary>¿Qué significa DRIP?</summary><p>Plan de reinversión de dividendos. En lugar de cobrar el dividendo, se compran más participaciones del mismo activo, así que el siguiente dividendo se paga sobre un saldo mayor. A lo largo de décadas, eso es la diferencia entre un crecimiento lineal y uno exponencial.</p></details>
+<details class="faq"><summary>¿Es mejor activar o desactivar el DRIP?</summary><p>Desactívalo para ver los ingresos con los que podrías vivir; actívalo para ver el crecimiento a largo plazo. La mayoría de las proyecciones de rentabilidad total suponen reinversión.</p></details>
+<details class="faq"><summary>¿Incluye los impuestos?</summary><p>No. Según el país, los impuestos sobre dividendos y plusvalías pueden llevarse entre el 15 % y el 30 % o más de la ganancia, y las comisiones de los fondos restan algo cada año. Réstalos si quieres una cifra realista.</p></details>
+<details class="faq"><summary>¿Cómo se calcula el tipo mensual?</summary><p>Con la raíz doceava del tipo anual: (1 + r)^(1/12) − 1. Dividir simplemente entre doce infla ligeramente el resultado anual.</p></details>
+<details class="faq"><summary>¿Qué rentabilidad es realista?</summary><p>Nadie lo sabe de antemano. Haz el cálculo dos o tres veces —por ejemplo al 4 %, al 7 % y al 10 %— y planifica con el escenario pesimista, no con el mejor.</p></details>
+<details class="faq"><summary>¿Qué moneda debo usar?</summary><p>La que uses para pensar. La calculadora solo da formato a los números; no convierte entre monedas.</p></details>
+</main>
+<script type="application/json" id="i18n">{"locale": "es-ES", "currency": "EUR", "currencies": [{"v": "EUR", "label": "Euro (€)"}, {"v": "USD", "label": "Dólar estadounidense ($)"}, {"v": "JPY", "label": "Yen japonés (¥)"}, {"v": "GBP", "label": "Libra esterlina (£)"}, {"v": "KRW", "label": "Won coreano (₩)"}]}</script><script src="../assets/compound.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contador de palabras — caracteres, palabras, bytes y tiempo de lectura</title>
+  <meta name="description" content="Contador de palabras y caracteres gratuito con bytes UTF-8, frases, párrafos, tiempo de lectura y densidad de palabras. Funciona sin conexión y no sube tu texto.">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="theme-color" content="#0b1020">
+  <link rel="canonical" href="https://handobin9782-lang.github.io/tools/es/word-counter.html">
+  <link rel="alternate" hreflang="en" href="https://handobin9782-lang.github.io/tools/en/word-counter.html">
+  <link rel="alternate" hreflang="ja" href="https://handobin9782-lang.github.io/tools/ja/word-counter.html">
+  <link rel="alternate" hreflang="es" href="https://handobin9782-lang.github.io/tools/es/word-counter.html">
+  <link rel="alternate" hreflang="de" href="https://handobin9782-lang.github.io/tools/de/word-counter.html">
+  <link rel="alternate" hreflang="ko" href="https://handobin9782-lang.github.io/tools/ko/word-counter.html">
+  <link rel="alternate" hreflang="x-default" href="https://handobin9782-lang.github.io/tools/en/word-counter.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Mini Herramientas">
+  <meta property="og:locale" content="es_ES">
+  <meta property="og:title" content="Contador de palabras — caracteres, palabras, bytes y tiempo de lectura">
+  <meta property="og:description" content="Contador de palabras y caracteres gratuito con bytes UTF-8, frases, párrafos, tiempo de lectura y densidad de palabras. Funciona sin conexión y no sube tu texto.">
+  <meta property="og:url" content="https://handobin9782-lang.github.io/tools/es/word-counter.html">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Contador de palabras — caracteres, palabras, bytes y tiempo de lectura">
+  <meta name="twitter:description" content="Contador de palabras y caracteres gratuito con bytes UTF-8, frases, párrafos, tiempo de lectura y densidad de palabras. Funciona sin conexión y no sube tu texto.">
+  <link rel="stylesheet" href="../assets/style.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230b1020'/%3E%3Ctext x='50' y='72' font-size='56' text-anchor='middle' fill='%2338d399'%3E%F0%9F%A7%B0%3C/text%3E%3C/svg%3E">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Cuenta palabras, caracteres y bytes mientras escribes",
+      "url": "https://handobin9782-lang.github.io/tools/es/word-counter.html",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "Any",
+      "inLanguage": "es",
+      "browserRequirements": "Requires JavaScript",
+      "description": "Contador de palabras y caracteres gratuito con bytes UTF-8, frases, párrafos, tiempo de lectura y densidad de palabras. Funciona sin conexión y no sube tu texto.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "inLanguage": "es",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "¿Se guarda o se envía mi texto?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. El recuento ocurre en la página con JavaScript. No se transmite, ni se guarda, ni se registra, y la herramienta funciona sin conexión."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Cómo se cuentan los caracteres japoneses y chinos?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Los caracteres se cuentan con exactitud; el número de palabras usa el segmentador del navegador y es aproximado. Para presupuestar traducciones es más fiable contar caracteres o bytes."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Por qué difieren bytes y caracteres?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Un carácter es un punto de código; un byte es el espacio que ocupa en UTF-8. Las letras inglesas ocupan un byte, los caracteres japoneses, coreanos y chinos tres, y los emoji cuatro."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Sirve para meta descripciones de SEO?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sí. La tabla muestra los límites habituales; Google suele truncar la meta descripción en torno a 155–160 caracteres."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Cuenta espacios y saltos de línea?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Los caracteres con espacios los incluyen; la cifra sin espacios y el recuento de palabras los ignoran. Los saltos de línea cuentan como un carácter en ambas cifras."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9910389156575302" crossorigin="anonymous"></script>
+</head>
+<body>
+<header class="topbar">
+  <div class="wrap bar">
+    <a class="brand" href="./"><span class="logo">🧰</span> Mini Herramientas</a>
+    <nav class="langs" aria-label="Idioma">
+      <a href="../en/word-counter.html" hreflang="en" lang="en">EN</a>
+      <a href="../ja/word-counter.html" hreflang="ja" lang="ja">日本語</a>
+      <a href="../es/word-counter.html" hreflang="es" lang="es" aria-current="page">ES</a>
+      <a href="../de/word-counter.html" hreflang="de" lang="de">DE</a>
+      <a href="../ko/word-counter.html" hreflang="ko" lang="ko">KO</a>
+    </nav>
+  </div>
+  <nav class="toolnav" aria-label="Mini Herramientas">
+    <a href="./">Inicio</a>
+    <a href="image-compressor.html">Comprimir imágenes</a>
+    <a href="compound-dividend.html">Interés compuesto</a>
+    <a href="word-counter.html" aria-current="page">Contador de palabras</a>
+    <a href="pdf-merge.html">Unir PDF</a>
+  </nav>
+</header>
+<main class="wrap">
+<div class="crumb"><a href="./">Inicio</a> › Cuenta palabras, caracteres y bytes mientras escribes</div>
+  <h1>Cuenta palabras, caracteres y bytes mientras escribes</h1>
+  <p class="lead">Pega un ensayo, un archivo de subtítulos o una publicación: todos los recuentos se actualizan al instante. Útil para límites de caracteres, presupuestos de traducción, meta descripciones y duración de un discurso.</p>
+
+  <div class="card">
+    <div class="field">
+      <label for="text">Tu texto</label>
+      <textarea id="text" placeholder="Empieza a escribir o pega aquí tu texto…" spellcheck="false"></textarea>
+    </div>
+    <div class="actions">
+      <button class="btn ghost sm" id="sampleBtn" type="button">Cargar un ejemplo</button>
+      <button class="btn ghost sm" id="clearBtn" type="button">Vaciar</button>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="k">Caracteres</div><div class="v" id="cChars">0</div></div>
+    <div class="stat"><div class="k">Caracteres (sin espacios)</div><div class="v" id="cCharsNoSpace">0</div></div>
+    <div class="stat"><div class="k">Palabras</div><div class="v accent" id="cWords">0</div></div>
+    <div class="stat"><div class="k">Frases</div><div class="v" id="cSentences">0</div></div>
+    <div class="stat"><div class="k">Párrafos</div><div class="v" id="cParagraphs">0</div></div>
+    <div class="stat"><div class="k">Bytes (UTF-8)</div><div class="v" id="cBytes">0</div></div>
+    <div class="stat"><div class="k">Tiempo de lectura</div><div class="v" id="cRead">0</div></div>
+    <div class="stat"><div class="k">Tiempo hablado</div><div class="v" id="cSpeak">0</div></div>
+    <div class="stat"><div class="k">Palabras distintas</div><div class="v" id="cUnique">0</div></div>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0;font-size:15px;color:var(--muted);font-weight:600">Palabras más frecuentes</h2>
+    <div id="density"></div>
+  </div>
+
+  <h2>Límites de caracteres habituales</h2>
+  <div class="table-wrap"><table><tbody><tr><td>Publicación en X / Twitter</td><td>280 caracteres</td></tr><tr><td>Meta descripción</td><td>155–160 caracteres</td></tr><tr><td>Título de YouTube</td><td>100 caracteres</td></tr><tr><td>SMS (un mensaje)</td><td>160 bytes</td></tr><tr><td>Descripción de Instagram</td><td>2.200 caracteres</td></tr><tr><td>Titular de Google Ads</td><td>30 caracteres</td></tr></tbody></table></div>
+
+
+<h2>¿Qué cuenta como palabra?</h2>
+<p>En las lenguas que separan palabras con espacios, una palabra es cualquier secuencia de letras, cifras o apóstrofos, la misma regla que usan los procesadores de texto, así que las comillas y los números no se cuentan dos veces. El japonés no usa espacios, por lo que la página recurre al segmentador de palabras del navegador (Intl.Segmenter) y el resultado es una buena aproximación, no un análisis exacto de diccionario.</p>
+<h2>Por qué importan los bytes</h2>
+<p>Muchos sistemas limitan bytes, no caracteres. Un SMS permite 160 bytes; una columna de base de datos o un campo de API pueden estar limitados a 2.000 bytes. En UTF-8 una letra inglesa ocupa un byte, la mayoría de las letras acentuadas dos, y los caracteres japoneses, coreanos, chinos y los emoji tres o cuatro. Por eso un texto japonés de 500 caracteres ronda los 1.500 bytes: conviene comprobarlo antes de pegarlo en un formulario que cuenta bytes.</p>
+<h2>Tiempo de lectura y de habla</h2>
+<p>El tiempo de lectura supone 200 palabras por minuto en lenguas con espacios y 500 caracteres por minuto en japonés, el rango habitual para leer en silencio un texto medio. El tiempo hablado usa 130 palabras por minuto, un ritmo cómodo de presentación. Ambas son estimaciones: un texto técnico denso se lee más despacio y un diálogo sencillo, más rápido.</p>
+<h2>Preguntas frecuentes</h2>
+<details class="faq"><summary>¿Se guarda o se envía mi texto?</summary><p>No. El recuento ocurre en la página con JavaScript. No se transmite, ni se guarda, ni se registra, y la herramienta funciona sin conexión.</p></details>
+<details class="faq"><summary>¿Cómo se cuentan los caracteres japoneses y chinos?</summary><p>Los caracteres se cuentan con exactitud; el número de palabras usa el segmentador del navegador y es aproximado. Para presupuestar traducciones es más fiable contar caracteres o bytes.</p></details>
+<details class="faq"><summary>¿Por qué difieren bytes y caracteres?</summary><p>Un carácter es un punto de código; un byte es el espacio que ocupa en UTF-8. Las letras inglesas ocupan un byte, los caracteres japoneses, coreanos y chinos tres, y los emoji cuatro.</p></details>
+<details class="faq"><summary>¿Sirve para meta descripciones de SEO?</summary><p>Sí. La tabla muestra los límites habituales; Google suele truncar la meta descripción en torno a 155–160 caracteres.</p></details>
+<details class="faq"><summary>¿Cuenta espacios y saltos de línea?</summary><p>Los caracteres con espacios los incluyen; la cifra sin espacios y el recuento de palabras los ignoran. Los saltos de línea cuentan como un carácter en ambas cifras.</p></details>
+</main>
+<script type="application/json" id="i18n">{"lang": "es", "locale": "es-ES", "mode": "words", "timeFmt": "{m} min {s} s", "stopwords": ["el", "la", "los", "las", "un", "una", "unos", "unas", "de", "del", "al", "a", "en", "y", "o", "u", "que", "con", "por", "para", "es", "son", "fue", "ser", "se", "su", "sus", "lo", "le", "les", "como", "más", "pero", "si", "no", "ya", "muy", "este", "esta", "estos", "estas", "ese", "esa", "eso", "yo", "tú", "él", "ella", "nos", "te", "me", "mi", "tu", "nuestro", "también", "cuando", "donde", "porque", "sin", "sobre", "entre", "hasta", "desde", "todo", "todos", "hay", "ha", "han", "he", "has", "está", "están", "era", "han", "uno", "dos", "puede", "sino", "otro", "otra", "cada", "bien", "solo", "sólo"], "densityEmpty": "Escribe algo para ver las palabras más frecuentes.", "sample": "El interés compuesto es la fuerza más silenciosa de las finanzas. Una cantidad pequeña invertida cada mes, olvidada durante veinte años, puede acabar valiendo más que todo el dinero aportado. La clave no es la rentabilidad espectacular, sino la constancia."}</script><script src="../assets/word-counter.js" defer></script>
+</body>
+</html>

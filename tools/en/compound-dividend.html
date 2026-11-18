@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Compound Interest &amp; Dividend Reinvestment (DRIP) Calculator</title>
+  <meta name="description" content="Free compound interest calculator with monthly contributions and dividend reinvestment. Year-by-year table, DRIP on or off, USD, JPY, EUR and more. No sign-up.">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="theme-color" content="#0b1020">
+  <link rel="canonical" href="https://handobin9782-lang.github.io/tools/en/compound-dividend.html">
+  <link rel="alternate" hreflang="en" href="https://handobin9782-lang.github.io/tools/en/compound-dividend.html">
+  <link rel="alternate" hreflang="ja" href="https://handobin9782-lang.github.io/tools/ja/compound-dividend.html">
+  <link rel="alternate" hreflang="es" href="https://handobin9782-lang.github.io/tools/es/compound-dividend.html">
+  <link rel="alternate" hreflang="de" href="https://handobin9782-lang.github.io/tools/de/compound-dividend.html">
+  <link rel="alternate" hreflang="ko" href="https://handobin9782-lang.github.io/tools/ko/compound-dividend.html">
+  <link rel="alternate" hreflang="x-default" href="https://handobin9782-lang.github.io/tools/en/compound-dividend.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Global Mini Tools">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:title" content="Compound Interest &amp; Dividend Reinvestment (DRIP) Calculator">
+  <meta property="og:description" content="Free compound interest calculator with monthly contributions and dividend reinvestment. Year-by-year table, DRIP on or off, USD, JPY, EUR and more. No sign-up.">
+  <meta property="og:url" content="https://handobin9782-lang.github.io/tools/en/compound-dividend.html">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Compound Interest &amp; Dividend Reinvestment (DRIP) Calculator">
+  <meta name="twitter:description" content="Free compound interest calculator with monthly contributions and dividend reinvestment. Year-by-year table, DRIP on or off, USD, JPY, EUR and more. No sign-up.">
+  <link rel="stylesheet" href="../assets/style.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230b1020'/%3E%3Ctext x='50' y='72' font-size='56' text-anchor='middle' fill='%2338d399'%3E%F0%9F%A7%B0%3C/text%3E%3C/svg%3E">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Compound growth with dividends reinvested",
+      "url": "https://handobin9782-lang.github.io/tools/en/compound-dividend.html",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "Any",
+      "inLanguage": "en",
+      "browserRequirements": "Requires JavaScript",
+      "description": "Free compound interest calculator with monthly contributions and dividend reinvestment. Year-by-year table, DRIP on or off, USD, JPY, EUR and more. No sign-up.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "inLanguage": "en",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What does DRIP mean?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Dividend reinvestment plan. Instead of taking the dividend as cash, it buys more of the same investment, so the next dividend is paid on a larger balance. Over decades this is the difference between linear and exponential growth."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Should DRIP be on or off?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Turn it off to see the income you could live on; turn it on to see long-term growth. Most total-return projections assume reinvestment."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does it account for taxes?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Depending on your country, dividend and capital gains taxes can take 15–30% or more of the gain, and fund fees take a little every year. Subtract them if you want a realistic figure."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How is the monthly rate calculated?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "With the twelfth root of the annual rate: (1 + r)^(1/12) − 1. Simply dividing by twelve slightly overstates the yearly result."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What return is realistic?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Nobody knows in advance. Run the calculation two or three times — at 4%, 7% and 10%, say — and plan around the pessimistic case rather than the best one."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which currency should I use?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Whichever you think in. The calculator only formats the numbers; it does not convert between currencies."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9910389156575302" crossorigin="anonymous"></script>
+</head>
+<body>
+<header class="topbar">
+  <div class="wrap bar">
+    <a class="brand" href="./"><span class="logo">🧰</span> Global Mini Tools</a>
+    <nav class="langs" aria-label="Language">
+      <a href="../en/compound-dividend.html" hreflang="en" lang="en" aria-current="page">EN</a>
+      <a href="../ja/compound-dividend.html" hreflang="ja" lang="ja">日本語</a>
+      <a href="../es/compound-dividend.html" hreflang="es" lang="es">ES</a>
+      <a href="../de/compound-dividend.html" hreflang="de" lang="de">DE</a>
+      <a href="../ko/compound-dividend.html" hreflang="ko" lang="ko">KO</a>
+    </nav>
+  </div>
+  <nav class="toolnav" aria-label="Global Mini Tools">
+    <a href="./">Home</a>
+    <a href="image-compressor.html">Image Compressor</a>
+    <a href="compound-dividend.html" aria-current="page">Compound &amp; Dividend</a>
+    <a href="word-counter.html">Word Counter</a>
+    <a href="pdf-merge.html">Merge PDF</a>
+  </nav>
+</header>
+<main class="wrap">
+<div class="crumb"><a href="./">Home</a> › Compound growth with dividends reinvested</div>
+  <h1>Compound growth with dividends reinvested</h1>
+  <p class="lead">Enter what you start with, what you add each month, and the return and dividend yield you expect. The calculator shows the balance year by year, with dividends either reinvested (DRIP) or paid out as cash.</p>
+
+  <div class="card">
+    <div class="row">
+      <div class="field"><label for="initial">Initial investment</label><input type="number" id="initial" value="10000" min="0" step="100" inputmode="numeric"></div>
+      <div class="field"><label for="monthly">Monthly contribution</label><input type="number" id="monthly" value="500" min="0" step="10" inputmode="numeric"></div>
+      <div class="field"><label for="years">Investment period (years)</label><input type="number" id="years" value="20" min="1" max="60" step="1" inputmode="numeric"></div>
+    </div>
+    <div class="row" style="margin-top:12px">
+      <div class="field"><label for="ret">Annual price return (%)</label><input type="number" id="ret" value="7" min="-90" max="40" step="0.1" inputmode="decimal"></div>
+      <div class="field"><label for="yld">Dividend yield (%)</label><input type="number" id="yld" value="2" min="0" max="30" step="0.1" inputmode="decimal"></div>
+      <div class="field"><label for="currency">Currency</label><select id="currency"></select></div>
+    </div>
+    <div class="check" style="margin-top:14px">
+      <input type="checkbox" id="drip" checked>
+      <label for="drip" style="font-size:14px;color:var(--text);font-weight:500">Reinvest dividends (DRIP)<br><span class="muted" style="font-weight:400">Off: dividends are paid out as cash and tracked separately.</span></label>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="k">Final balance</div><div class="v accent" id="oFinal">—</div></div>
+    <div class="stat"><div class="k">Total invested</div><div class="v" id="oInvested">—</div></div>
+    <div class="stat"><div class="k">Dividends received</div><div class="v" id="oDividends">—</div></div>
+    <div class="stat"><div class="k">Total return</div><div class="v" id="oReturn">—</div><div class="s">Gain <span id="oGain"></span></div></div>
+    <div class="stat" id="cashCard"><div class="k">Cash dividends paid out</div><div class="v" id="oCash">—</div></div>
+    <div class="stat" id="wealthCard"><div class="k">Total wealth (balance + cash)</div><div class="v" id="oWealth">—</div></div>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0;font-size:15px;color:var(--muted);font-weight:600">Balance vs. money invested</h2>
+    <canvas id="chart" height="260"></canvas>
+  </div>
+
+  <div id="tableBlock">
+    <h2>Year-by-year projection</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Year</th><th>Invested</th><th>Dividends this year</th><th>Dividends to date</th><th>Cash to date</th><th>End balance</th></tr></thead>
+        <tbody id="tblBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <p class="note">A projection, not a promise. Returns and dividends are not guaranteed, and taxes, fees and inflation are not included.</p>
+
+
+<h2>How the calculation works</h2>
+<p>The annual price return is converted to a monthly rate with (1 + r)^(1/12) − 1 rather than r ÷ 12, so twelve months compound to exactly the annual figure. Dividends are calculated on the current balance each month and either added back to it (DRIP) or accumulated as cash. Contributions are added at the end of each month.</p>
+<p>Price growth and dividends are entered separately because they are different things: a fund can rise 6% a year and distribute another 3%. With DRIP on, the two compound together; with it off, you see the income you would actually receive.</p>
+<h2>What to put in each field</h2>
+<ul><li><b>Initial investment</b> — what you already hold, in the currency you select.</li><li><b>Monthly contribution</b> — the amount you add every month, starting with the first one.</li><li><b>Price return</b> — average annual price growth you expect. 5–8% is a common long-run assumption for global equities; history is not a guarantee.</li><li><b>Dividend yield</b> — the annual distribution as a percentage of the balance. Broad index funds are often 1–2%, higher-dividend strategies 3–5%.</li><li><b>DRIP</b> — on, dividends buy more of the same investment; off, they are paid out as cash.</li></ul>
+<h2>Reading the table</h2>
+<p>Each row is one year. “Invested” is cumulative money you put in — your cost basis. “Dividends to date” is everything the investment has paid you. “End balance” is what the portfolio is worth when dividends were reinvested; with DRIP off, the cash column shows what has been paid out instead, and total wealth is the balance plus that cash.</p>
+<h2>Frequently asked questions</h2>
+<details class="faq"><summary>What does DRIP mean?</summary><p>Dividend reinvestment plan. Instead of taking the dividend as cash, it buys more of the same investment, so the next dividend is paid on a larger balance. Over decades this is the difference between linear and exponential growth.</p></details>
+<details class="faq"><summary>Should DRIP be on or off?</summary><p>Turn it off to see the income you could live on; turn it on to see long-term growth. Most total-return projections assume reinvestment.</p></details>
+<details class="faq"><summary>Does it account for taxes?</summary><p>No. Depending on your country, dividend and capital gains taxes can take 15–30% or more of the gain, and fund fees take a little every year. Subtract them if you want a realistic figure.</p></details>
+<details class="faq"><summary>How is the monthly rate calculated?</summary><p>With the twelfth root of the annual rate: (1 + r)^(1/12) − 1. Simply dividing by twelve slightly overstates the yearly result.</p></details>
+<details class="faq"><summary>What return is realistic?</summary><p>Nobody knows in advance. Run the calculation two or three times — at 4%, 7% and 10%, say — and plan around the pessimistic case rather than the best one.</p></details>
+<details class="faq"><summary>Which currency should I use?</summary><p>Whichever you think in. The calculator only formats the numbers; it does not convert between currencies.</p></details>
+</main>
+<script type="application/json" id="i18n">{"locale": "en-US", "currency": "USD", "currencies": [{"v": "USD", "label": "US dollar ($)"}, {"v": "EUR", "label": "Euro (€)"}, {"v": "JPY", "label": "Japanese yen (¥)"}, {"v": "GBP", "label": "Pound sterling (£)"}, {"v": "KRW", "label": "Korean won (₩)"}]}</script><script src="../assets/compound.js" defer></script>
+</body>
+</html>

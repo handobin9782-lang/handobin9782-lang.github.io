@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>이미지 용량 줄이기·형식 변환기 (JPG·PNG·WebP) — 무료, 업로드 없음</title>
+  <meta name="description" content="브라우저에서 이미지를 무료로 압축하고 변환합니다. JPG·PNG·WebP를 고르고 품질과 너비를 조절해 용량을 비교한 뒤 바로 저장하세요. 파일은 전송되지 않습니다.">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="theme-color" content="#0b1020">
+  <link rel="canonical" href="https://handobin9782-lang.github.io/tools/ko/image-compressor.html">
+  <link rel="alternate" hreflang="en" href="https://handobin9782-lang.github.io/tools/en/image-compressor.html">
+  <link rel="alternate" hreflang="ja" href="https://handobin9782-lang.github.io/tools/ja/image-compressor.html">
+  <link rel="alternate" hreflang="es" href="https://handobin9782-lang.github.io/tools/es/image-compressor.html">
+  <link rel="alternate" hreflang="de" href="https://handobin9782-lang.github.io/tools/de/image-compressor.html">
+  <link rel="alternate" hreflang="ko" href="https://handobin9782-lang.github.io/tools/ko/image-compressor.html">
+  <link rel="alternate" hreflang="x-default" href="https://handobin9782-lang.github.io/tools/en/image-compressor.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="글로벌 미니툴">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:title" content="이미지 용량 줄이기·형식 변환기 (JPG·PNG·WebP) — 무료, 업로드 없음">
+  <meta property="og:description" content="브라우저에서 이미지를 무료로 압축하고 변환합니다. JPG·PNG·WebP를 고르고 품질과 너비를 조절해 용량을 비교한 뒤 바로 저장하세요. 파일은 전송되지 않습니다.">
+  <meta property="og:url" content="https://handobin9782-lang.github.io/tools/ko/image-compressor.html">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="이미지 용량 줄이기·형식 변환기 (JPG·PNG·WebP) — 무료, 업로드 없음">
+  <meta name="twitter:description" content="브라우저에서 이미지를 무료로 압축하고 변환합니다. JPG·PNG·WebP를 고르고 품질과 너비를 조절해 용량을 비교한 뒤 바로 저장하세요. 파일은 전송되지 않습니다.">
+  <link rel="stylesheet" href="../assets/style.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230b1020'/%3E%3Ctext x='50' y='72' font-size='56' text-anchor='middle' fill='%2338d399'%3E%F0%9F%A7%B0%3C/text%3E%3C/svg%3E">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "이미지를 올리지 않고 용량 줄이기",
+      "url": "https://handobin9782-lang.github.io/tools/ko/image-compressor.html",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "Any",
+      "inLanguage": "ko",
+      "browserRequirements": "Requires JavaScript",
+      "description": "브라우저에서 이미지를 무료로 압축하고 변환합니다. JPG·PNG·WebP를 고르고 품질과 너비를 조절해 용량을 비교한 뒤 바로 저장하세요. 파일은 전송되지 않습니다.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "inLanguage": "ko",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "이미지가 어디론가 전송되나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "아니요. 디코딩과 재압축을 모두 브라우저가 합니다. 네트워크 전송이 없고, 페이지를 연 뒤에는 오프라인에서도 동작합니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "PNG로 바꿨더니 용량이 커졌어요",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "PNG는 무손실이고 품질 슬라이더가 적용되지 않아 다시 저장하면서 몇 바이트가 늘 수 있습니다. 사진은 WebP나 JPG로 바꿔야 실제로 줄어듭니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "EXIF나 GPS 정보도 지워지나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "네. Canvas로 다시 인코딩하면서 EXIF·GPS 같은 메타데이터가 사라집니다. 그 정보가 필요하면 원본을 남겨 두세요."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "파일 크기 제한이 있나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "정해진 제한은 없고, 실질적인 한계는 기기 메모리입니다. 20~30MB 사진은 최근 휴대폰에서도 처리되고, 아주 큰 이미지는 몇 초 걸릴 수 있습니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "아이폰 HEIC 사진도 되나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "아이폰은 보통 HEIC로 저장하고 브라우저에 따라 읽지 못합니다. 카메라 설정을 ‘높은 호환성’으로 바꾸거나 JPG로 내보낸 뒤 사용하세요."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9910389156575302" crossorigin="anonymous"></script>
+</head>
+<body>
+<header class="topbar">
+  <div class="wrap bar">
+    <a class="brand" href="./"><span class="logo">🧰</span> 글로벌 미니툴</a>
+    <nav class="langs" aria-label="언어">
+      <a href="../en/image-compressor.html" hreflang="en" lang="en">EN</a>
+      <a href="../ja/image-compressor.html" hreflang="ja" lang="ja">日本語</a>
+      <a href="../es/image-compressor.html" hreflang="es" lang="es">ES</a>
+      <a href="../de/image-compressor.html" hreflang="de" lang="de">DE</a>
+      <a href="../ko/image-compressor.html" hreflang="ko" lang="ko" aria-current="page">KO</a>
+    </nav>
+  </div>
+  <nav class="toolnav" aria-label="글로벌 미니툴">
+    <a href="./">홈</a>
+    <a href="image-compressor.html" aria-current="page">이미지 압축</a>
+    <a href="compound-dividend.html">복리·배당</a>
+    <a href="word-counter.html">글자수 세기</a>
+    <a href="pdf-merge.html">PDF 합치기</a>
+  </nav>
+</header>
+<main class="wrap">
+<div class="crumb"><a href="./">홈</a> › 이미지를 올리지 않고 용량 줄이기</div>
+  <h1>이미지를 올리지 않고 용량 줄이기</h1>
+  <p class="lead">사진을 고르고 출력 형식과 품질을 정한 뒤 가벼워진 파일을 저장하세요. 변환은 브라우저의 Canvas 엔진으로 하기 때문에 사진이 기기 밖으로 나가지 않습니다.</p>
+  <div class="notice"><span>🔒 전부 기기 안에서 처리 — 업로드도 서버도 회원가입도 없습니다.</span></div>
+
+  <div class="card">
+    <div class="drop" id="drop" role="button" tabindex="0" aria-label="여기에 이미지를 끌어다 놓거나 눌러서 선택하세요">
+      <span class="big">🖼️</span>
+      <b>여기에 이미지를 끌어다 놓거나 눌러서 선택하세요</b>
+      <div class="hint">여러 장을 한 번에 올려도 됩니다</div>
+      <div class="hint">JPG · PNG · WebP · GIF · BMP</div>
+    </div>
+    <input type="file" id="file" accept="image/*" multiple>
+    <div class="row" style="margin-top:16px">
+      <div class="field">
+        <label for="format">출력 형식</label>
+        <select id="format">
+          <option value="keep">원본 형식 유지</option>
+          <option value="image/jpeg" selected>JPG — 사진은 이게 가장 작음</option>
+          <option value="image/webp">WebP — 전체적으로 가장 작음</option>
+          <option value="image/png">PNG — 무손실, 투명 배경 유지</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="quality">품질 <span id="qualityVal">80%</span></label>
+        <input type="range" id="quality" min="0.1" max="1" step="0.05" value="0.8">
+      </div>
+      <div class="field">
+        <label for="maxw">최대 너비(픽셀, 선택)</label>
+        <input type="number" id="maxw" min="0" step="50" inputmode="numeric" placeholder="예: 1600">
+      </div>
+    </div>
+    <div id="status" class="muted" style="margin-top:10px"></div>
+    <div id="summary" class="muted" style="margin-top:4px"></div>
+    <div id="results" class="results"></div>
+    <div class="actions">
+      <button class="btn" id="dlAll" disabled>전체 저장</button>
+      <button class="btn ghost" id="clear">비우기</button>
+    </div>
+  </div>
+
+<h2>사용 방법</h2>
+<ol class="steps"><li><b>이미지 추가</b>파일을 상자에 끌어다 놓거나 상자를 눌러 고릅니다. 여러 장을 한꺼번에 처리할 수 있고, 사진마다 저장 버튼이 따로 생깁니다.</li><li><b>형식과 품질 고르기</b>사진은 JPG가 무난하고, 용량을 가장 줄이려면 WebP, 스크린샷이나 로고, 투명 배경이 필요하면 PNG입니다. 미리보기가 볼 만한 수준까지 품질을 내려 보세요.</li><li><b>비교하고 저장</b>결과마다 원본 용량, 변환 후 용량, 줄어든 비율이 나옵니다. 하나씩 저장하거나 ‘전체 저장’을 누르면 됩니다.</li></ol>
+<h2>어떤 형식을 골라야 할까</h2>
+<ul><li><b>JPG</b> — 사진과 공유용 이미지에 가장 좋습니다. 눈에 잘 띄지 않는 정보를 버리기 때문에 4MB 사진이 300KB가 되는 일도 흔합니다.</li><li><b>WebP</b> — 같은 화질이면 JPG보다 보통 25~35% 작고 투명도도 지원합니다. 요즘 브라우저는 모두 표시합니다.</li><li><b>PNG</b> — 무손실이고 투명도가 유지되지만 사진에서는 큽니다. 스크린샷, 로고, 아이콘, 글자가 선명한 이미지에 쓰세요.</li></ul>
+<h2>품질 슬라이더의 뜻</h2>
+<p>품질은 인코더를 조절하는 값이고, 이미지 크기(픽셀)는 바뀌지 않습니다. 80%에서도 대부분의 사진은 원본과 구분이 어렵고 용량은 몇 배 줄어듭니다. 50% 아래로 내리면 하늘이나 부드러운 그라데이션에 블록 모양 얼룩이 보이기 시작합니다. PNG는 무손실이라 슬라이더가 적용되지 않으니, PNG를 가볍게 하려면 WebP로 바꾸세요.</p>
+<h2>개인정보 관련</h2>
+<p>Canvas로 다시 그리면 EXIF 정보(촬영 위치, 기종, 촬영 시각 등)가 지워집니다. 사진을 공개하기 전에는 대개 좋은 일이지만, 그 정보가 필요하다면 원본 파일을 따로 보관하세요.</p>
+<h2>자주 묻는 질문</h2>
+<details class="faq"><summary>이미지가 어디론가 전송되나요?</summary><p>아니요. 디코딩과 재압축을 모두 브라우저가 합니다. 네트워크 전송이 없고, 페이지를 연 뒤에는 오프라인에서도 동작합니다.</p></details>
+<details class="faq"><summary>PNG로 바꿨더니 용량이 커졌어요</summary><p>PNG는 무손실이고 품질 슬라이더가 적용되지 않아 다시 저장하면서 몇 바이트가 늘 수 있습니다. 사진은 WebP나 JPG로 바꿔야 실제로 줄어듭니다.</p></details>
+<details class="faq"><summary>EXIF나 GPS 정보도 지워지나요?</summary><p>네. Canvas로 다시 인코딩하면서 EXIF·GPS 같은 메타데이터가 사라집니다. 그 정보가 필요하면 원본을 남겨 두세요.</p></details>
+<details class="faq"><summary>파일 크기 제한이 있나요?</summary><p>정해진 제한은 없고, 실질적인 한계는 기기 메모리입니다. 20~30MB 사진은 최근 휴대폰에서도 처리되고, 아주 큰 이미지는 몇 초 걸릴 수 있습니다.</p></details>
+<details class="faq"><summary>아이폰 HEIC 사진도 되나요?</summary><p>아이폰은 보통 HEIC로 저장하고 브라우저에 따라 읽지 못합니다. 카메라 설정을 ‘높은 호환성’으로 바꾸거나 JPG로 내보낸 뒤 사용하세요.</p></details>
+</main>
+<script type="application/json" id="i18n">{"processing": "압축 중…", "smaller": "감소", "larger": "증가", "total": "합계", "download": "저장", "failed": "이 브라우저에서 처리할 수 없습니다"}</script><script src="../assets/image-compressor.js" defer></script>
+</body>
+</html>

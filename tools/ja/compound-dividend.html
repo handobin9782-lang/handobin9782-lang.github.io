@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>複利・配当再投資（DRIP）計算ツール</title>
+  <meta name="description" content="毎月の積立と配当再投資を反映した複利計算。年ごとの推移表、DRIPのオン・オフ、円・ドル・ユーロに対応。登録不要。">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="theme-color" content="#0b1020">
+  <link rel="canonical" href="https://handobin9782-lang.github.io/tools/ja/compound-dividend.html">
+  <link rel="alternate" hreflang="en" href="https://handobin9782-lang.github.io/tools/en/compound-dividend.html">
+  <link rel="alternate" hreflang="ja" href="https://handobin9782-lang.github.io/tools/ja/compound-dividend.html">
+  <link rel="alternate" hreflang="es" href="https://handobin9782-lang.github.io/tools/es/compound-dividend.html">
+  <link rel="alternate" hreflang="de" href="https://handobin9782-lang.github.io/tools/de/compound-dividend.html">
+  <link rel="alternate" hreflang="ko" href="https://handobin9782-lang.github.io/tools/ko/compound-dividend.html">
+  <link rel="alternate" hreflang="x-default" href="https://handobin9782-lang.github.io/tools/en/compound-dividend.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="グローバルミニツール">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:title" content="複利・配当再投資（DRIP）計算ツール">
+  <meta property="og:description" content="毎月の積立と配当再投資を反映した複利計算。年ごとの推移表、DRIPのオン・オフ、円・ドル・ユーロに対応。登録不要。">
+  <meta property="og:url" content="https://handobin9782-lang.github.io/tools/ja/compound-dividend.html">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="複利・配当再投資（DRIP）計算ツール">
+  <meta name="twitter:description" content="毎月の積立と配当再投資を反映した複利計算。年ごとの推移表、DRIPのオン・オフ、円・ドル・ユーロに対応。登録不要。">
+  <link rel="stylesheet" href="../assets/style.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230b1020'/%3E%3Ctext x='50' y='72' font-size='56' text-anchor='middle' fill='%2338d399'%3E%F0%9F%A7%B0%3C/text%3E%3C/svg%3E">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "配当を再投資しながら複利で増やす",
+      "url": "https://handobin9782-lang.github.io/tools/ja/compound-dividend.html",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "Any",
+      "inLanguage": "ja",
+      "browserRequirements": "Requires JavaScript",
+      "description": "毎月の積立と配当再投資を反映した複利計算。年ごとの推移表、DRIPのオン・オフ、円・ドル・ユーロに対応。登録不要。",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "inLanguage": "ja",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "DRIPとは何ですか",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "配当再投資（Dividend Reinvestment Plan）の略です。配当を現金で受け取らず同じ投資対象を買い増すため、次の配当はより大きな残高に対して支払われます。数十年単位では、直線的な増え方と指数的な増え方の差になります。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "DRIPはオンとオフどちらがいいですか",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "生活費として受け取りたいならオフ、長期の成長を見たいならオンです。トータルリターンの試算は通常、再投資を前提にします。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "税金も計算に入りますか",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "入りません。国によっては配当・譲渡益に15〜30%以上の課税があり、信託報酬も毎年かかります。現実的な数字が必要なら差し引いて考えてください。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "月率はどう計算していますか",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "年率の12乗根、(1+r)^(1/12)−1 です。単純に12で割ると年間の結果が少し大きく出ます。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "現実的な利回りはどのくらいですか",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "事前には誰にも分かりません。4%・7%・10%など2〜3通りで計算し、楽観的な数字ではなく慎重な数字を基準に計画してください。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "通貨はどれを選べばいいですか",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "ご自身が金額を把握しやすい通貨で構いません。この計算ツールは表示を通貨単位に整えるだけで、為替換算は行いません。"
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9910389156575302" crossorigin="anonymous"></script>
+</head>
+<body>
+<header class="topbar">
+  <div class="wrap bar">
+    <a class="brand" href="./"><span class="logo">🧰</span> グローバルミニツール</a>
+    <nav class="langs" aria-label="言語">
+      <a href="../en/compound-dividend.html" hreflang="en" lang="en">EN</a>
+      <a href="../ja/compound-dividend.html" hreflang="ja" lang="ja" aria-current="page">日本語</a>
+      <a href="../es/compound-dividend.html" hreflang="es" lang="es">ES</a>
+      <a href="../de/compound-dividend.html" hreflang="de" lang="de">DE</a>
+      <a href="../ko/compound-dividend.html" hreflang="ko" lang="ko">KO</a>
+    </nav>
+  </div>
+  <nav class="toolnav" aria-label="グローバルミニツール">
+    <a href="./">ホーム</a>
+    <a href="image-compressor.html">画像圧縮</a>
+    <a href="compound-dividend.html" aria-current="page">複利・配当</a>
+    <a href="word-counter.html">文字数カウント</a>
+    <a href="pdf-merge.html">PDF結合</a>
+  </nav>
+</header>
+<main class="wrap">
+<div class="crumb"><a href="./">ホーム</a> › 配当を再投資しながら複利で増やす</div>
+  <h1>配当を再投資しながら複利で増やす</h1>
+  <p class="lead">最初の投資額、毎月の積立額、想定する値上がり率と配当利回りを入力してください。配当を再投資する場合（DRIP）と現金で受け取る場合の両方で、残高が年ごとにどう変わるかを表示します。</p>
+
+  <div class="card">
+    <div class="row">
+      <div class="field"><label for="initial">初期投資額</label><input type="number" id="initial" value="10000" min="0" step="100" inputmode="numeric"></div>
+      <div class="field"><label for="monthly">毎月の積立額</label><input type="number" id="monthly" value="500" min="0" step="10" inputmode="numeric"></div>
+      <div class="field"><label for="years">運用期間（年）</label><input type="number" id="years" value="20" min="1" max="60" step="1" inputmode="numeric"></div>
+    </div>
+    <div class="row" style="margin-top:12px">
+      <div class="field"><label for="ret">年間の値上がり率（%）</label><input type="number" id="ret" value="7" min="-90" max="40" step="0.1" inputmode="decimal"></div>
+      <div class="field"><label for="yld">配当利回り（%）</label><input type="number" id="yld" value="2" min="0" max="30" step="0.1" inputmode="decimal"></div>
+      <div class="field"><label for="currency">通貨</label><select id="currency"></select></div>
+    </div>
+    <div class="check" style="margin-top:14px">
+      <input type="checkbox" id="drip" checked>
+      <label for="drip" style="font-size:14px;color:var(--text);font-weight:500">配当を再投資する（DRIP）<br><span class="muted" style="font-weight:400">オフにすると配当は現金として別に集計されます。</span></label>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="k">最終残高</div><div class="v accent" id="oFinal">—</div></div>
+    <div class="stat"><div class="k">投資元本の合計</div><div class="v" id="oInvested">—</div></div>
+    <div class="stat"><div class="k">受け取った配当の合計</div><div class="v" id="oDividends">—</div></div>
+    <div class="stat"><div class="k">トータルリターン</div><div class="v" id="oReturn">—</div><div class="s">利益 <span id="oGain"></span></div></div>
+    <div class="stat" id="cashCard"><div class="k">受け取った現金配当</div><div class="v" id="oCash">—</div></div>
+    <div class="stat" id="wealthCard"><div class="k">総資産（残高＋現金）</div><div class="v" id="oWealth">—</div></div>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0;font-size:15px;color:var(--muted);font-weight:600">残高と投資元本の推移</h2>
+    <canvas id="chart" height="260"></canvas>
+  </div>
+
+  <div id="tableBlock">
+    <h2>年ごとの推移</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>年</th><th>元本</th><th>その年の配当</th><th>累計配当</th><th>累計現金</th><th>年末残高</th></tr></thead>
+        <tbody id="tblBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <p class="note">これは試算であり、約束ではありません。リターンや配当は保証されず、税金・手数料・インフレは含まれていません。</p>
+
+
+<h2>計算のしくみ</h2>
+<p>年間の値上がり率は r÷12 ではなく (1+r)^(1/12)−1 で月率に変換しているため、12か月分を複利で積み上げると年率とぴったり一致します。配当は毎月の残高に対して計算し、再投資する場合は残高に戻し、しない場合は現金として積み上げます。積立額は各月末に加算します。</p>
+<p>値上がりと配当を分けて入力するのは、両者が別物だからです。年間6%値上がりし、さらに3%を分配する投資信託もあります。再投資オンなら両方が複利で効き、オフなら実際に受け取る分配金が見えます。</p>
+<h2>各項目の入れ方</h2>
+<ul><li><b>初期投資額</b> — すでに保有している金額を、選んだ通貨で。</li><li><b>毎月の積立額</b> — 毎月追加する金額。1か月目から加算します。</li><li><b>値上がり率</b> — 想定する年平均の値上がり率。世界株式なら5〜8%がよく使われる長期の目安ですが、過去の実績は保証ではありません。</li><li><b>配当利回り</b> — 残高に対する年間分配の割合。インデックスファンドは1〜2%、高配当戦略は3〜5%程度が目安です。</li><li><b>DRIP</b> — オンなら配当で同じ投資対象を買い増し、オフなら現金で受け取ります。</li></ul>
+<h2>表の読み方</h2>
+<p>1行が1年です。「元本」はこれまでに入れた金額の累計、「累計配当」は投資が支払った分配の合計、「年末残高」は配当を再投資した場合の評価額です。DRIPをオフにすると現金の列が有効になり、総資産は残高と現金の合計になります。</p>
+<h2>よくある質問</h2>
+<details class="faq"><summary>DRIPとは何ですか</summary><p>配当再投資（Dividend Reinvestment Plan）の略です。配当を現金で受け取らず同じ投資対象を買い増すため、次の配当はより大きな残高に対して支払われます。数十年単位では、直線的な増え方と指数的な増え方の差になります。</p></details>
+<details class="faq"><summary>DRIPはオンとオフどちらがいいですか</summary><p>生活費として受け取りたいならオフ、長期の成長を見たいならオンです。トータルリターンの試算は通常、再投資を前提にします。</p></details>
+<details class="faq"><summary>税金も計算に入りますか</summary><p>入りません。国によっては配当・譲渡益に15〜30%以上の課税があり、信託報酬も毎年かかります。現実的な数字が必要なら差し引いて考えてください。</p></details>
+<details class="faq"><summary>月率はどう計算していますか</summary><p>年率の12乗根、(1+r)^(1/12)−1 です。単純に12で割ると年間の結果が少し大きく出ます。</p></details>
+<details class="faq"><summary>現実的な利回りはどのくらいですか</summary><p>事前には誰にも分かりません。4%・7%・10%など2〜3通りで計算し、楽観的な数字ではなく慎重な数字を基準に計画してください。</p></details>
+<details class="faq"><summary>通貨はどれを選べばいいですか</summary><p>ご自身が金額を把握しやすい通貨で構いません。この計算ツールは表示を通貨単位に整えるだけで、為替換算は行いません。</p></details>
+</main>
+<script type="application/json" id="i18n">{"locale": "ja-JP", "currency": "JPY", "currencies": [{"v": "JPY", "label": "日本円（¥）"}, {"v": "USD", "label": "米ドル（$）"}, {"v": "EUR", "label": "ユーロ（€）"}, {"v": "GBP", "label": "英ポンド（£）"}, {"v": "KRW", "label": "韓国ウォン（₩）"}]}</script><script src="../assets/compound.js" defer></script>
+</body>
+</html>

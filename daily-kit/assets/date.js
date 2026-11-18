@@ -30,6 +30,7 @@
     return { y: t.getUTCFullYear(), m: t.getUTCMonth() + 1, d: t.getUTCDate() };
   }
 
+
   function weekday(p) { return WD[new Date(utc(p)).getUTCDay()]; }
 
   function diffDays(a, b) { return Math.round((utc(b) - utc(a)) / DAY); }
@@ -46,10 +47,15 @@
     return age;
   }
 
+  /* 2월 29일처럼 존재하지 않는 날짜는 다음 실제 날짜로 넘긴다(평년 2/29 → 3/1). */
+  function normalize(p) {
+    var t = new Date(utc(p));
+    return { y: t.getUTCFullYear(), m: t.getUTCMonth() + 1, d: t.getUTCDate() };
+  }
+
   function nextBirthday(birth, ref) {
-    var cand = { y: ref.y, m: birth.m, d: birth.d };
-    // 2월 29일생은 평년에 3월 1일로 계산된다.
-    if (diffDays(ref, cand) < 0) cand = { y: ref.y + 1, m: birth.m, d: birth.d };
+    var cand = normalize({ y: ref.y, m: birth.m, d: birth.d });
+    if (diffDays(ref, cand) < 0) cand = normalize({ y: ref.y + 1, m: birth.m, d: birth.d });
     return cand;
   }
 

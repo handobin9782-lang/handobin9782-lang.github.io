@@ -9,7 +9,7 @@
     if (v === 0) return '0';
     var a = Math.abs(v);
     if (a >= 1e12 || a < 1e-6) return v.toExponential(4);
-    var s = Number(v.toPrecision(8));
+    var s = Number(v.toPrecision(6));
     return String(s);
   }
 

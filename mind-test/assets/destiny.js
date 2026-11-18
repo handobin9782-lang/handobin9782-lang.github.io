@@ -91,6 +91,9 @@
       y: y, m: m, d: d,
       dateText: y + '년 ' + m + '월 ' + d + '일',
       year: yp, month: mp, day: dp,
+      yearStem: yp.stem, yearBranch: yp.branch,
+      monthStem: mp.stem, monthBranch: mp.branch,
+      dayStem: dp.stem, dayBranch: dp.branch,
       pillars: [yp, mp, dp],
       counts: counts, total: total,
       dominant: sorted[0], second: sorted[1], weakest: weakest, lack: lack,
@@ -154,7 +157,7 @@
   function ensureHanja() {
     if (hanjaTable || !g.fetch) return Promise.resolve(null);
     hanjaTable = {};
-    return fetch('assets/hanja.json?v=1').then(function (r) { return r.json(); }).then(function (j) {
+    return fetch('assets/hanja.json?v=20261118b').then(function (r) { return r.json(); }).then(function (j) {
       hanjaTable = j; return j;
     }).catch(function () { return null; });
   }

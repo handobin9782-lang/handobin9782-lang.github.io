@@ -148,9 +148,9 @@ h1{
 .hero-cta{display:flex; gap:9px; flex-wrap:wrap}
 .hero-points{list-style:none; margin:14px 0 0; padding:0; display:grid; gap:5px}
 .hero-points li{
-  position:relative; padding-left:16px; font-size:12.5px; color:var(--ink-3);
+  position:relative; padding-left:14px; font-size:12.5px; color:var(--ink-3);
 }
-.hero-points li::before{content:"◦"; position:absolute; left:2px; color:var(--gold); font-weight:900}
+.hero-points li > .dot{position:absolute; left:0; top:0; color:var(--gold)}
 
 /* ── 버튼 ─────────────────────────────── */
 .btn{

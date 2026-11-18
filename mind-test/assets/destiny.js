@@ -563,7 +563,7 @@
     /* 눈 크기·간격 — 눈 라인 좁은 밴드, 중앙 ±0.30fw만 */
     var eyeTop = Math.max(by0, Math.round(eyeY - fh * 0.028));
     var eyeBot = Math.min(by0 + fh, Math.round(eyeY + fh * 0.032));
-    var ex0 = Math.round(bx0 + fw * 0.20), ex1 = Math.round(bx1 - fw * 0.20);
+    var ex0 = Math.round(bx0 + fw * 0.14), ex1 = Math.round(bx1 - fw * 0.14);
     var lx = 0, ln = 0, rx = 0, rn = 0, darkTot = 0, area = 0;
     for (var y7 = eyeTop; y7 < eyeBot; y7++) {
       for (var x7 = ex0; x7 <= ex1; x7++) {
@@ -575,7 +575,7 @@
       }
     }
     var eyeSize = area ? darkTot / area : 0;
-    var eyeSpace = (ln > 2 && rn > 2) ? clamp(Math.abs((rx / rn) - (lx / ln)) / fw, 0.22, 0.55) : 0.40;
+    var eyeSpace = (ln > 2 && rn > 2) ? clamp(Math.abs((rx / rn) - (lx / ln)) / fw, 0.26, 0.52) : 0.40;
 
     /* 입 라인 — 중앙 영역의 붉은 기운/어두움 피크 */
     var mouthY = by0 + fh * 0.76, bestSc = -1;
@@ -703,12 +703,16 @@
   function ogwanOf(face) {
     var m = face.metrics;
     function lv(v, lo, hi) { return v < lo ? 'weak' : (v > hi ? 'strong' : 'mid'); }
+    var eyeW = m.eyeSpace < 0.33 ? '좁은 편' : (m.eyeSpace > 0.44 ? '넓은 편' : '보통');
+    var mouthW = m.mouthWidth < 0.26 ? '작은 편' : (m.mouthWidth > 0.40 ? '큰 편' : '보통');
+    var noseW = m.noseContrast < 0.10 ? '낮은 편' : (m.noseContrast > 0.24 ? '높은 편' : '보통');
+    var earW = m.earRatio < 0.86 ? '붙은 편' : (m.earRatio > 1.02 ? '앞으로 선 편' : '보통');
     return {
-      brow: { key: 'brow', level: lv(m.energy.sang, 70, 92), v: m.energy.sang + '%' },
-      eye: { key: 'eye', level: lv(m.eyeSize, 0.055, 0.11), v: Math.round(m.eyeSpace * 100) + '% 간격' },
-      nose: { key: 'nose', level: lv(m.noseContrast, 12, 26), v: Math.round(m.noseWidth * 100) + '% 폭' },
-      mouth: { key: 'mouth', level: lv(m.mouthWidth, 0.24, 0.34), v: Math.round(m.mouthWidth * 100) + '% 폭' },
-      ear: { key: 'ear', level: lv(m.earRatio, 0.86, 0.97), v: m.earRatio.toFixed(2) }
+      brow: { key: 'brow', level: lv(m.energy.sang, 58, 80), v: '이마 기운 ' + m.energy.sang + '%' },
+      eye: { key: 'eye', level: lv(m.eyeSize, 0.16, 0.30), v: '눈 간격 ' + eyeW },
+      nose: { key: 'nose', level: lv(m.noseContrast, 0.10, 0.24), v: '콧대 ' + noseW },
+      mouth: { key: 'mouth', level: lv(m.mouthWidth, 0.26, 0.40), v: '입 ' + mouthW },
+      ear: { key: 'ear', level: lv(m.earRatio, 0.86, 1.02), v: '귀 ' + earW }
     };
   }
 

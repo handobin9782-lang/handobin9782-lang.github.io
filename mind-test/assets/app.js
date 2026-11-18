@@ -198,6 +198,7 @@
     }).join('');
   }
   function lvLabel(lv) { return { strong: '강', mid: '보통', weak: '약' }[lv] || ''; }
+  function wordOf(v, th, a, b, c) { return v < th[0] ? a : (v > th[1] ? c : b); }
 
   /* ── 부팅 ─────────────────────────────────────── */
   function boot() {
@@ -604,7 +605,7 @@
         : '<p class="sec-lede">사진이 없어 <b>사주·이름으로 추정한 삼정</b>입니다. 사진을 올리면 실측값으로 바뀝니다.</p>') +
       '<div class="tri">' + rows + '</div>' +
       '<div class="ogawn-list">' + ogList + '</div>' +
-      (p.face ? '<p class="note-line">측정값 — 대칭도 ' + p.face.metrics.symmetry + '% · 기색 ' + p.face.metrics.brightness + ' · 혈색 ' + p.face.metrics.redness + ' · 눈 ' + Math.round(p.face.metrics.eyeSpace * 100) + '% 간격 · 입 ' + Math.round(p.face.metrics.mouthWidth * 100) + '% 폭 · 턱 ' + Math.round(p.face.metrics.jawRatio * 100) + '%</p>' : '') +
+      (p.face ? '<p class="note-line">측정값 — 대칭도 ' + p.face.metrics.symmetry + ' · 기색 ' + p.face.metrics.brightness + ' · 눈 ' + wordOf(p.face.metrics.eyeSpace, [0.33, 0.44], '좁은 편', '보통', '넓은 편') + ' · 입 ' + wordOf(p.face.metrics.mouthWidth, [0.26, 0.40], '작은 편', '보통', '큰 편') + ' · 턱 ' + wordOf(p.face.metrics.jawRatio, [0.70, 0.88], '갸름한 편', '보통', '넓은 편') + '</p>' : '') +
       '</div></section>';
   }
 

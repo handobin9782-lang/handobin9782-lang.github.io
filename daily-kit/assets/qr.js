@@ -96,7 +96,7 @@
     warn.hidden = true;
 
     if (!text) {
-      setError(mode === 'wifi' ? '와이파이 이름(SSID)을 입력하면 바로 만들어집니다.' : '주소나 글자를 입력하면 아래에 QR 코드가 나타납니다.');
+      setError(mode === 'wifi' ? '와이파이 이름(SSID)을 입력하면 바로 만들어집니다.' : '주소나 글자를 입력하면 바로 QR 코드가 만들어집니다.');
       return;
     }
 

@@ -148,7 +148,7 @@
   <div class="stats">
     <div class="stat"><div class="k">최종 잔액</div><div class="v accent" id="oFinal">—</div></div>
     <div class="stat"><div class="k">총 투자 원금</div><div class="v" id="oInvested">—</div></div>
-    <div class="stat"><div class="k">받은 배당 합계</div><div class="v" id="oDividends">—</div></div>
+    <div class="stat" id="divCard"><div class="k">받은 배당 합계</div><div class="v" id="oDividends">—</div></div>
     <div class="stat"><div class="k">총 수익률</div><div class="v" id="oReturn">—</div><div class="s">평가 이익 <span id="oGain"></span></div></div>
     <div class="stat" id="cashCard"><div class="k">받은 현금 배당</div><div class="v" id="oCash">—</div></div>
     <div class="stat" id="wealthCard"><div class="k">총자산(잔액+현금)</div><div class="v" id="oWealth">—</div></div>
@@ -163,10 +163,11 @@
     <h2>연도별 추이</h2>
     <div class="table-wrap">
       <table>
-        <thead><tr><th>연차</th><th>누적 원금</th><th>그해 배당</th><th>누적 배당</th><th>누적 현금</th><th>연말 잔액</th></tr></thead>
+        <thead><tr><th>연차</th><th>누적 원금</th><th>그해 배당</th><th>누적 배당</th><th>연말 잔액</th></tr></thead>
         <tbody id="tblBody"></tbody>
       </table>
     </div>
+    <p class="muted" style="margin:8px 0 0">DRIP를 끄면 연말 잔액에는 현금으로 받은 배당이 포함되지 않습니다. 현금과 총자산은 위 카드에 표시됩니다.</p>
   </div>
 
   <p class="note">예측이지 약속이 아닙니다. 수익률과 배당은 보장되지 않으며, 세금·수수료·물가는 반영되지 않았습니다.</p>

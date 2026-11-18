@@ -148,7 +148,7 @@
   <div class="stats">
     <div class="stat"><div class="k">Endstand</div><div class="v accent" id="oFinal">—</div></div>
     <div class="stat"><div class="k">Insgesamt eingezahlt</div><div class="v" id="oInvested">—</div></div>
-    <div class="stat"><div class="k">Erhaltene Dividenden</div><div class="v" id="oDividends">—</div></div>
+    <div class="stat" id="divCard"><div class="k">Erhaltene Dividenden</div><div class="v" id="oDividends">—</div></div>
     <div class="stat"><div class="k">Gesamtrendite</div><div class="v" id="oReturn">—</div><div class="s">Gewinn <span id="oGain"></span></div></div>
     <div class="stat" id="cashCard"><div class="k">Ausgezahlte Bardividenden</div><div class="v" id="oCash">—</div></div>
     <div class="stat" id="wealthCard"><div class="k">Gesamtvermögen (Stand + Bargeld)</div><div class="v" id="oWealth">—</div></div>
@@ -163,10 +163,11 @@
     <h2>Projektion Jahr für Jahr</h2>
     <div class="table-wrap">
       <table>
-        <thead><tr><th>Jahr</th><th>Eingezahlt</th><th>Dividenden im Jahr</th><th>Dividenden kumuliert</th><th>Bargeld kumuliert</th><th>Jahresendstand</th></tr></thead>
+        <thead><tr><th>Jahr</th><th>Eingezahlt</th><th>Dividenden im Jahr</th><th>Dividenden kumuliert</th><th>Jahresendstand</th></tr></thead>
         <tbody id="tblBody"></tbody>
       </table>
     </div>
+    <p class="muted" style="margin:8px 0 0">Bei ausgeschaltetem DRIP enthält der Jahresendstand die bar ausgezahlten Dividenden nicht — diese Zahlen stehen oben.</p>
   </div>
 
   <p class="note">Eine Hochrechnung, kein Versprechen. Renditen und Dividenden sind nicht garantiert, Steuern, Gebühren und Inflation sind nicht enthalten.</p>

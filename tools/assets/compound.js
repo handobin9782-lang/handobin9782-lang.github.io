@@ -68,6 +68,7 @@
     $('oWealth').textContent = money(wealth);
     $('oGain').textContent = money(gain);
     $('cashCard').style.display = drip ? 'none' : '';
+    $('divCard').style.display = drip ? '' : 'none';
     $('oCash').textContent = money(last.cash);
     $('wealthCard').style.display = drip ? 'none' : '';
 
@@ -76,8 +77,7 @@
     for (var i = 0; i < rows.length; i++) {
       var row = rows[i];
       html += '<tr><td>' + row.y + '</td><td>' + plain(row.invested) + '</td><td>' + plain(Math.round(row.divYear)) +
-        '</td><td>' + plain(Math.round(row.cumDiv)) + '</td><td>' + plain(Math.round(row.cash)) +
-        '</td><td><b>' + plain(Math.round(row.bal)) + '</b></td></tr>';
+        '</td><td>' + plain(Math.round(row.cumDiv)) + '</td><td><b>' + plain(Math.round(row.bal)) + '</b></td></tr>';
     }
     tbody.innerHTML = html;
     table.style.display = '';

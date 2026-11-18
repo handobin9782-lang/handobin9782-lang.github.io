@@ -148,7 +148,7 @@
   <div class="stats">
     <div class="stat"><div class="k">最終残高</div><div class="v accent" id="oFinal">—</div></div>
     <div class="stat"><div class="k">投資元本の合計</div><div class="v" id="oInvested">—</div></div>
-    <div class="stat"><div class="k">受け取った配当の合計</div><div class="v" id="oDividends">—</div></div>
+    <div class="stat" id="divCard"><div class="k">受け取った配当の合計</div><div class="v" id="oDividends">—</div></div>
     <div class="stat"><div class="k">トータルリターン</div><div class="v" id="oReturn">—</div><div class="s">利益 <span id="oGain"></span></div></div>
     <div class="stat" id="cashCard"><div class="k">受け取った現金配当</div><div class="v" id="oCash">—</div></div>
     <div class="stat" id="wealthCard"><div class="k">総資産（残高＋現金）</div><div class="v" id="oWealth">—</div></div>
@@ -163,10 +163,11 @@
     <h2>年ごとの推移</h2>
     <div class="table-wrap">
       <table>
-        <thead><tr><th>年</th><th>元本</th><th>その年の配当</th><th>累計配当</th><th>累計現金</th><th>年末残高</th></tr></thead>
+        <thead><tr><th>年</th><th>元本</th><th>その年の配当</th><th>累計配当</th><th>年末残高</th></tr></thead>
         <tbody id="tblBody"></tbody>
       </table>
     </div>
+    <p class="muted" style="margin:8px 0 0">DRIPをオフにすると、年末残高には現金で受け取った配当は含まれません。現金と総資産は上のカードに表示されます。</p>
   </div>
 
   <p class="note">これは試算であり、約束ではありません。リターンや配当は保証されず、税金・手数料・インフレは含まれていません。</p>

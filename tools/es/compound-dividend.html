@@ -148,7 +148,7 @@
   <div class="stats">
     <div class="stat"><div class="k">Saldo final</div><div class="v accent" id="oFinal">—</div></div>
     <div class="stat"><div class="k">Total aportado</div><div class="v" id="oInvested">—</div></div>
-    <div class="stat"><div class="k">Dividendos recibidos</div><div class="v" id="oDividends">—</div></div>
+    <div class="stat" id="divCard"><div class="k">Dividendos recibidos</div><div class="v" id="oDividends">—</div></div>
     <div class="stat"><div class="k">Rentabilidad total</div><div class="v" id="oReturn">—</div><div class="s">Ganancia <span id="oGain"></span></div></div>
     <div class="stat" id="cashCard"><div class="k">Dividendos cobrados en efectivo</div><div class="v" id="oCash">—</div></div>
     <div class="stat" id="wealthCard"><div class="k">Patrimonio total (saldo + efectivo)</div><div class="v" id="oWealth">—</div></div>
@@ -163,10 +163,11 @@
     <h2>Proyección año a año</h2>
     <div class="table-wrap">
       <table>
-        <thead><tr><th>Año</th><th>Aportado</th><th>Dividendos del año</th><th>Dividendos acumulados</th><th>Efectivo acumulado</th><th>Saldo final</th></tr></thead>
+        <thead><tr><th>Año</th><th>Aportado</th><th>Dividendos del año</th><th>Dividendos acumulados</th><th>Saldo final</th></tr></thead>
         <tbody id="tblBody"></tbody>
       </table>
     </div>
+    <p class="muted" style="margin:8px 0 0">Con el DRIP desactivado, el saldo final no incluye los dividendos cobrados en efectivo: esas cifras aparecen arriba.</p>
   </div>
 
   <p class="note">Es una proyección, no una promesa. La rentabilidad y los dividendos no están garantizados, y los impuestos, las comisiones y la inflación no están incluidos.</p>

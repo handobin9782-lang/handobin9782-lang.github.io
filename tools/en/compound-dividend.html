@@ -148,7 +148,7 @@
   <div class="stats">
     <div class="stat"><div class="k">Final balance</div><div class="v accent" id="oFinal">—</div></div>
     <div class="stat"><div class="k">Total invested</div><div class="v" id="oInvested">—</div></div>
-    <div class="stat"><div class="k">Dividends received</div><div class="v" id="oDividends">—</div></div>
+    <div class="stat" id="divCard"><div class="k">Dividends received</div><div class="v" id="oDividends">—</div></div>
     <div class="stat"><div class="k">Total return</div><div class="v" id="oReturn">—</div><div class="s">Gain <span id="oGain"></span></div></div>
     <div class="stat" id="cashCard"><div class="k">Cash dividends paid out</div><div class="v" id="oCash">—</div></div>
     <div class="stat" id="wealthCard"><div class="k">Total wealth (balance + cash)</div><div class="v" id="oWealth">—</div></div>
@@ -163,10 +163,11 @@
     <h2>Year-by-year projection</h2>
     <div class="table-wrap">
       <table>
-        <thead><tr><th>Year</th><th>Invested</th><th>Dividends this year</th><th>Dividends to date</th><th>Cash to date</th><th>End balance</th></tr></thead>
+        <thead><tr><th>Year</th><th>Invested</th><th>Dividends this year</th><th>Dividends to date</th><th>End balance</th></tr></thead>
         <tbody id="tblBody"></tbody>
       </table>
     </div>
+    <p class="muted" style="margin:8px 0 0">With DRIP switched off, the end balance leaves out the dividends paid to you in cash — the cash and total-wealth figures are shown above.</p>
   </div>
 
   <p class="note">A projection, not a promise. Returns and dividends are not guaranteed, and taxes, fees and inflation are not included.</p>

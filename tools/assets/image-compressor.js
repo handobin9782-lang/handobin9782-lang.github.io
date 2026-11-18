@@ -14,6 +14,8 @@
   var status = document.getElementById('status');
   var files = [];
   var outputs = [];
+  var runId = 0;
+  var runTimer = null;
 
   function bytes(n) {
     if (n < 1024) return n + ' B';
@@ -122,14 +124,21 @@
     return { before: o.file.size, after: o.blob.size };
   }
 
+  function schedule() {
+    clearTimeout(runTimer);
+    runTimer = setTimeout(run, 130);
+  }
+
   async function run() {
     if (!files.length) return;
+    var my = ++runId;
     clearOutputs();
     status.textContent = I.processing + ' (0/' + files.length + ')';
     var before = 0, after = 0, done = 0;
     for (var i = 0; i < files.length; i++) {
       try {
         var o = await compressOne(files[i]);
+        if (my !== runId) return;
         var r = renderItem(o);
         before += r.before; after += r.after;
       } catch (e) {
@@ -139,6 +148,7 @@
         results.appendChild(li);
       }
       done++;
+      if (my !== runId) return;
       status.textContent = I.processing + ' (' + done + '/' + files.length + ')';
     }
     status.textContent = '';
@@ -157,7 +167,7 @@
       if (!f || (f.type && f.type.indexOf('image/') !== 0)) continue;
       files.push(f); added++;
     }
-    if (added) run();
+    if (added) schedule();
   }
 
   drop.addEventListener('click', function () { input.click(); });
@@ -175,8 +185,9 @@
     if (e.dataTransfer && e.dataTransfer.files) addFiles(e.dataTransfer.files);
   });
   [fmtSel, quality, maxW].forEach(function (el) {
-    el.addEventListener('input', function () { if (files.length) run(); });
-    el.addEventListener('change', function () { if (files.length) run(); });
+    ['input', 'change'].forEach(function (ev) {
+      el.addEventListener(ev, function () { if (files.length) schedule(); });
+    });
   });
   quality.addEventListener('input', function () { qualityVal.textContent = Math.round(quality.value * 100) + '%'; });
   qualityVal.textContent = Math.round(quality.value * 100) + '%';

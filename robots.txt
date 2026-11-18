@@ -4,3 +4,4 @@ Allow: /
 Sitemap: https://handobin9782-lang.github.io/smart-calc/sitemap.xml
 Sitemap: https://handobin9782-lang.github.io/tools/sitemap.xml
 Sitemap: https://handobin9782-lang.github.io/daily-kit/sitemap.xml
+Sitemap: https://handobin9782-lang.github.io/mind-test/sitemap.xml

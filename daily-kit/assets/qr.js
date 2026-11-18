@@ -9,6 +9,7 @@
   var $ = function (id) { return document.getElementById(id); };
   var canvas = $('qr-canvas');
   var ctx = canvas.getContext('2d');
+  var box = $('qr-box');
   var emptyBox = $('qr-empty');
   var meta = $('qr-meta');
   var warn = $('qr-warn');
@@ -75,7 +76,8 @@
 
   function setError(msg) {
     canvas.style.display = 'none';
-    emptyBox.style.display = '';
+    if (box) box.hidden = true;
+    emptyBox.hidden = false;
     emptyBox.textContent = msg;
     meta.textContent = '';
     dlBtn.disabled = true;
@@ -127,7 +129,8 @@
     }
 
     canvas.style.display = '';
-    emptyBox.style.display = 'none';
+    if (box) box.hidden = false;
+    emptyBox.hidden = true;
     dlBtn.disabled = false;
     if (copyBtn) copyBtn.disabled = !(canvas.toBlob && window.ClipboardItem && navigator.clipboard && navigator.clipboard.write);
 

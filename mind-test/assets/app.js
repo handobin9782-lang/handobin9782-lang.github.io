@@ -1418,7 +1418,7 @@
   $('btnSound').addEventListener('click', function () {
     var on = Sound.setEnabled(!Sound.isOn());
     paintSoundBtn();
-    if (on) toast('사운드 켜짐 · 시험장 똑딱 사운드');
+    if (on) toast('사운드 켜짐 · 잔잔한 시험장 배경음');
   });
 
   document.addEventListener('pointerdown', function () { Sound.unlock(); }, { once: true });

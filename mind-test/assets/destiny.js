@@ -500,7 +500,7 @@
         if (skin[yy * W + xx] && skin[yy * W + mx2]) { symSum += Math.abs(lum[yy * W + xx] - lum[yy * W + mx2]); symN++; }
       }
     }
-    var symmetry = symN > 40 ? clamp(100 - (symSum / symN) * 2.1, 30, 98) : 62;
+    var symmetry = symN > 40 ? clamp(100 - (symSum / symN) * 1.15, 55, 98) : 78;
 
     /* 밝기·혈색 */
     var bSum = 0, redSum = 0, bN = 0;
@@ -842,7 +842,9 @@
     var _a = pk(el.avoid);
     var out = [];
     out.push({ t: el.ko + ' 기운의 ' + el.weak.split(',')[0].trim(), d: el.avoid[0] });
-    out.push({ t: an.name + '의 그늘 — ' + an.guard.split('.')[0], d: an.avoid[0] + ' / ' + an.avoid[1] });
+    var guardShort = an.guard.split('.')[0].split(',')[0];
+    if (guardShort.length > 26) guardShort = guardShort.slice(0, 24) + '…';
+    out.push({ t: an.name + '의 그늘 — ' + guardShort, d: an.avoid[0] + ' / ' + an.avoid[1] });
     out.push({ t: (p.saju.lack.length ? E[p.saju.lack[0]].ko + ' 기운이 비어 있는 자리' : weak.ko + ' 기운이 얇은 자리'),
       d: (p.saju.lack.length ? E[p.saju.lack[0]] : weak).weak + ' — 이 기운이 약해서 무리하게 흉내 내면 오히려 새어 나갑니다. ' +
         _p + josa(_p, '을', '를') + ' 자주 한다면 그게 신호입니다.' });

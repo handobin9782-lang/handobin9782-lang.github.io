@@ -194,7 +194,8 @@
       };
     });
     var hchars = String(hanja || '').replace(/\s+/g, '').split('').filter(isHanja);
-    var useHanja = hchars.length >= 2;
+    /* 한자는 이름 글자 수와 같을 때만 원획으로 계산 (모자라거나 넘치면 소리 획수로) */
+    var useHanja = hchars.length >= 2 && hchars.length === chars.length;
     /* 한자 획수 배열 — 성1 + 이름 n */
     var hStrokes = useHanja ? hchars.map(function (c) { return hanjaStroke(c) || 0; }) : [];
     var validHanja = useHanja && hStrokes.every(function (s) { return s > 0; });
@@ -239,6 +240,7 @@
 
     return {
       name: chars.join(''), hanja: hchars.join(''), useHanja: validHanja, hasHanjaInput: hchars.length > 0,
+      hanjaMismatch: hchars.length > 0 && hchars.length !== chars.length,
       syllables: syl, flow: flow, trans: trans, geuk: geuk, saeng: saeng,
       soundStrokes: syl.map(function (s) { return s.strokes; }),
       soundTotal: syl.reduce(function (a, s) { return a + s.strokes; }, 0),

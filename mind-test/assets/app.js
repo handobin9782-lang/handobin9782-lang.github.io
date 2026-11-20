@@ -271,6 +271,134 @@
     $('sheet').addEventListener('click', function (e) {
       if (e.target.hasAttribute('data-close')) $('sheet').hidden = true;
     });
+
+    /* ── 한자 고르기 ── */
+    $('btnHanjaPick').addEventListener('click', function () { hjOpen(); });
+    $('hanjaSheet').addEventListener('click', function (e) {
+      if (e.target.hasAttribute('data-hj-close')) hjClose();
+    });
+    $('hjSlots').addEventListener('click', function (e) {
+      var b = e.target.closest('.hj-slot'); if (!b) return;
+      HJ.slot = Number(b.getAttribute('data-slot')) || 0;
+      $('hjSearch').value = '';
+      hjPaintSlots(); hjPaintGrid(); hjPaintCount();
+      Sound.click();
+    });
+    $('hjGrid').addEventListener('click', function (e) {
+      var b = e.target.closest('.hj-cell'); if (!b) return;
+      HJ.picks[HJ.slot] = b.getAttribute('data-hj');
+      var next = HJ.picks.indexOf('');
+      if (next >= 0) HJ.slot = next;
+      $('hjSearch').value = '';
+      hjPaintSlots(); hjPaintGrid(); hjPaintCount();
+      Sound.click();
+    });
+    $('hjSearch').addEventListener('input', function () { hjPaintGrid(); hjPaintCount(); });
+    $('hjClear').addEventListener('click', function () {
+      HJ.picks = HJ.picks.map(function () { return ''; });
+      HJ.slot = 0; $('hjSearch').value = '';
+      hjPaintSlots(); hjPaintGrid(); hjPaintCount();
+      Sound.click();
+    });
+    $('hjApply').addEventListener('click', function () { hjApply(); });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !$('hanjaSheet').hidden) hjClose();
+    });
+  }
+
+  /* ── 한자 고르기 (핸드폰에서 한자를 칠 수 없는 문제 해결) ── */
+  var HJ = { data: null, promise: null, failed: false, slot: 0, picks: [], name: '' };
+
+  function hjSyllables() {
+    return String($('fName').value || '').replace(/\s+/g, '').split('').filter(function (c) { return /[가-힣]/.test(c); });
+  }
+  function hjLoad() {
+    if (HJ.data) return Promise.resolve(HJ.data);
+    if (!HJ.promise) {
+      HJ.promise = fetch('assets/hanja-names.json?v=20261120a').then(function (r) { return r.json(); }).then(function (j) {
+        HJ.data = j; return j;
+      }).catch(function () { HJ.failed = true; return null; });
+    }
+    return HJ.promise;
+  }
+  function hjChar(item) { var i = item.indexOf('|'); return i < 0 ? item : item.slice(0, i); }
+  function hjMeaning(item) { var i = item.indexOf('|'); return i < 0 ? '' : item.slice(i + 1); }
+  function hjOpen() {
+    var syls = hjSyllables();
+    if (!syls.length) { toast('이름을 먼저 넣어주세요'); $('fName').focus(); return; }
+    HJ.name = syls.join('');
+    var set = ($('fHanja').value || '').match(/[\u4E00-\u9FFF\u3400-\u4DBF]/g) || [];
+    HJ.picks = syls.map(function (_, i) { return set[i] || ''; });
+    HJ.slot = Math.max(0, HJ.picks.indexOf(''));
+    $('hjSearch').value = '';
+    $('hanjaSheet').hidden = false;
+    document.body.style.overflow = 'hidden';
+    hjPaintSlots(); hjPaintGrid(); hjPaintCount();
+    hjLoad().then(function () { hjPaintGrid(); hjPaintCount(); });
+    Sound.click();
+  }
+  function hjClose() {
+    $('hanjaSheet').hidden = true;
+    document.body.style.overflow = '';
+    if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
+  }
+  function hjPaintSlots() {
+    var syls = HJ.name.split('');
+    $('hjSlots').innerHTML = syls.map(function (s, i) {
+      var p = HJ.picks[i] || '';
+      return '<button type="button" class="hj-slot' + (i === HJ.slot ? ' is-on' : '') + (p ? ' is-set' : '') + '" data-slot="' + i + '">' +
+        '<i>' + esc(s) + '</i><b>' + (p ? esc(p) : '?') + '</b></button>';
+    }).join('');
+  }
+  function hjCandidates() {
+    var data = HJ.data || {};
+    var q = ($('hjSearch').value || '').replace(/\s+/g, '');
+    if (!q) {
+      var read = HJ.name.charAt(HJ.slot);
+      return { label: read + ' 음 한자', items: data[read] || [] };
+    }
+    if (/^[가-힣]{1,2}$/.test(q) && data[q]) return { label: q + ' 음 한자', items: data[q] };
+    var out = [];
+    Object.keys(data).forEach(function (read) {
+      data[read].forEach(function (it) {
+        if (out.length >= 160) return;
+        if (hjMeaning(it).indexOf(q) >= 0 || hjChar(it).indexOf(q) >= 0) out.push(it);
+      });
+    });
+    return { label: '“' + q + '”로 찾은 한자', items: out };
+  }
+  function hjPaintGrid() {
+    var box = $('hjGrid');
+    if (HJ.failed) { box.innerHTML = '<p class="hj-empty">한자 목록을 불러오지 못했어요. 한글만으로도 풀이됩니다.</p>'; return; }
+    if (!HJ.data) { box.innerHTML = '<p class="hj-empty">한자 목록을 불러오는 중…</p>'; return; }
+    var c = hjCandidates();
+    if (!c.items.length) {
+      box.innerHTML = '<p class="hj-empty">해당하는 한자가 없어요. ' + (($('hjSearch').value || '') ? '다른 말로 찾아보세요.' : '한자를 직접 넣거나 한글만으로 풀이하세요.') + '</p>';
+      return;
+    }
+    box.innerHTML = c.items.map(function (it) {
+      var ch = hjChar(it), m = hjMeaning(it);
+      return '<button type="button" class="hj-cell' + (HJ.picks[HJ.slot] === ch ? ' is-on' : '') + '" data-hj="' + attr(ch) + '">' +
+        '<b>' + esc(ch) + '</b><span>' + esc(m || ' ' ) + '</span></button>';
+    }).join('');
+  }
+  function hjPaintCount() {
+    var n = HJ.picks.filter(Boolean).length;
+    var tail = ' · 고른 글자 ' + n + '/' + HJ.picks.length;
+    if (HJ.failed) { $('hjCount').textContent = '한자 목록을 불러오지 못했어요' + tail; return; }
+    if (!HJ.data) { $('hjCount').textContent = '한자 목록 불러오는 중…' + tail; return; }
+    var c = hjCandidates();
+    $('hjCount').textContent = c.label + ' · ' + c.items.length + '자' + tail;
+  }
+  function hjApply() {
+    if (HJ.picks.filter(Boolean).length !== HJ.picks.length) {
+      toast('이름 ' + HJ.picks.length + '글자 모두 한자를 골라주세요');
+      return;
+    }
+    $('fHanja').value = HJ.picks.join('');
+    hjClose();
+    toast('한자를 넣었어요 · 풀이 시작을 누르면 원획으로 계산합니다');
+    Sound.click();
   }
 
   /* ── 인트로 → 입력 ────────────────────────────── */
@@ -335,15 +463,24 @@
   /* ── 제출 ─────────────────────────────────────── */
   function submitForm() {
     var name = ($('fName').value || '').replace(/\s+/g, '');
-    var hanja = ($('fHanja').value || '').replace(/\s+/g, '');
+    var hanjaRaw = ($('fHanja').value || '').replace(/\s+/g, '');
     var birth = $('fBirth').value;
     var err = $('formErr');
     if (!name) return fail('이름을 넣어주세요.');
     if (!/^[가-힣]{1,6}$/.test(name)) return fail('한글 이름만 넣어주세요. (예: 정주용)');
-    if (hanja && !/^[\u4E00-\u9FFF]{1,6}$/.test(hanja)) return fail('한자는 1~6자까지 넣을 수 있어요. (예: 鄭周容)');
     if (!birth) return fail('생년월일을 골라주세요.');
     var y = Number(birth.slice(0, 4));
     if (y < 1930 || y > 2030) return fail('1930~2030년 사이로 넣어주세요.');
+
+    /* 한자 칸은 막지 않습니다 — 한글이 섞여 있어도 그대로 진행하고 소리 획수로 풀이합니다 */
+    var hanjaChars = hanjaRaw.match(/[\u4E00-\u9FFF\u3400-\u4DBF]/g) || [];
+    var hanja = hanjaChars.slice(0, 6).join('');
+    if (hanjaRaw && !hanja) {
+      $('fHanja').value = '';
+      toast('한자 대신 한글 소리 획수로 풀이합니다');
+    } else if (hanja && hanja.length !== name.length) {
+      toast('한자 ' + hanja.length + '자·이름 ' + name.length + '자가 달라 소리 획수로 봅니다');
+    }
     err.hidden = true;
 
     var payload = { name: name, hanja: hanja, birth: birth, photo: S.photo };
@@ -702,7 +839,8 @@
         return '<div class="hs"><b>' + esc(ch) + '</b>' + st + '획' + (mean ? ' · ' + esc(mean) : '') + '</div>';
       }).join('') + '</div>';
     } else {
-      hanjaChips = '<p class="note-line">한자를 넣으면 <b>원획수</b>로 다시 계산합니다. 지금은 한글 소리 획수(총 ' + nm.soundTotal + '획)로 본 참고값입니다.</p>';
+      hanjaChips = '<p class="note-line">한자를 넣지 않아도 괜찮습니다 — 지금은 한글 소리 획수(총 ' + nm.soundTotal + '획)로 본 참고값입니다. 한자를 알면 아래에서 골라 원획수로 다시 볼 수 있습니다.</p>' +
+        (p === S.me ? '<button type="button" class="btn btn-ghost btn-sm btn-pickhanja">名 한자 골라서 다시 보기</button>' : '');
     }
 
     return '' +
@@ -713,7 +851,8 @@
       hanjaChips +
       '<div class="sagyeok">' + sg + '</div>' +
       '<p class="name-verdict">' + esc(verdict) + '</p>' +
-      (nm.hasHanjaInput && !nm.useHanja ? '<p class="note-line">한자 일부를 획수로 확인하지 못해 소리 획수로 계산했습니다. 자전에 있는 한자로 다시 넣어주세요.</p>' : '') +
+      (nm.hanjaMismatch ? '<p class="note-line">한자 글자 수가 이름과 달라 소리 획수로 계산했습니다. 한자 고르기로 이름 글자 수에 맞춰 넣으면 원획수로 바뀝니다.</p>' : '') +
+      (nm.hasHanjaInput && !nm.useHanja && !nm.hanjaMismatch ? '<p class="note-line">한자 일부를 획수로 확인하지 못해 소리 획수로 계산했습니다. 자전에 있는 한자로 다시 넣어주세요.</p>' : '') +
       (nm.useHanja ? '<p class="note-line">원획수 기준 — 물수변·심방변·초두머리·좌우부리 등 부수를 원래 글자 획수로 보정했습니다. 자전·유파에 따라 ±1 차이가 있을 수 있습니다.</p>' : '') +
       '</div></section>';
   }
@@ -794,6 +933,13 @@
       enterForm('self');
       $('fName').value = p.name; $('fHanja').value = p.hanja || ''; $('fBirth').value = p.birth;
       $('formSub').textContent = '사진을 올리면 관상 삼정·오관이 실측값으로 바뀝니다.';
+    });
+    var pick = document.querySelector('.btn-pickhanja');
+    if (pick) pick.addEventListener('click', function () {
+      enterForm('self');
+      $('fName').value = p.name; $('fHanja').value = p.hanja || ''; $('fBirth').value = p.birth;
+      $('formSub').textContent = '한자를 고르면 원획 사격수리까지 함께 계산합니다. 몰라도 한글만으로 풀이됩니다.';
+      hjOpen();
     });
     var bp = $('btnPartner');
     if (bp) bp.addEventListener('click', function () { Sound.click(); enterForm('partner'); });

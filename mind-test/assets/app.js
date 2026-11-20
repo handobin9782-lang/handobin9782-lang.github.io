@@ -286,12 +286,7 @@
     });
     $('hjGrid').addEventListener('click', function (e) {
       var b = e.target.closest('.hj-cell'); if (!b) return;
-      HJ.picks[HJ.slot] = b.getAttribute('data-hj');
-      var next = HJ.picks.indexOf('');
-      if (next >= 0) HJ.slot = next;
-      $('hjSearch').value = '';
-      hjPaintSlots(); hjPaintGrid(); hjPaintCount();
-      Sound.click();
+      hjPick(b.getAttribute('data-hj'));
     });
     $('hjSearch').addEventListener('input', function () { hjPaintGrid(); hjPaintCount(); });
     $('hjClear').addEventListener('click', function () {
@@ -316,7 +311,17 @@
     if (HJ.data) return Promise.resolve(HJ.data);
     if (!HJ.promise) {
       HJ.promise = fetch('assets/hanja-names.json?v=20261120a').then(function (r) { return r.json(); }).then(function (j) {
-        HJ.data = j; return j;
+        HJ.data = j;
+        /* 한자 → 독음 역색인 (뜻으로 찾은 한자를 제 글자 자리에 넣기 위해) */
+        var map = {};
+        Object.keys(j).forEach(function (read) {
+          j[read].forEach(function (it) {
+            var c = hjChar(it);
+            (map[c] = map[c] || []).indexOf(read) < 0 && map[c].push(read);
+          });
+        });
+        HJ.charRead = map;
+        return j;
       }).catch(function () { HJ.failed = true; return null; });
     }
     return HJ.promise;
@@ -389,6 +394,23 @@
     if (!HJ.data) { $('hjCount').textContent = '한자 목록 불러오는 중…' + tail; return; }
     var c = hjCandidates();
     $('hjCount').textContent = c.label + ' · ' + c.items.length + '자' + tail;
+  }
+  /* 고른 한자를 제 자리에 넣습니다 — 이름의 음과 한자의 독음이 다르면 맞는 자리를 찾아 넣습니다 */
+  function hjPick(ch) {
+    if (!ch) return;
+    var slot = HJ.slot, reads = (HJ.charRead && HJ.charRead[ch]) || [];
+    var activeRead = HJ.name.charAt(slot);
+    if (reads.length && reads.indexOf(activeRead) < 0) {
+      for (var i = 0; i < HJ.picks.length; i++) {
+        if (!HJ.picks[i] && reads.indexOf(HJ.name.charAt(i)) >= 0) { slot = i; break; }
+      }
+    }
+    HJ.picks[slot] = ch;
+    var next = HJ.picks.indexOf('');
+    HJ.slot = next >= 0 ? next : slot;
+    $('hjSearch').value = '';
+    hjPaintSlots(); hjPaintGrid(); hjPaintCount();
+    Sound.click();
   }
   function hjApply() {
     if (HJ.picks.filter(Boolean).length !== HJ.picks.length) {

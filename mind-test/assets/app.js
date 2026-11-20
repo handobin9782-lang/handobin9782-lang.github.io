@@ -861,7 +861,10 @@
         return '<div class="hs"><b>' + esc(ch) + '</b>' + st + '획' + (mean ? ' · ' + esc(mean) : '') + '</div>';
       }).join('') + '</div>';
     } else {
-      hanjaChips = '<p class="note-line">한자를 넣지 않아도 괜찮습니다 — 지금은 한글 소리 획수(총 ' + nm.soundTotal + '획)로 본 참고값입니다. 한자를 알면 아래에서 골라 원획수로 다시 볼 수 있습니다.</p>' +
+      var noHanjaNote = nm.hanjaMismatch
+        ? '한자 글자 수가 이름 글자 수와 달라 소리 획수(총 ' + nm.soundTotal + '획)로 계산했습니다. 한자 고르기로 이름 글자 수에 맞춰 넣으면 원획수로 바뀝니다.'
+        : '한자를 넣지 않아도 괜찮습니다 — 지금은 한글 소리 획수(총 ' + nm.soundTotal + '획)로 본 참고값입니다. 한자를 알면 아래에서 골라 원획수로 다시 볼 수 있습니다.';
+      hanjaChips = '<p class="note-line">' + noHanjaNote + '</p>' +
         (p === S.me ? '<button type="button" class="btn btn-ghost btn-sm btn-pickhanja">名 한자 골라서 다시 보기</button>' : '');
     }
 
@@ -873,7 +876,6 @@
       hanjaChips +
       '<div class="sagyeok">' + sg + '</div>' +
       '<p class="name-verdict">' + esc(verdict) + '</p>' +
-      (nm.hanjaMismatch ? '<p class="note-line">한자 글자 수가 이름과 달라 소리 획수로 계산했습니다. 한자 고르기로 이름 글자 수에 맞춰 넣으면 원획수로 바뀝니다.</p>' : '') +
       (nm.hasHanjaInput && !nm.useHanja && !nm.hanjaMismatch ? '<p class="note-line">한자 일부를 획수로 확인하지 못해 소리 획수로 계산했습니다. 자전에 있는 한자로 다시 넣어주세요.</p>' : '') +
       (nm.useHanja ? '<p class="note-line">원획수 기준 — 물수변·심방변·초두머리·좌우부리 등 부수를 원래 글자 획수로 보정했습니다. 자전·유파에 따라 ±1 차이가 있을 수 있습니다.</p>' : '') +
       '</div></section>';

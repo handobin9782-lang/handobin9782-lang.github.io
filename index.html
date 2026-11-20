@@ -3,15 +3,156 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>복리·적립식 자산 계산기</title>
-<meta name="description" content="복리·적립식 자산 계산기로 이동합니다." />
-<meta http-equiv="refresh" content="0; url=/smart-calc/" />
+<title>무료 계산기·웹툴 모음</title>
+<meta name="description" content="복리·적립식 자산 계산기, 다국어 미니 웹툴, 데일리 킷, 관상철학관 — 설치 없이 브라우저에서 바로 쓰는 무료 도구 모음입니다." />
 <meta name="naver-site-verification" content="ac8996cf3d74fdcd5431c13f8f3b7832a6321e02" />
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9910389156575302" crossorigin="anonymous"></script>
-<link rel="canonical" href="https://handobin9782-lang.github.io/smart-calc/" />
+<link rel="canonical" href="https://handobin9782-lang.github.io/" />
+<style>
+  :root {
+    --bg: #0b1020;
+    --card: #131a2e;
+    --card2: #1a233d;
+    --border: rgba(255, 255, 255, 0.08);
+    --text: #f3f6ff;
+    --muted: #93a1c6;
+    --accent: #38d399;
+    --accent2: #60a5fa;
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    padding: 20px 14px 36px;
+    line-height: 1.6;
+    word-break: keep-all;
+    overflow-wrap: break-word;
+  }
+  .wrap { max-width: 760px; margin: 0 auto; }
+  .head { margin-bottom: 16px; }
+  .head h1 { font-size: 20px; font-weight: 800; letter-spacing: -0.3px; margin: 0 0 5px; }
+  .head p { font-size: 13px; color: var(--muted); margin: 0; }
+
+  .hub { display: grid; gap: 10px; }
+  .hub a.site {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    padding: 14px 15px; border-radius: 16px;
+    background: var(--card); border: 1px solid var(--border);
+    text-decoration: none; color: var(--text);
+  }
+  .hub a.site:active { transform: scale(0.99); }
+  .site-main { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+  .site-name { font-size: 14px; font-weight: 800; letter-spacing: -0.2px; }
+  .site-desc { font-size: 12px; color: var(--muted); }
+  .site-arrow { color: var(--accent); font-size: 15px; font-weight: 800; flex: 0 0 auto; }
+
+  /* ── 쿠팡 파트너스 추천 아이템 ─────────────────────────── */
+  .pick {
+    margin: 22px 0 0; padding: 15px 14px 14px;
+    border: 1px solid var(--border); border-radius: 18px;
+    background: linear-gradient(160deg, #12273c 0%, var(--card) 62%);
+  }
+  .pick-head h2 { font-size: 15px; font-weight: 800; margin: 0 0 3px; letter-spacing: -0.2px; }
+  .pick-head p { font-size: 12px; color: var(--muted); margin: 0 0 12px; }
+  .pick-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .pick-card {
+    display: flex; flex-direction: column; gap: 3px; padding: 11px 12px;
+    border-radius: 14px; background: rgba(255,255,255,0.045);
+    border: 1px solid var(--border); text-decoration: none; color: var(--text);
+  }
+  .pick-card:active { transform: scale(0.98); }
+  .pick-badge { font-size: 10.5px; font-weight: 800; color: var(--accent); letter-spacing: 0.2px; }
+  .pick-name { font-size: 12.5px; font-weight: 700; line-height: 1.45; color: var(--text); }
+  .pick-cta { font-size: 11.5px; font-weight: 700; color: var(--accent2); margin-top: 3px; }
+  .pick-note { font-size: 10.5px; line-height: 1.65; color: var(--muted); margin: 12px 0 0; }
+
+  footer { margin-top: 24px; font-size: 11.5px; color: var(--muted); line-height: 1.7; }
+  footer p { margin: 4px 0; }
+
+  @media (min-width: 640px) {
+    body { padding: 28px 20px 44px; }
+    .head h1 { font-size: 23px; }
+    .pick-grid { grid-template-columns: repeat(4, 1fr); }
+    .pick-name { font-size: 13px; }
+  }
+</style>
 </head>
 <body>
-<p>복리·적립식 자산 계산기로 이동합니다. <a href="/smart-calc/">계산기 열기</a></p>
-<p>🌍 글로벌 미니 웹툴 (EN · 日本語 · ES · DE · KO): <a href="/tools/">tools 열기</a></p>
+<div class="wrap">
+
+  <header class="head">
+    <h1>무료 계산기 · 웹툴 모음</h1>
+    <p>설치 없이 브라우저에서 바로 쓰는 무료 도구들입니다.</p>
+  </header>
+
+  <nav class="hub" aria-label="사이트 목록">
+    <a class="site" href="/smart-calc/">
+      <span class="site-main">
+        <span class="site-name">복리·적립식 자산 계산기</span>
+        <span class="site-desc">복리·적립, 월배당, 대출, 연봉·세금, 청약 가점 등 계산기 9종</span>
+      </span>
+      <span class="site-arrow">→</span>
+    </a>
+    <a class="site" href="/tools/">
+      <span class="site-main">
+        <span class="site-name">글로벌 미니 웹툴</span>
+        <span class="site-desc">이미지 압축 · 복리배당 · 글자수 세기 · PDF 합치기 (EN · 日本語 · ES · DE · KO)</span>
+      </span>
+      <span class="site-arrow">→</span>
+    </a>
+    <a class="site" href="/daily-kit/">
+      <span class="site-main">
+        <span class="site-name">데일리 킷</span>
+        <span class="site-desc">QR 코드 생성기 · 만 나이·D-Day · 단위·평수 변환</span>
+      </span>
+      <span class="site-arrow">→</span>
+    </a>
+    <a class="site" href="/mind-test/">
+      <span class="site-main">
+        <span class="site-name">관상철학관</span>
+        <span class="site-desc">관상 · 사주 · 이름풀이와 6대 관계 궁합 카드</span>
+      </span>
+      <span class="site-arrow">→</span>
+    </a>
+  </nav>
+
+  <!-- 쿠팡 파트너스 추천 아이템 -->
+  <section class="pick" aria-label="추천 재테크·데스크 아이템">
+    <div class="pick-head">
+      <h2>추천 재테크·데스크 아이템</h2>
+      <p>계산기와 함께 쓰면 좋은 것들만 골랐습니다.</p>
+    </div>
+    <div class="pick-grid">
+      <a class="pick-card" href="https://link.coupang.com/a/iO9DmRwQ6m" target="_blank" rel="noopener sponsored">
+        <span class="pick-badge">재테크</span>
+        <span class="pick-name">돈의 심리학 (양장) · 모건 하우절</span>
+        <span class="pick-cta">쿠팡에서 보기 →</span>
+      </a>
+      <a class="pick-card" href="https://link.coupang.com/a/iO9HlzNrC8" target="_blank" rel="noopener sponsored">
+        <span class="pick-badge">가계부</span>
+        <span class="pick-name">인디고 2027 기본 날짜형 1년 가계부</span>
+        <span class="pick-cta">쿠팡에서 보기 →</span>
+      </a>
+      <a class="pick-card" href="https://link.coupang.com/a/iO9AIDrIf6" target="_blank" rel="noopener sponsored">
+        <span class="pick-badge">계산기</span>
+        <span class="pick-name">카시오 공학용계산기 FX-570CW</span>
+        <span class="pick-cta">쿠팡에서 보기 →</span>
+      </a>
+      <a class="pick-card" href="https://link.coupang.com/a/iO9FqWjR3k" target="_blank" rel="noopener sponsored">
+        <span class="pick-badge">데스크</span>
+        <span class="pick-name">홈플래닛 메탈 쿨링홀 노트북 거치대</span>
+        <span class="pick-cta">쿠팡에서 보기 →</span>
+      </a>
+    </div>
+    <p class="pick-note">※ 이 페이지는 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다. 가격과 재고는 쿠팡 상품 페이지에서 확인하세요.</p>
+  </section>
+
+  <footer>
+    <p>이 사이트의 계산 결과는 입력한 가정에 따른 참고용 수치이며, 특정 상품의 수익을 보장하지 않습니다.</p>
+  </footer>
+
+</div>
 </body>
 </html>
